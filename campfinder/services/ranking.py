@@ -18,10 +18,14 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Any
 
 
-def _weeks_from_dates(start_iso: str, end_iso: str) -> list[date]:
+def _as_date(value: date | str) -> date:
+    return value if isinstance(value, date) else date.fromisoformat(value)
+
+
+def _weeks_from_dates(start_value: date | str, end_value: date | str) -> list[date]:
     """Return all Monday dates that fall within [start, end]."""
-    start = date.fromisoformat(start_iso)
-    end = date.fromisoformat(end_iso)
+    start = _as_date(start_value)
+    end = _as_date(end_value)
     weeks: list[date] = []
     # Find first Monday on or after start
     current = start + timedelta(days=(7 - start.weekday()) % 7)
@@ -62,11 +66,7 @@ def score_camp(
         requested_dates = {date.fromisoformat(w) for w in requested_weeks}
         matched_weeks = 0
         for session in sessions:
-            session_weeks = set(
-                _weeks_from_dates(
-                    str(session["start_date"]), str(session["end_date"])
-                )
-            )
+            session_weeks = set(_weeks_from_dates(session["start_date"], session["end_date"]))
             overlap = requested_dates & session_weeks
             matched_weeks += len(overlap)
         if matched_weeks > 0:
@@ -120,7 +120,7 @@ def score_camp(
         reasons.append("ACA accredited")
 
     # --- Freshness ---
-    last_updated = camp.get("last_updated_date") or camp.get("updated_at")
+    last_updated = camp.get("updated_at")
     if last_updated is not None:
         if isinstance(last_updated, str):
             try:

@@ -2,10 +2,8 @@
 
 import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { searchCamps, type CampSearchResult } from '@/lib/api'
+import { searchCamps, startClaim, verifyClaim, type CampSearchResult } from '@/lib/api'
 import { Events } from '@/lib/analytics'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 function ClaimFlow() {
   const params = useSearchParams()
@@ -24,7 +22,6 @@ function ClaimFlow() {
   const [token, setToken] = useState('')
   const [verifying, setVerifying] = useState(false)
   const [verifyError, setVerifyError] = useState('')
-  const [upgrading, setUpgrading] = useState(false)
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -54,20 +51,12 @@ function ClaimFlow() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${API_URL}/api/v1/claims`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          camp_id: selected.id,
-          email,
-          contact_name: contactName || undefined,
-          role: role || undefined,
-        }),
+      await startClaim({
+        camp_id: selected.id,
+        email,
+        contact_name: contactName || undefined,
+        role: role || undefined,
       })
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.detail || 'Claim failed')
-      }
       setStep('verify')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -82,11 +71,7 @@ function ClaimFlow() {
     setVerifying(true)
     setVerifyError('')
     try {
-      const res = await fetch(`${API_URL}/api/v1/claims/verify?token=${encodeURIComponent(token)}`)
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.detail || 'Invalid or expired token')
-      }
+      await verifyClaim(token)
       setStep('done')
     } catch (err: unknown) {
       setVerifyError(err instanceof Error ? err.message : 'Verification failed.')
@@ -270,43 +255,8 @@ function ClaimFlow() {
             <ul className="text-sm text-gray-600 space-y-2">
               <li>✓ Your listing now shows a <strong>claimed</strong> status badge</li>
               <li>✓ Parents see that your data is managed by a verified owner</li>
-              <li>→ Add your 2025 sessions and pricing to rank higher in search</li>
-              <li>→ Upgrade to Pro for priority placement and AI discoverability boost</li>
+              <li>→ Reply to any of our emails to update sessions, prices or availability</li>
             </ul>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 text-left">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-bold text-gray-900 text-sm mb-1">Pro listing -- $149/yr</p>
-                <p className="text-xs text-gray-500">
-                  Priority ranking · Verified badge · Session management · AI discoverability signals
-                </p>
-              </div>
-              <button
-                disabled={upgrading}
-                onClick={async () => {
-                  if (!selected) return
-                  setUpgrading(true)
-                  Events.stripeCheckoutStarted(selected.id)
-                  try {
-                    const res = await fetch(`${API_URL}/api/v1/stripe/checkout`, {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ camp_id: selected.id, email }),
-                    })
-                    const data = await res.json()
-                    if (data.checkout_url) {
-                      window.location.href = data.checkout_url
-                    }
-                  } catch {
-                    setUpgrading(false)
-                  }
-                }}
-                className="shrink-0 bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors disabled:opacity-60"
-              >
-                {upgrading ? 'Redirecting...' : 'Upgrade →'}
-              </button>
-            </div>
           </div>
         </div>
       )}

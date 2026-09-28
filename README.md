@@ -1,135 +1,72 @@
-# CampFinder API
+# CampFinder
 
-Agent-first camp discovery platform. Verified camp data served through a structured API.
+Grubhub for camps. Parents plan and book the whole summer in one place, guided by parents who
+have been there. Camp owners get found and booked without learning any software.
 
-## Setup
+Start with `docs/PRODUCT.md` (what and why), `docs/ROADMAP.md` (when), and
+`docs/ARCHITECTURE.md` (how).
 
-### 1. Install dependencies
+## Run the API locally
+
+Needs Python 3.11+, and Postgres 16 with PostGIS (locally, or a Supabase project).
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. Configure environment
-
-```bash
-cp .env.example .env
-```
-
-Fill in your Supabase credentials in `.env`:
-
-```
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_KEY=your-service-key
-DATABASE_URL=postgresql://postgres:[password]@db.your-project.supabase.co:5432/postgres
-```
-
-### 3. Run the database schema
-
-Connect to your Supabase project and run:
-
-```bash
-psql $DATABASE_URL -f schema.sql
-```
-
-Or paste `schema.sql` into the Supabase SQL editor.
-
-### 4. Seed the database
-
-```bash
-python -m campfinder.seed.generate
-```
-
-This inserts 50 synthetic camps across Providence/Boston and NYC metro, with sessions and field sources.
-
-### 5. Start the API server
-
-```bash
+cp .env.example .env               # set DATABASE_URL
+python -m campfinder.migrate       # apply migrations
+python -m campfinder.seed.generate --wipe   # 60 synthetic Providence-area camps
 uvicorn campfinder.main:app --reload
 ```
 
-The API is now running at `http://localhost:8000`.
+Docs at http://localhost:8000/docs. Health at http://localhost:8000/health.
 
-- Interactive docs: http://localhost:8000/docs
-- Health check: http://localhost:8000/health
+## Run the tests
 
----
+```bash
+pytest
+```
+
+The tests start a throwaway Postgres cluster with PostGIS, apply the migrations, and run every
+endpoint against it. They need `postgresql-16` and `postgresql-16-postgis-3` installed (or set
+`TEST_DATABASE_URL` to an existing empty database).
+
+## Turn a camp website into a listing
+
+```bash
+export ANTHROPIC_API_KEY=...
+python -m campfinder.ingest https://example-camp.org           # print the proposal
+python -m campfinder.ingest brochure.pdf --json                # full detail
+python -m campfinder.ingest https://example-camp.org --import  # write it as an unverified camp
+```
 
 ## Endpoints
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `POST` | `/api/v1/search` | Search camps by location and filters |
-| `GET`  | `/api/v1/camps/{id}` | Full camp detail with trust summary |
-| `POST` | `/api/v1/compare` | Compare 2–5 camps side-by-side |
-| `GET`  | `/api/v1/camps/{id}/sessions` | Sessions for a camp |
-| `POST` | `/api/v1/plan` | Build a week-by-week summer plan |
-| `GET`  | `/api/v1/camps/{id}/freshness` | Freshness grade and stale fields |
-| `GET`  | `/health` | API + database health check |
+| Method | Path | What |
+|---|---|---|
+| `POST` | `/api/v1/search` | Camps near a location that meet every filter, ranked |
+| `GET` | `/api/v1/camps/{id-or-slug}` | Full listing with sessions and trust summary |
+| `GET` | `/api/v1/camps/{id}/sessions` | Sessions with spots and registration dates |
+| `GET` | `/api/v1/camps/{id}/freshness` | How current the listing is |
+| `POST` | `/api/v1/compare` | 2 to 5 camps side by side |
+| `POST` | `/api/v1/plan` | Week-by-week summer plan |
+| `POST` | `/api/v1/alerts` | Tell me when registration opens |
+| `GET` | `/api/v1/me`, `/me/children`, `/me/children/{id}/medical` | The family profile (signed in) |
+| `GET` | `/api/v1/me/export` | Everything we hold about a family |
+| `DELETE` | `/api/v1/me` | Delete the family and all its data |
+| `POST` | `/api/v1/me/spot-requests` | Ask a camp for a spot |
+| `POST` | `/api/v1/spot-requests/respond` | Camp confirms or declines from its email |
+| `POST` | `/api/v1/claims`, `GET /claims/verify` | Owner takes over a listing |
+| `POST` | `/api/v1/submissions` | Owner submits a camp not yet listed |
+| `POST` | `/api/v1/events` | Product analytics (named events, no identifying data) |
 
----
+## Jobs
 
-## Quick test
-
-**Search near Providence for a 10-year-old:**
 ```bash
-curl -X POST http://localhost:8000/api/v1/search \
-  -H "Content-Type: application/json" \
-  -d '{"location": "Providence, RI", "age": 10}'
+python -m campfinder.jobs.send_alerts   # daily: emails alerts for registration opening within 7 days
 ```
 
-**Compare three camps:**
-```bash
-curl -X POST http://localhost:8000/api/v1/compare \
-  -H "Content-Type: application/json" \
-  -d '{"camp_ids": ["<id1>", "<id2>", "<id3>"], "reference_location": "Providence, RI"}'
-```
+## Environment
 
-**Build a summer plan:**
-```bash
-curl -X POST http://localhost:8000/api/v1/plan \
-  -H "Content-Type: application/json" \
-  -d '{
-    "camp_sessions": [
-      {"camp_id": "<camp_id>", "session_id": "<session_id>"}
-    ],
-    "summer_start": "2027-06-09",
-    "summer_end": "2027-08-22"
-  }'
-```
-
----
-
-## Project structure
-
-```
-campfinder/
-  main.py              # FastAPI app factory and lifespan
-  config.py            # Settings from environment variables
-  database.py          # asyncpg connection pool
-  models/
-    camp.py            # Pydantic v2 camp models
-    session.py         # Session models
-    plan.py            # Planner models
-  routers/
-    search.py          # POST /search
-    camps.py           # GET /camps/{id}
-    compare.py         # POST /compare
-    sessions.py        # GET /camps/{id}/sessions
-    planner.py         # POST /plan
-    freshness.py       # GET /camps/{id}/freshness
-  services/
-    search.py          # Query building and result assembly
-    geo.py             # Haversine distance, city geocoding
-    ranking.py         # Scoring and match_reasons generation
-    planning.py        # Week-allocation logic
-    freshness.py       # Freshness grade computation
-    differences.py     # Comparison difference generation
-  seed/
-    generate.py        # Synthetic data generator
-    cities.py          # City lat/lng lookup table (50+ cities)
-schema.sql             # Full Postgres/PostGIS schema
-requirements.txt
-.env.example
-```
+See `.env.example`. `DATABASE_URL` is required. `AUTH_JWT_SECRET` turns on family endpoints.
+`RESEND_API_KEY` turns on real email; without it, emails are logged. `ANTHROPIC_API_KEY` is
+read by the ingest tool.

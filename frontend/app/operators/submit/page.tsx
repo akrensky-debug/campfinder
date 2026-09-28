@@ -56,15 +56,15 @@ export default function SubmitCampPage() {
         city: form.city,
         state: form.state,
         camp_type: form.camp_type,
-        contact_email: form.contact_email,
+        email: form.contact_email,
         contact_name: form.contact_name || undefined,
         phone: form.phone || undefined,
         website_url: form.website_url || undefined,
-        description_short: form.description_short || undefined,
+        description: form.description_short || undefined,
         age_min: form.age_min ? Number(form.age_min) : undefined,
         age_max: form.age_max ? Number(form.age_max) : undefined,
-        price_per_week: form.price_per_week ? Number(form.price_per_week) : undefined,
         primary_categories: form.categories.length > 0 ? form.categories : undefined,
+        notes: form.price_per_week ? `Price per week: ${form.price_per_week}` : undefined,
       })
       setStep('done')
     } catch {

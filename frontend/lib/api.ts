@@ -1,7 +1,23 @@
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
+export interface SessionSummary {
+  id: string
+  name: string | null
+  start_date: string
+  end_date: string
+  age_min: number | null
+  age_max: number | null
+  price: number | null
+  full_season: boolean
+  availability: string
+  spots_total: number | null
+  spots_available: number | null
+  registration_opens_at: string | null
+}
+
 export interface CampSearchResult {
   id: string
+  slug: string
   name: string
   city: string
   state: string
@@ -18,12 +34,14 @@ export interface CampSearchResult {
   financial_aid: boolean
   aca_accredited: boolean | null
   verification_status: string
+  updated_at: string | null
   description_short: string | null
   hero_image_url: string | null
+  detail_url: string | null
   distance_miles: number | null
   match_score: number | null
   match_reasons: string[]
-  detail_url: string | null
+  next_session: SessionSummary | null
 }
 
 export interface SearchResponse {
@@ -31,16 +49,7 @@ export interface SearchResponse {
   total: number
   location: string
   radius_miles: number
-}
-
-export interface SessionSummary {
-  id: string
-  name: string | null
-  start_date: string
-  end_date: string
-  price: number | null
-  availability: string
-  full_season: boolean
+  location_recognised: boolean
 }
 
 export interface TrustSummary {
@@ -52,7 +61,7 @@ export interface TrustSummary {
   accreditation: { status: string; source: string | null }
 }
 
-export interface CampDetail extends CampSearchResult {
+export interface CampDetail extends Omit<CampSearchResult, 'distance_miles' | 'match_score' | 'match_reasons' | 'next_session'> {
   operator_name: string | null
   website_url: string | null
   registration_url: string | null
@@ -60,6 +69,8 @@ export interface CampDetail extends CampSearchResult {
   phone: string | null
   street_address: string | null
   zip: string
+  lat: number
+  lng: number
   region: string | null
   description_full: string | null
   activities: string[]
@@ -69,78 +80,71 @@ export interface CampDetail extends CampSearchResult {
   special_needs_notes: string | null
   swim_waterfront_notes: string | null
   aca_source_url: string | null
-  last_updated_date: string | null
   sessions: SessionSummary[]
-  trust_summary: TrustSummary
+  trust_summary: TrustSummary | null
 }
 
-export async function searchCamps(params: {
+async function post<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) {
+    let detail = 'Request failed'
+    try { detail = (await res.json()).detail ?? detail } catch { /* keep default */ }
+    throw new Error(typeof detail === 'string' ? detail : 'Request failed')
+  }
+  return res.json()
+}
+
+export function searchCamps(params: {
   location: string
   age?: number
   camp_type?: string
   categories?: string[]
   max_price_per_week?: number
+  radius_miles?: number
   limit?: number
 }): Promise<SearchResponse> {
-  const res = await fetch(`${API}/api/v1/search`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...params, limit: params.limit ?? 20 }),
-    cache: 'no-store',
-  })
-  if (!res.ok) throw new Error('Search failed')
-  return res.json()
+  return post('/api/v1/search', params)
 }
 
-export async function getCamp(id: string): Promise<CampDetail> {
-  const res = await fetch(`${API}/api/v1/camps/${id}`, { cache: 'no-store' })
+export async function getCamp(idOrSlug: string): Promise<CampDetail> {
+  const res = await fetch(`${API}/api/v1/camps/${encodeURIComponent(idOrSlug)}`, { cache: 'no-store' })
   if (!res.ok) throw new Error('Camp not found')
   return res.json()
 }
 
-export async function captureLead(data: {
-  parent_email: string
-  first_name?: string
-  parent_zip?: string
-  child_age_band?: string
-  weeks_needed?: number
-  interests?: string[]
-  target_camp_id?: string
-  search_context?: Record<string, unknown>
-  message?: string
-  consent_flag?: boolean
-  source?: string
-  matched_camp_ids?: string[]
-}): Promise<{ id: string }> {
-  const res = await fetch(`${API}/api/v1/leads`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  if (!res.ok) throw new Error('Failed to save')
+export function createAlert(data: { email: string; camp_id: string }): Promise<{ id: string; status: string }> {
+  return post('/api/v1/alerts', data)
+}
+
+export function startClaim(data: { camp_id: string; email: string; contact_name?: string; role?: string }): Promise<{ message: string; camp_name: string }> {
+  return post('/api/v1/claims', data)
+}
+
+export async function verifyClaim(token: string): Promise<{ message: string; camp_name: string }> {
+  const res = await fetch(`${API}/api/v1/claims/verify?token=${encodeURIComponent(token)}`)
+  if (!res.ok) throw new Error('This link has expired or was already used')
   return res.json()
 }
 
-export async function submitCamp(data: {
+export function submitCamp(data: {
   name: string
   city: string
   state: string
+  zip?: string
   camp_type?: string
-  contact_email: string
+  email: string
   contact_name?: string
   phone?: string
   website_url?: string
-  description_short?: string
+  description?: string
   age_min?: number
   age_max?: number
-  price_per_week?: number
   primary_categories?: string[]
-}): Promise<{ id: string; name: string }> {
-  const res = await fetch(`${API}/api/v1/submissions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  if (!res.ok) throw new Error('Failed to submit')
-  return res.json()
+  notes?: string
+}): Promise<{ id: string; name: string; status: string }> {
+  return post('/api/v1/submissions', data)
 }

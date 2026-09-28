@@ -1,0 +1,15 @@
+[project]
+name = "campfinder"
+version = "2.0.0"
+description = "Grubhub for camps: parents plan and book the summer, camp owners get found without learning software."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+filterwarnings = ["error::RuntimeWarning"]
+
+[tool.ruff]
+line-length = 100

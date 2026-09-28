@@ -32,7 +32,7 @@ export default function HomePage() {
             There is finally a better way<br className="hidden md:block" /> to plan your kid's summer.
           </h1>
           <p className="text-brand-100 text-lg md:text-xl mb-10">
-            Search verified camps by location, age, and interests. See real sessions and pricing. Request info in one click.
+            Search camps by location, age and interests. See real sessions, prices and open spots. Get told when registration opens.
           </p>
 
           {/* Search form */}
@@ -123,9 +123,9 @@ export default function HomePage() {
       {/* Operator CTA */}
       <section className="py-16 px-4 bg-brand-700 text-white">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-3">The easiest way for camps to become discoverable in the AI economy.</h2>
+          <h2 className="text-3xl font-bold mb-3">Run a camp? Get found and booked without learning new software.</h2>
           <p className="text-brand-100 text-lg mb-8">
-            Structure your data. Verify your listing. Show up when parents ask Claude, ChatGPT, or Google about camps like yours.
+            Send us your brochure or website. We build your listing, you reply "looks good", and parents can find you and ask for a spot.
           </p>
           <a
             href="/operators"

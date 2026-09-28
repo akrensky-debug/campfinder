@@ -15,7 +15,7 @@ export default function CampCard({ camp, blurred = false, rank }: Props) {
 
   return (
     <a
-      href={blurred ? undefined : `/camps/${camp.id}`}
+      href={blurred ? undefined : `/camps/${camp.slug}`}
       onClick={() => !blurred && Events.campDetailViewed(camp.id)}
       className={`block bg-white rounded-2xl border border-gray-200 p-5 hover:border-brand-300 hover:shadow-md transition-all relative ${blurred ? 'cursor-default select-none' : ''}`}
     >

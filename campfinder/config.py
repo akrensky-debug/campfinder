@@ -1,6 +1,9 @@
 """Application configuration loaded from environment variables."""
 
+from __future__ import annotations
+
 import os
+from dataclasses import dataclass, field
 from functools import lru_cache
 
 from dotenv import load_dotenv
@@ -8,30 +11,56 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def _env_list(name: str, default: str = "") -> list[str]:
+    raw = os.environ.get(name, default)
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
+
+@dataclass(frozen=True)
 class Settings:
-    """Application settings sourced from environment variables."""
+    database_url: str = field(default_factory=lambda: os.environ.get("DATABASE_URL", ""))
 
-    supabase_url: str = os.environ.get("SUPABASE_URL", "")
-    supabase_anon_key: str = os.environ.get("SUPABASE_ANON_KEY", "")
-    supabase_service_key: str = os.environ.get("SUPABASE_SERVICE_KEY", "")
-    database_url: str = os.environ.get("DATABASE_URL", "")
+    # Browser origins allowed to call the API. Never "*" once credentials are involved.
+    cors_origins: list[str] = field(
+        default_factory=lambda: _env_list("CORS_ORIGINS", "http://localhost:3000")
+    )
 
-    # Convert postgres:// to postgresql:// for asyncpg compatibility
+    # Public site URL, used in emails and detail_url fields.
+    site_url: str = field(default_factory=lambda: os.environ.get("SITE_URL", "http://localhost:3000"))
+
+    # Parent auth: HS256 JWTs issued by the auth provider (Supabase Auth) and
+    # verified here with the shared secret. Empty means auth is off and every
+    # family endpoint returns 401.
+    auth_jwt_secret: str = field(default_factory=lambda: os.environ.get("AUTH_JWT_SECRET", ""))
+    auth_jwt_audience: str = field(default_factory=lambda: os.environ.get("AUTH_JWT_AUDIENCE", "authenticated"))
+
+    # Outbound email (Resend). Empty means emails are logged, not sent.
+    resend_api_key: str = field(default_factory=lambda: os.environ.get("RESEND_API_KEY", ""))
+    email_from: str = field(
+        default_factory=lambda: os.environ.get("EMAIL_FROM", "CampFinder <hello@localhost>")
+    )
+    team_email: str = field(default_factory=lambda: os.environ.get("TEAM_EMAIL", ""))
+
+    # Listing ingest (Claude). The SDK reads ANTHROPIC_API_KEY itself.
+    ingest_model: str = field(default_factory=lambda: os.environ.get("INGEST_MODEL", "claude-opus-5-5"))
+
+    # Requests per minute per client IP on write endpoints.
+    rate_limit_per_minute: int = field(
+        default_factory=lambda: int(os.environ.get("RATE_LIMIT_PER_MINUTE", "30"))
+    )
+
+    privacy_policy_version: str = field(
+        default_factory=lambda: os.environ.get("PRIVACY_POLICY_VERSION", "2026-10")
+    )
+
+    api_prefix: str = "/api/v1"
+
     @property
     def asyncpg_dsn(self) -> str:
         url = self.database_url
         if url.startswith("postgres://"):
             url = url.replace("postgres://", "postgresql://", 1)
         return url
-
-    resend_api_key: str = os.environ.get("RESEND_API_KEY", "")
-    stripe_secret_key: str = os.environ.get("STRIPE_SECRET_KEY", "")
-    stripe_webhook_secret: str = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
-    stripe_pro_price_id: str = os.environ.get("STRIPE_PRO_PRICE_ID", "")
-    frontend_url: str = os.environ.get("FRONTEND_URL", "http://localhost:3000")
-
-    cors_origins: list[str] = ["*"]  # Tighten in production
-    api_prefix: str = "/api/v1"
 
 
 @lru_cache

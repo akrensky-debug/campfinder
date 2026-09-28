@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'CampFinder -- There is finally a better way to plan your kid\'s summer.',
-  description: 'Search verified summer camps near you. Filter by age, type, price, and interests. Request info in one click.',
+  description: 'Plan and book the whole summer in one place, guided by parents who have been there.',
   openGraph: {
     title: 'CampFinder',
     description: 'There is finally a better way to plan your kid\'s summer.',
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <p className="font-semibold text-gray-700 mb-1">⛺ CampFinder</p>
               <p className="mb-0.5">There is finally a better way to plan your kid's summer.</p>
-              <p className="text-xs text-gray-400">The structured camp discoverability layer for the AI economy.</p>
+              <p className="text-xs text-gray-400">Built by parents, for parents. We never sell your data.</p>
             </div>
             <div className="flex gap-8">
               <div>

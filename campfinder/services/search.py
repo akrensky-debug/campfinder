@@ -1,24 +1,23 @@
 """
-Core search logic: fetch camps via Supabase REST API, apply geo + attribute
-filters in Python, score, and return ranked results.
+Search: geocode the parent's location, filter in Postgres, score in Python.
 
-This approach is correct for the current data size (50–500 camps). When the
-dataset grows, replace the full-table fetch with a PostGIS RPC function
-(see services/geo.py for the SQL to add).
+The database returns at most a few hundred nearby candidates already filtered
+on the hard constraints. Scoring and match_reasons run on that set.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from supabase import Client
+import asyncpg
 
-from campfinder.services.geo import geocode_location, haversine_miles
+from campfinder.repositories import camps as camps_repo
+from campfinder.services.geo import geocode_location
 from campfinder.services.ranking import score_camp
 
 
 async def search_camps(
-    client: Client,
+    conn: asyncpg.Connection,
     *,
     location: str,
     radius_miles: float = 30.0,
@@ -34,98 +33,40 @@ async def search_camps(
     requires_accreditation: bool = False,
     limit: int = 10,
     sort: str = "best_match",
-) -> list[dict[str, Any]]:
-    """
-    Search camps filtered by location radius and optional attributes.
-    Geo filtering is performed in Python using the city coordinate lookup.
-    """
+) -> list[dict[str, Any]] | None:
+    """Return ranked camps, or None when the location cannot be geocoded."""
     coords = geocode_location(location)
     if coords is None:
+        return None
+    lat, lng = coords
+
+    candidates = await camps_repo.search_camps(
+        conn, lat=lat, lng=lng, radius_miles=radius_miles, age=age, camp_type=camp_type,
+        categories=categories, max_price_per_week=max_price_per_week,
+        requires_transport=requires_transport, requires_extended_care=requires_extended_care,
+        requires_meals=requires_meals, requires_financial_aid=requires_financial_aid,
+        requires_accreditation=requires_accreditation,
+    )
+    if not candidates:
         return []
-    ref_lat, ref_lng = coords
 
-    # Fetch all active camps (REST API — no raw SQL needed)
-    query = client.table("camps").select("*").eq("is_active", True)
+    sessions_by_camp = await camps_repo.sessions_for_camps(conn, [c["id"] for c in candidates])
 
-    # Push simple equality filters to the server to reduce payload
-    if camp_type:
-        query = query.eq("camp_type", camp_type)
-    if requires_transport:
-        query = query.eq("transportation", True)
-    if requires_extended_care:
-        query = query.eq("extended_care", True)
-    if requires_meals:
-        query = query.eq("meals_included", True)
-    if requires_financial_aid:
-        query = query.eq("financial_aid", True)
-    if requires_accreditation:
-        query = query.eq("aca_accredited", True)
-
-    response = query.execute()
-    all_camps: list[dict[str, Any]] = response.data or []
-
-    # Fetch sessions for all camps in one call
-    session_response = client.table("sessions").select("*").execute()
-    sessions_by_camp: dict[str, list[dict[str, Any]]] = {}
-    for s in session_response.data or []:
-        sessions_by_camp.setdefault(s["camp_id"], []).append(s)
-
-    results: list[dict[str, Any]] = []
-
-    for camp in all_camps:
-        # --- Geo filter ---
-        camp_coords = geocode_location(f"{camp['city']}, {camp['state']}")
-        if camp_coords is None:
-            continue
-        distance = haversine_miles(ref_lat, ref_lng, camp_coords[0], camp_coords[1])
-        if distance > radius_miles:
-            continue
-
-        # --- Age filter ---
-        if age is not None:
-            mn, mx = camp.get("age_min"), camp.get("age_max")
-            if mn is not None and age < mn:
-                continue
-            if mx is not None and age > mx:
-                continue
-
-        # --- Price filter ---
-        if max_price_per_week is not None:
-            ppw = camp.get("price_per_week")
-            if ppw is not None and float(ppw) > max_price_per_week:
-                continue
-
-        # --- Category filter ---
-        if categories:
-            camp_cats = [c.lower() for c in (camp.get("primary_categories") or [])]
-            if not any(cat.lower() in camp_cats for cat in categories):
-                continue
-
+    for camp in candidates:
         camp_sessions = sessions_by_camp.get(camp["id"], [])
-
         score, reasons = score_camp(
-            camp,
-            camp_sessions,
-            age=age,
-            requested_weeks=weeks,
-            categories=categories,
-            distance_miles=distance,
-            max_price_per_week=max_price_per_week,
+            camp, camp_sessions, age=age, requested_weeks=weeks, categories=categories,
+            distance_miles=camp["distance_miles"], max_price_per_week=max_price_per_week,
         )
-
-        camp["distance_miles"] = round(distance, 2)
         camp["match_score"] = round(score, 4)
         camp["match_reasons"] = reasons
         camp["sessions"] = camp_sessions
-        camp["detail_url"] = f"https://campfinder.com/camps/{camp['id']}"
-        results.append(camp)
 
-    # Sort
-    if sort == "best_match":
-        results.sort(key=lambda c: c["match_score"], reverse=True)
-    elif sort == "distance":
-        results.sort(key=lambda c: c.get("distance_miles") or 9999)
+    if sort == "distance":
+        candidates.sort(key=lambda c: c["distance_miles"])
     elif sort == "price":
-        results.sort(key=lambda c: float(c.get("price_per_week") or 9999))
+        candidates.sort(key=lambda c: float(c["price_per_week"]) if c.get("price_per_week") is not None else 1e9)
+    else:
+        candidates.sort(key=lambda c: (-c["match_score"], c["distance_miles"]))
 
-    return results[:limit]
+    return candidates[:limit]

@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { getCamp, type CampDetail } from '@/lib/api'
 import { Events } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
-import RequestInfoModal from '@/components/RequestInfoModal'
+import AlertModal from '@/components/AlertModal'
 
 export default function CampDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -37,7 +37,7 @@ export default function CampDetailPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {showModal && <RequestInfoModal campId={camp.id} campName={camp.name} onClose={() => setModal(false)} />}
+      {showModal && <AlertModal campId={camp.id} campName={camp.name} onClose={() => setModal(false)} />}
 
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-400 mb-6">
@@ -55,9 +55,9 @@ export default function CampDetailPage() {
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-3">{camp.name}</h1>
             <TrustBadge status={camp.verification_status} aca={camp.aca_accredited} />
-            {camp.last_updated_date && (
+            {camp.updated_at && (
               <p className="text-xs text-gray-400 mt-2">
-                Last updated {new Date(camp.last_updated_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                Last updated {new Date(camp.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
               </p>
             )}
           </div>
@@ -68,7 +68,7 @@ export default function CampDetailPage() {
               onClick={() => setModal(true)}
               className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-3 rounded-xl transition-colors text-center"
             >
-              Request info →
+              Tell me when registration opens
             </button>
             {camp.website_url && (
               <a
@@ -131,6 +131,9 @@ export default function CampDetailPage() {
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
+                        {s.spots_available != null && s.availability === 'open' && (
+                          <span className="text-xs text-gray-500">{s.spots_available} spots left</span>
+                        )}
                         {s.price && <span className="font-semibold text-gray-900">${Math.round(s.price).toLocaleString()}</span>}
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${avail[s.availability] ?? avail.unknown}`}>
                           {s.availability}

@@ -16,7 +16,6 @@ IMPORTANT_FIELDS = [
     "meals_included",
     "refund_policy_summary",
     "special_needs_notes",
-    "medical_support_notes",
     "email",
     "phone",
 ]
