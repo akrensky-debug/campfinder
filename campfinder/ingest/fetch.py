@@ -22,6 +22,11 @@ import httpx
 MAX_BYTES = 8 * 1024 * 1024
 TIMEOUT_SECONDS = 20.0
 USER_AGENT = "CampFinderBot/1.0 (+listing verification; contact via site)"
+# Below this many words a page has nothing to extract (a bot check, a script-only shell, a scanned PDF).
+MIN_WORDS = 40
+# Bot-check interstitials answer 200 with a line or two of text. Only checked on short pages.
+BOT_CHECK_PHRASES = ("request is being verified", "checking your browser", "one moment, please",
+                     "just a moment", "verify you are human", "enable javascript and cookies")
 
 
 @dataclass
@@ -165,6 +170,17 @@ async def fetch_url(url: str) -> Source:
     raise FetchError(f"Unsupported content type: {content_type or 'unknown'}")
 
 
+def check_content(source: Source) -> Source:
+    """Refuse pages with nothing to extract, so the model never sees a bot check or an empty shell."""
+    words = len(source.text.split())
+    low = source.text.lower()
+    if words < 200 and any(phrase in low for phrase in BOT_CHECK_PHRASES):
+        raise FetchError(f"{source.url} returned a bot-check page, not the camp page")
+    if words < MIN_WORDS:
+        raise FetchError(f"{source.url} has almost no text ({words} words); it may need a browser or be a scanned PDF")
+    return source
+
+
 def read_file(path: str | Path) -> Source:
     p = Path(path)
     data = p.read_bytes()
@@ -179,5 +195,5 @@ def read_file(path: str | Path) -> Source:
 async def fetch(target: str) -> Source:
     """A URL or a local file path."""
     if target.startswith(("http://", "https://")):
-        return await fetch_url(target)
-    return read_file(target)
+        return check_content(await fetch_url(target))
+    return check_content(read_file(target))

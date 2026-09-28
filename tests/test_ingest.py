@@ -51,6 +51,27 @@ def test_read_local_html(tmp_path: Path) -> None:
     assert source.kind == "html" and source.title == "Riverbend Day Camp"
 
 
+def _source(text: str) -> fetch.Source:
+    return fetch.Source(url="https://camp.example", kind="html", title=None, text=text)
+
+
+@pytest.mark.parametrize("text", ["Please wait while your request is being verified...",
+                                  "One moment, please... " + "word " * 60])
+def test_bot_check_pages_are_refused(text: str) -> None:
+    with pytest.raises(fetch.FetchError, match="bot-check"):
+        fetch.check_content(_source(text))
+
+
+def test_near_empty_pages_are_refused() -> None:
+    with pytest.raises(fetch.FetchError, match="almost no text"):
+        fetch.check_content(_source("Loading"))
+
+
+def test_real_page_passes_even_if_it_mentions_javascript() -> None:
+    text = "Riverbend Day Camp, ages 6 to 12, $250 a week. " * 30 + "Please enable JavaScript and cookies for the map."
+    assert fetch.check_content(_source(text)).text == text
+
+
 async def test_extract_uses_structured_output(monkeypatch: pytest.MonkeyPatch) -> None:
     captured: dict = {}
 

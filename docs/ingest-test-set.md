@@ -113,3 +113,17 @@ widget at the foot of every page. Answer-key rows, from the fetched text:
 |---|---|---|---|---|---|---|---|
 | 2 | Barrington | Cool Kids Camp and Camp Endeavor / Barrington / day | 5–7 (Cool Kids), 8–11 (Endeavor) | $200 ($175 for the short first week) | 6 weeks, 29 June – 7 Aug 2026. The page also lists BEST Summer Theatre Camp: 3 Classic weeks (ages 8–18, $250/week) and one 2-week Advanced session (ages 12–18, $525) | Not stated ("Registration Now Open"); closes noon the Friday before each week | 2026. The Advanced theatre dates say **2025**, a stale line inside a current page |
 | 3 | Bristol | Bristol Parks and Recreation Summer Camp / Bristol / day | 6–14, Bristol residents only | $300 per camper, $250 per sibling, for the whole six weeks. Weekly not stated | 1 (29 June – 7 Aug 2026, no camp 3 July) | 6 April 2026 (registration runs to 5 June) | 2026 |
+
+### Follow-up: why the fetcher is blocked, and the empty-page guard
+
+- **Kids Junction** and any page like it now fail with "returned a bot-check page" (or "almost
+  no text" under 40 words) instead of reaching the model. See `check_content` in
+  `campfinder/ingest/fetch.py`.
+- **East Providence and St. Andrew's (403)** block on the TLS handshake, not the headers. With
+  every header identical, Python's `urllib` gets 200 and gets 403 as soon as its handshake
+  advertises HTTP/1.1 only (ALPN), which is what httpx always does. The fetcher could be
+  changed to leave ALPN out. That would deliberately get past a bot filter these sites run,
+  even with the honest `CampFinderBot` name, so it's a policy decision, not made here.
+  The alternative is to ask the operators, or to enter these camps by hand.
+- **Save The Bay (429)** is rate limiting and comes and goes between runs. Retry later rather
+  than working around it.
