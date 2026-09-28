@@ -78,3 +78,38 @@ What the pages alone already show:
   Bayside or Kent PDF passed directly.
 - Ages are often given as grades (Save The Bay, J-Camp, Agawam, YMCA). The schema has
   `grade_min`/`grade_max`, so decide before scoring whether grades count as "ages right".
+
+## Download check, 28 September 2026 (second session): no model step
+
+Still no `ANTHROPIC_API_KEY`, so the model step did not run. The network now reaches the camp
+hosts, so each source went through the tool's own fetcher (`campfinder.ingest.fetch`) only.
+
+| # | Camp | Fetcher result | Notes |
+|---|---|---|---|
+| 1 | Providence Rec | OK, 867 words | |
+| 2 | Barrington | OK, 739 words, full camp content | See correction below |
+| 3 | Bristol | OK, 725 words, full camp content | See correction below |
+| 4 | East Providence | **403** | curl gets 200 from the same host. The block is on the Python client, not the bot name: a browser User-Agent and Accept headers made no difference |
+| 5 | Save The Bay | **429** | Same pattern: curl gets 200 |
+| 6 | St. Andrew's | **403** | Same pattern: curl gets 200 |
+| 7 | J-Camp | OK, 2,263 words | |
+| 8 | Camp Agawam | OK, 711 words | |
+| 9 | Kids Junction | **Bot check page, 8 words** ("Please wait while your request is being verified...") | HTTP 200, so the tool would send this text to the model and get back an empty listing, not an error. curl and headless Chromium get the same page |
+| 10 | YMCA Kent PDF | OK, PDF, 1,829 words | |
+
+So 6 of 10 sources reach the model with real content today. Until 4, 5, 6 and 9 are fixed the
+October targets (9 of 10, 7 of 10) can't be met whatever the prompt does.
+
+A headless-browser fallback could not be tested here: Chromium rejects this sandbox's
+proxy certificate. It is not needed for Barrington or Bristol.
+
+### Correction: Barrington and Bristol are scorable
+
+The first session's answer key said these two CivicPlus pages load their body by script. They
+don't. The whole camp section is in the plain HTML. The "Loading" text is a CivicPlus pop-up
+widget at the foot of every page. Answer-key rows, from the fetched text:
+
+| # | Camp | Name / city / type | Ages | Price per week | Sessions on page | Registration opens | Season on page (should warn) |
+|---|---|---|---|---|---|---|---|
+| 2 | Barrington | Cool Kids Camp and Camp Endeavor / Barrington / day | 5–7 (Cool Kids), 8–11 (Endeavor) | $200 ($175 for the short first week) | 6 weeks, 29 June – 7 Aug 2026. The page also lists BEST Summer Theatre Camp: 3 Classic weeks (ages 8–18, $250/week) and one 2-week Advanced session (ages 12–18, $525) | Not stated ("Registration Now Open"); closes noon the Friday before each week | 2026. The Advanced theatre dates say **2025**, a stale line inside a current page |
+| 3 | Bristol | Bristol Parks and Recreation Summer Camp / Bristol / day | 6–14, Bristol residents only | $300 per camper, $250 per sibling, for the whole six weeks. Weekly not stated | 1 (29 June – 7 Aug 2026, no camp 3 July) | 6 April 2026 (registration runs to 5 June) | 2026 |
