@@ -77,12 +77,19 @@ def _internal_hits() -> list[str]:
 
 
 def _has_browser() -> bool:
+    if fetch.CHROMIUM_PATH:
+        return True
     try:
-        import playwright  # noqa: F401
+        from playwright.sync_api import sync_playwright
     except ImportError:
         return False
-    return bool(fetch.CHROMIUM_PATH) or bool(os.environ.get("PLAYWRIGHT_BROWSERS_PATH"))
+    with sync_playwright() as p:
+        return os.path.exists(p.chromium.executable_path)
 
+
+# CI sets REQUIRE_BROWSER_TESTS so a missing Chromium fails the run instead of skipping quietly.
+if os.environ.get("REQUIRE_BROWSER_TESTS") and not _has_browser():
+    raise RuntimeError("REQUIRE_BROWSER_TESTS is set but Playwright has no Chromium")
 
 needs_browser = pytest.mark.skipif(not _has_browser(), reason="no Chromium for Playwright")
 
