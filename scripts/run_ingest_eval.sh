@@ -7,6 +7,8 @@ cd "$(dirname "$0")/.."
 [ -d .venv ] || python3 -m venv .venv
 source .venv/bin/activate
 pip install -q -r requirements.txt
+# The fetcher falls back to headless Chromium for sites that refuse plain requests.
+[ -n "${PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD:-}" ] || python -m playwright install chromium
 mkdir -p eval
 day=$(date +%F)
 n=0
@@ -19,7 +21,7 @@ for url in \
   https://www.summeratsaintandrews.org/ \
   https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp \
   https://www.agawamhunt.org/camp \
-  http://kidsjunctionri.com/summer-camp/ \
+  https://ymcapawtucket.org/camps/camp-westwood \
   "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Kent%20Camp%20Info%202026.pdf"
 do
   n=$((n+1))
