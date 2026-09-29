@@ -24,6 +24,7 @@ from campfinder import security
 from campfinder.config import Settings
 
 ISSUER = "https://project.supabase.co/auth/v1"
+SECRET = "a-shared-secret-long-enough-for-hs256-0123"
 
 
 class _JWKS(BaseHTTPRequestHandler):
@@ -99,10 +100,14 @@ def test_keys_are_cached(signing_key, settings) -> None:
     assert _JWKS.fetches == 1
 
 
-def test_rotated_key_is_picked_up(signing_key, settings) -> None:
+def test_rotated_key_is_picked_up(signing_key, settings, monkeypatch: pytest.MonkeyPatch) -> None:
     _identify(_es256(signing_key), settings)
     new_key = ec.generate_private_key(ec.SECP256R1())
     _JWKS.body = json.dumps({"keys": [_jwk(signing_key, "key-1"), _jwk(new_key, "key-2")]}).encode()
+    # Newer PyJWT waits out a short cooldown before refetching for an unknown key id;
+    # a real rotation arrives long after the last fetch, so move the clock on.
+    real_monotonic = time.monotonic
+    monkeypatch.setattr(time, "monotonic", lambda: real_monotonic() + 120)
     assert _identify(_es256(new_key, kid="key-2"), settings).subject == "user-1"
 
 
@@ -124,7 +129,7 @@ def test_hs256_token_made_with_the_public_key_is_refused(signing_key, settings) 
         serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo
     )
     forged = jwt.api_jws.PyJWS().encode(
-        json.dumps(_claims()).encode(), key="unused", algorithm="HS256", headers={"kid": "key-1"}
+        json.dumps(_claims()).encode(), key="u" * 40, algorithm="HS256", headers={"kid": "key-1"}
     )
     header, payload, _ = forged.split(".")
     import base64
@@ -145,14 +150,14 @@ def test_unsigned_and_unexpected_algorithms_are_refused(signing_key, settings) -
 
 
 def test_hs256_still_works_when_a_secret_is_set(settings) -> None:
-    both = replace(settings, auth_jwt_secret="shared-secret", auth_jwt_issuer="")
-    token = jwt.encode(_claims(), "shared-secret", algorithm="HS256")
+    both = replace(settings, auth_jwt_secret=SECRET, auth_jwt_issuer="")
+    token = jwt.encode(_claims(), SECRET, algorithm="HS256")
     assert _identify(token, both).subject == "user-1"
-    _refused(jwt.encode(_claims(), "wrong-secret", algorithm="HS256"), both)
+    _refused(jwt.encode(_claims(), "w" * 40, algorithm="HS256"), both)
 
 
 def test_hs256_is_refused_when_no_secret_is_set(settings) -> None:
-    _refused(jwt.encode(_claims(), "anything", algorithm="HS256"), settings)
+    _refused(jwt.encode(_claims(), "a" * 40, algorithm="HS256"), settings)
 
 
 def test_no_auth_configured_refuses_everything(signing_key) -> None:
