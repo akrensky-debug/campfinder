@@ -15,8 +15,8 @@ each page before trusting anything on it.
 | 6 | Summer at St. Andrew's, Barrington | School | https://www.summeratsaintandrews.org/ | Many programs, registration opens 1 February |
 | 7 | Summer J-Camp, Jewish Alliance | Nonprofit | https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp | Weekly themes with dates |
 | 8 | Camp Agawam, Rumford | Club | https://www.agawamhunt.org/camp | Golf and tennis, week list in prose |
-| 9 | Camp Westwood, YMCA of Pawtucket | Lakefront day camp | https://ymcapawtucket.org/camps/camp-westwood | Replaces Kids Junction, whose site sits behind a bot wall that never clears for an automated browser |
-| 10 | YMCA of Greater Providence, Cranston Y | Larger operator | https://ymcagreaterprovidence.org/program/summer-camp and the linked Bayside/Kent PDFs | Tests the PDF path |
+| 9 | Camp Westwood, YMCA of Pawtucket | Lakefront day camp | https://ymcapawtucket.org/camps/camp-westwood/day-camp | Replaces Kids Junction, whose site sits behind a bot wall that never clears for an automated browser. The day-camp page, not the camp home page: the home page has no ages or prices, and its "2026 Dates and Rates" link goes here |
+| 10 | Kent County YMCA, Warwick (YMCA of Greater Providence) | Larger operator | https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Kent%20Camp%20Info%202026.pdf | Tests the PDF path. The Cranston hub page's PDF link is broken, so the Kent PDF is passed directly |
 
 Dropped: Kids Junction, http://kidsjunctionri.com/summer-camp/. Its host answers every automated
 request, plain or headless browser, with a "one moment, please" check that never clears. That is
@@ -58,21 +58,23 @@ The tool did not run. The session had no `ANTHROPIC_API_KEY`, and its network po
 blocked the ten camp hosts, so the fetcher got a 403 on every source. Nothing is in `eval/`
 yet, and nothing was imported.
 
-The answer key below comes from reading each live page by hand on 28 September. Score the
+The answer key below comes from reading each live page by hand on 28 September, corrected on
+29 September: Barrington and Bristol re-read through the browser fetcher, Kids Junction replaced
+by Camp Westwood, and row 10 re-keyed to the Kent PDF the eval script actually reads. Score the
 tool's JSON against it when the run happens.
 
 | # | Camp | Name / city / type | Ages | Price per week | Sessions on page | Registration opens | Season on page (should warn) |
 |---|---|---|---|---|---|---|---|
 | 1 | Providence Rec | Providence Recreation Department camps / Providence / day | 5–13 (sports), 8–13 (sailing), 8–12 (bike); day-camp ages not stated | $5 | 23 dated: 8 sports, 5 EcoAdventure, 3 Learn to Sail, 7 bike. Ten rec-centre day camps have no dates | 4 April, 10am, year not printed | 2026 (fair on 28 March 2026) |
-| 2 | Barrington | Not scorable: page body loads by script, and the HTML has no camp content | – | – | 0 in HTML | – | Should warn that the page is empty |
-| 3 | Bristol | Not scorable: same CivicPlus loader as Barrington | – | – | 0 in HTML | – | Should warn that the page is empty |
+| 2 | Barrington | Cool Kids Camp & Camp Endeavor (Barrington Recreation) / Barrington / day | 5–7 (Cool Kids), 8–11 (Endeavor); BEST theatre 8–18, advanced 12–18 | $200 ($175 short week 1); BEST theatre $250 ($215 week 1) | 6 weeks, 29 June – 7 Aug (week 1 ends 2 July); BEST Classic 3 weeks, 29 June – 17 July; BEST Advanced 1 two-week block | Not stated ("now open"); closes the Friday before each week at noon | 2026. BEST Advanced says **2025** (21 July – 1 Aug): should warn on the mismatch |
+| 3 | Bristol | Bristol Parks & Recreation Summer Camp / Bristol / day | 6–14, Bristol residents only | $300 per camper, $250 per sibling; the page does not say whether that is per week or for the summer | 1 block, 29 June – 7 Aug (no camp 3 July) | 6 April 2026 (through 5 June, or until full) | 2026 |
 | 4 | East Providence | East Providence Recreation Summer Day Camp / East Providence / day | 6–12 | $450 for six weeks; weekly not stated | 1 (29 June – 7 Aug 2020) | Not stated | **2020**. Page last updated Dec 2020 |
 | 5 | Save The Bay | Save The Bay BayCamps / Providence (also Wickford, Newport, Bristol) / day | Grades completed K–12; ages not stated | $375 member, $400 non-member | 31: Junior 8, BayCamp 14, Shipboard 8, High School 1 | Not stated | 2026 (Jumbula links say BayCamp2026) |
 | 6 | St. Andrew's | Summer at St. Andrew's / Barrington / day | 3–17 | Not on this page | 0 on the home page; programs are on /programs | 1 February, 9am | Stale: FAQ says Feb 2022; calendar dates fit 2021 |
 | 7 | J-Camp | Summer J-Camp (Dwares JCC) / Providence; city not printed / day | Entering K to 6; ages not stated | $356 member, $447 non-member ($286/$357 for week 2) | 9 camper weeks, 22 June – 21 Aug; also 5 LIT sessions | Not stated | Year not printed; the weekdays fit 2026 |
 | 8 | Camp Agawam | Camp Agawam (Agawam Hunt) / Rumford / day | Grades 1–6; ages not stated | $415 member, $465 non-member (5 days) | 9 weeks from 15 June to 17 Aug | Not on this page | 2026 |
-| 9 | Kids Junction | Kids Junction Summer Camp / city not on page / day | 3–12 | Not stated | 10 (22 June – 28 Aug; 9 themed weeks from 29 June) | Not stated | 2026 |
-| 10 | YMCA Cranston | Cranston Y summer day camp / Cranston / day | Entering K to 8; ages not stated | Not on the HTML page. The Bayside and Kent PDFs show $340–$395 member | 9 weeks, 22 June – 21 Aug (per PDFs) | Not stated ("now open") | 2026. It is also a hub page for six sites: should warn |
+| 9 | Camp Westwood | YMCA Camp Westwood Day Camp / Coventry (address is on the home page, not this one) / day | 5–16 (overview); groups 4–13; half-day 4–6; immersive and specialty camps 5–15 | $355 traditional, $375 immersive and specialty, $260 half day; extras: bus $60, before and after care $30 each | 0 dated: no session dates on the page | Not stated ("$355 per week starting 1/1/2026") | 2026 |
+| 10 | Kent County YMCA | Kent County YMCA summer camp / Warwick / day | Entering K to 8; preschool camp must be 5 by 22 June | $340 member, $420 non-member (traditional); $355/$435 themed; $371/$450 preschool; $345/$405 leadership | 9 weeks, 22 June – 21 Aug (closed 3 July; the PDF misprints week 4 as 13–19 July) | Not stated | 2026 |
 
 What the pages alone already show:
 
@@ -80,10 +82,9 @@ What the pages alone already show:
   check applies to all ten this round, and "prefer the upcoming season" never has anything
   to prefer.
 - **Two of the ten can't be read without a browser.** Barrington and Bristol are CivicPlus
-  pages that fill in by script, so a plain fetch gets only "Loading". This needs a fetcher
-  fix, not a prompt fix. The target of 9 of 10 can't be met while they stay in the set.
+  pages that fill in by script, so a plain fetch gets only "Loading". Fixed on 29 September by
+  the headless browser fallback; both now read in full and are in the key above.
 - **The Cranston PDF link on the YMCA page is broken** (`PASTE-CRANSTON-PDF-LINK-HERE`).
-  The tool reads one URL and does not follow links, so testing the PDF path needs the
-  Bayside or Kent PDF passed directly.
+  The tool reads one URL and does not follow links, so the Kent PDF is passed directly.
 - Ages are often given as grades (Save The Bay, J-Camp, Agawam, YMCA). The schema has
   `grade_min`/`grade_max`, so decide before scoring whether grades count as "ages right".

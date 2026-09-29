@@ -21,7 +21,7 @@ for url in \
   https://www.summeratsaintandrews.org/ \
   https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp \
   https://www.agawamhunt.org/camp \
-  https://ymcapawtucket.org/camps/camp-westwood \
+  https://ymcapawtucket.org/camps/camp-westwood/day-camp \
   "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Kent%20Camp%20Info%202026.pdf"
 do
   n=$((n+1))
