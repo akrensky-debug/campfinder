@@ -24,10 +24,36 @@ a real category of camp: the fix is the product's own path, the owner sends us t
 
 ## Fetching, 29 September 2026
 
-The fetcher now falls back to headless Chromium when a host refuses a plain request or the page
-fills in by script. With that, 9 of the original 10 sources read: Barrington and Bristol
-(CivicPlus, script-rendered), East Providence and St. Andrew's (403 to plain requests), Save The
-Bay (429 to plain requests) all come through the browser. Kids Junction does not, see above.
+The two sessions of 28 September disagreed about the fetcher, and this settles it.
+
+**The rule.** The fetcher says who it is (`CampFinderBot`). If a host refuses it (401, 403 or 429),
+that is the answer: the tool stops with "ask the owner for the brochure" and does not try again
+with a browser or a borrowed identity. The owner's brochure is the product's own path, and a
+company asking camp owners for trust does not get past their filters. Headless Chromium is used
+only when a plain fetch *succeeded* but the page is nearly empty, which is what a page that fills
+in by script looks like. Every hop of a redirect is checked against the public-host rule, in the
+plain fetch and in the browser, where every request the page makes is checked too
+(`tests/test_fetch_policy.py`).
+
+Results with the fetcher as it now stands, run from this session:
+
+| # | Camp | Result |
+|---|---|---|
+| 1 | Providence Rec | OK, 867 words |
+| 2 | Barrington | OK, 739 words (one connection error, fine on retry) |
+| 3 | Bristol | OK, 725 words |
+| 4 | East Providence | **Refused (403).** Ask the town for the brochure |
+| 5 | Save The Bay | OK, 1,941 words. The 429 of 28 September has cleared |
+| 6 | St. Andrew's | **Refused (403).** Ask the school for the brochure |
+| 7 | J-Camp | OK, 2,263 words |
+| 8 | Camp Agawam | OK, 711 words |
+| 9 | Camp Westwood | OK, 757 words (no answer key yet) |
+| 10 | YMCA Kent PDF | OK, PDF, 1,829 words |
+| – | Kids Junction (dropped) | OK today, 666 words of real content. Its bot check comes and goes |
+
+So 8 of 10 reach the model with real content, and none of them needed the browser. The October
+target of 9 of 10 now depends on one of the two refusing sites sending a brochure, which is the
+first test of the owner path, not a fetcher problem.
 
 ## How to run it
 
@@ -87,3 +113,53 @@ What the pages alone already show:
   Bayside or Kent PDF passed directly.
 - Ages are often given as grades (Save The Bay, J-Camp, Agawam, YMCA). The schema has
   `grade_min`/`grade_max`, so decide before scoring whether grades count as "ages right".
+
+## Download check, 28 September 2026 (second session): no model step
+
+Still no `ANTHROPIC_API_KEY`, so the model step did not run. The network now reaches the camp
+hosts, so each source went through the tool's own fetcher (`campfinder.ingest.fetch`) only.
+
+| # | Camp | Fetcher result | Notes |
+|---|---|---|---|
+| 1 | Providence Rec | OK, 867 words | |
+| 2 | Barrington | OK, 739 words, full camp content | See correction below |
+| 3 | Bristol | OK, 725 words, full camp content | See correction below |
+| 4 | East Providence | **403** | curl gets 200 from the same host. The block is on the Python client, not the bot name: a browser User-Agent and Accept headers made no difference |
+| 5 | Save The Bay | **429** | Same pattern: curl gets 200 |
+| 6 | St. Andrew's | **403** | Same pattern: curl gets 200 |
+| 7 | J-Camp | OK, 2,263 words | |
+| 8 | Camp Agawam | OK, 711 words | |
+| 9 | Kids Junction | **Bot check page, 8 words** ("Please wait while your request is being verified...") | HTTP 200, so the tool would send this text to the model and get back an empty listing, not an error. curl and headless Chromium get the same page |
+| 10 | YMCA Kent PDF | OK, PDF, 1,829 words | |
+
+So 6 of 10 sources reach the model with real content today. Until 4, 5, 6 and 9 are fixed the
+October targets (9 of 10, 7 of 10) can't be met whatever the prompt does.
+
+A headless-browser fallback could not be tested here: Chromium rejects this sandbox's
+proxy certificate. It is not needed for Barrington or Bristol.
+
+### Correction: Barrington and Bristol are scorable
+
+The first session's answer key said these two CivicPlus pages load their body by script. They
+don't. The whole camp section is in the plain HTML. The "Loading" text is a CivicPlus pop-up
+widget at the foot of every page. Answer-key rows, from the fetched text:
+
+| # | Camp | Name / city / type | Ages | Price per week | Sessions on page | Registration opens | Season on page (should warn) |
+|---|---|---|---|---|---|---|---|
+| 2 | Barrington | Cool Kids Camp and Camp Endeavor / Barrington / day | 5–7 (Cool Kids), 8–11 (Endeavor) | $200 ($175 for the short first week) | 6 weeks, 29 June – 7 Aug 2026. The page also lists BEST Summer Theatre Camp: 3 Classic weeks (ages 8–18, $250/week) and one 2-week Advanced session (ages 12–18, $525) | Not stated ("Registration Now Open"); closes noon the Friday before each week | 2026. The Advanced theatre dates say **2025**, a stale line inside a current page |
+| 3 | Bristol | Bristol Parks and Recreation Summer Camp / Bristol / day | 6–14, Bristol residents only | $300 per camper, $250 per sibling, for the whole six weeks. Weekly not stated | 1 (29 June – 7 Aug 2026, no camp 3 July) | 6 April 2026 (registration runs to 5 June) | 2026 |
+
+### Follow-up: why the fetcher is blocked, and the empty-page guard
+
+- **Kids Junction** and any page like it now fail with "returned a bot-check page" (or "almost
+  no text" under 40 words) instead of reaching the model. See `check_content` in
+  `campfinder/ingest/fetch.py`.
+- **East Providence and St. Andrew's (403)** block on the TLS handshake, not the headers. With
+  every header identical, Python's `urllib` gets 200 and gets 403 as soon as its handshake
+  advertises HTTP/1.1 only (ALPN), which is what httpx always does. The fetcher could be
+  changed to leave ALPN out. That would deliberately get past a bot filter these sites run,
+  even with the honest `CampFinderBot` name, so it's a policy decision, not made here.
+  The alternative is to ask the operators, or to enter these camps by hand.
+  *Decided 29 September: we don't. See "Fetching, 29 September 2026" above.*
+- **Save The Bay (429)** is rate limiting and comes and goes between runs. Retry later rather
+  than working around it.
