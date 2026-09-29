@@ -15,10 +15,19 @@ each page before trusting anything on it.
 | 6 | Summer at St. Andrew's, Barrington | School | https://www.summeratsaintandrews.org/ | Many programs, registration opens 1 February |
 | 7 | Summer J-Camp, Jewish Alliance | Nonprofit | https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp | Weekly themes with dates |
 | 8 | Camp Agawam, Rumford | Club | https://www.agawamhunt.org/camp | Golf and tennis, week list in prose |
-| 9 | Kids Junction summer camp | Small private | http://kidsjunctionri.com/summer-camp/ | Ages 3 to 12, long hours, the low-tech profile |
+| 9 | Camp Westwood, YMCA of Pawtucket | Lakefront day camp | https://ymcapawtucket.org/camps/camp-westwood | Replaces Kids Junction, whose site sits behind a bot wall that never clears for an automated browser |
 | 10 | YMCA of Greater Providence, Cranston Y | Larger operator | https://ymcagreaterprovidence.org/program/summer-camp and the linked Bayside/Kent PDFs | Tests the PDF path |
 
-Alternate: Camp Westwood, YMCA Pawtucket, https://ymcapawtucket.org/camps/camp-westwood.
+Dropped: Kids Junction, http://kidsjunctionri.com/summer-camp/. Its host answers every automated
+request, plain or headless browser, with a "one moment, please" check that never clears. That is
+a real category of camp: the fix is the product's own path, the owner sends us the brochure.
+
+## Fetching, 29 September 2026
+
+The fetcher now falls back to headless Chromium when a host refuses a plain request or the page
+fills in by script. With that, 9 of the original 10 sources read: Barrington and Bristol
+(CivicPlus, script-rendered), East Providence and St. Andrew's (403 to plain requests), Save The
+Bay (429 to plain requests) all come through the browser. Kids Junction does not, see above.
 
 ## How to run it
 

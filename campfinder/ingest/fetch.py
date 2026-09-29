@@ -9,6 +9,7 @@ only HTML, text and PDF content types.
 from __future__ import annotations
 
 import ipaddress
+import os
 import re
 import socket
 from dataclasses import dataclass, field
@@ -21,7 +22,19 @@ import httpx
 
 MAX_BYTES = 8 * 1024 * 1024
 TIMEOUT_SECONDS = 20.0
-USER_AGENT = "CampFinderBot/1.0 (+listing verification; contact via site)"
+# A browser user agent. Camp websites sit behind hosting firewalls that refuse
+# anything that calls itself a bot, and we fetch one page per camp.
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+)
+MIN_USEFUL_CHARS = 600
+INTERSTITIAL = re.compile(r"one moment|just a moment|please wait|checking your browser|attention required", re.I)
+# Path to a Chromium binary when Playwright's own download is not present
+# (the Claude Code environment ships one at /opt/pw-browsers/chromium).
+CHROMIUM_PATH = os.environ.get("CHROMIUM_PATH") or (
+    "/opt/pw-browsers/chromium" if os.path.exists("/opt/pw-browsers/chromium") else None
+)
 
 
 @dataclass
@@ -31,6 +44,7 @@ class Source:
     title: str | None
     text: str
     links: list[tuple[str, str]] = field(default_factory=list)  # (anchor text, absolute url)
+    notes: str | None = None
 
 
 class UnsafeURL(ValueError):
@@ -176,8 +190,54 @@ def read_file(path: str | Path) -> Source:
     return Source(url=p.resolve().as_uri(), kind="text", title=None, text=data.decode("utf-8", errors="replace"))
 
 
-async def fetch(target: str) -> Source:
-    """A URL or a local file path."""
-    if target.startswith(("http://", "https://")):
-        return await fetch_url(target)
-    return read_file(target)
+async def fetch_with_browser(url: str) -> Source:
+    """
+    Load the page in headless Chromium and read the rendered HTML. For pages
+    that fill in by script (town sites on CivicPlus, site builders) and for
+    hosts that refuse plain HTTP clients.
+    """
+    from playwright.async_api import async_playwright
+
+    check_url(url)
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(executable_path=CHROMIUM_PATH)
+        try:
+            page = await browser.new_page(user_agent=USER_AGENT)
+            response = await page.goto(url, wait_until="networkidle", timeout=int(TIMEOUT_SECONDS * 1000))
+            if response is not None and response.status >= 400:
+                raise FetchError(f"{url} returned {response.status} in the browser")
+            # Some hosts serve a "one moment, please" page that reloads itself
+            # once a cookie is set. Give it one chance to finish.
+            if INTERSTITIAL.search(await page.title() or ""):
+                await page.wait_for_timeout(7000)
+                await page.wait_for_load_state("networkidle", timeout=int(TIMEOUT_SECONDS * 1000))
+            final_url = page.url
+            check_url(final_url)
+            html = await page.content()
+        finally:
+            await browser.close()
+    text, title, links = html_to_text(html, final_url)
+    return Source(url=final_url, kind="html", title=title, text=text, links=links)
+
+
+async def fetch(target: str, *, browser_fallback: bool = True) -> Source:
+    """
+    A URL or a local file path. A plain fetch first; if the host refuses it or
+    the page comes back nearly empty, the browser has a go.
+    """
+    if not target.startswith(("http://", "https://")):
+        return read_file(target)
+    try:
+        source = await fetch_url(target)
+    except (FetchError, httpx.HTTPError) as exc:
+        if not browser_fallback:
+            raise
+        source = await fetch_with_browser(target)
+        source.notes = f"plain fetch failed ({exc}); used the browser"
+        return source
+    if browser_fallback and source.kind == "html" and len(source.text) < MIN_USEFUL_CHARS:
+        rendered = await fetch_with_browser(target)
+        if len(rendered.text) > len(source.text):
+            rendered.notes = "plain fetch was nearly empty; used the browser"
+            return rendered
+    return source
