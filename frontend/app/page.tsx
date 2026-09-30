@@ -1,140 +1,273 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import { track } from '@/lib/analytics'
+import {
+  calendarFeedUrl, loadFamily, streamChat,
+  type AgentEvent, type Family, type UIData,
+} from '@/lib/agent'
+import { AgentBlock, AgentText, CalendarList } from '@/components/agent/AgentBlocks'
 
-const CAMP_TYPES = ['Any type', 'Day camp', 'Sleepaway', 'Specialty']
-const CATEGORIES = ['Sports', 'Arts', 'STEM', 'Nature', 'Performing arts', 'Technology']
+type Part =
+  | { kind: 'text'; text: string }
+  | { kind: 'ui'; data: UIData }
 
-export default function HomePage() {
-  const router = useRouter()
-  const [location, setLocation] = useState('')
-  const [age, setAge] = useState('')
-  const [campType, setCampType] = useState('')
-  const [loading, setLoading] = useState(false)
+interface Message {
+  role: 'user' | 'assistant'
+  parts: Part[]
+  status?: string   // current tool label while the turn is running
+  error?: string
+}
 
-  function handleSearch(e: React.FormEvent) {
-    e.preventDefault()
-    if (!location.trim()) return
-    setLoading(true)
-    const params = new URLSearchParams({ location })
-    if (age) params.set('age', age)
-    if (campType && campType !== 'Any type') params.set('camp_type', campType.toLowerCase().replace(' ', ''))
-    router.push(`/search?${params.toString()}`)
+const STARTERS = [
+  'Find a STEM day camp near Providence for my 8-year-old',
+  'I need full-day coverage for two kids for all of July',
+  'Sleepaway camps in New England under $1,200 a week',
+  'Help me plan our whole summer',
+]
+
+export default function AgentHome() {
+  const [family, setFamily] = useState<Family | null>(null)
+  const [familyError, setFamilyError] = useState(false)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [conversationId, setConversationId] = useState<string | null>(null)
+  const [input, setInput] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [panelOpen, setPanelOpen] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    loadFamily().then(setFamily).catch(() => setFamilyError(true))
+  }, [])
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }, [messages])
+
+  function updateLast(fn: (m: Message) => Message) {
+    setMessages(prev => [...prev.slice(0, -1), fn(prev[prev.length - 1])])
   }
 
-  return (
-    <div>
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 text-white py-20 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            There is finally a better way<br className="hidden md:block" /> to plan your kid's summer.
-          </h1>
-          <p className="text-brand-100 text-lg md:text-xl mb-10">
-            Search verified camps by location, age, and interests. See real sessions and pricing. Request info in one click.
-          </p>
+  function handleEvent(e: AgentEvent) {
+    switch (e.type) {
+      case 'conversation':
+        setConversationId(e.id)
+        break
+      case 'text':
+        updateLast(m => {
+          const parts = [...m.parts]
+          const last = parts[parts.length - 1]
+          if (last?.kind === 'text') parts[parts.length - 1] = { kind: 'text', text: last.text + e.text }
+          else parts.push({ kind: 'text', text: e.text })
+          return { ...m, parts, status: undefined }
+        })
+        break
+      case 'tool_start':
+        updateLast(m => ({ ...m, status: e.label }))
+        break
+      case 'ui':
+        if (e.data.type === 'profile') {
+          const profile = e.data.profile
+          setFamily(f => (f ? { ...f, profile } : f))
+        } else if (e.data.type === 'calendar') {
+          const events = e.data.events
+          setFamily(f => (f ? { ...f, events } : f))
+        }
+        updateLast(m => ({ ...m, parts: [...m.parts, { kind: 'ui', data: e.data }] }))
+        break
+      case 'error':
+        updateLast(m => ({ ...m, error: e.message, status: undefined }))
+        break
+      case 'done':
+        updateLast(m => ({ ...m, status: undefined }))
+        break
+    }
+  }
 
-          {/* Search form */}
-          <form onSubmit={handleSearch} className="bg-white rounded-2xl p-2 shadow-2xl flex flex-col md:flex-row gap-2">
-            <input
-              type="text"
-              placeholder="City or zip code (e.g. Providence, RI)"
-              value={location}
-              onChange={e => setLocation(e.target.value)}
-              className="flex-1 px-4 py-3 text-gray-900 rounded-xl text-base outline-none"
-              required
+  async function send(text: string) {
+    const message = text.trim()
+    if (!message || busy || !family) return
+    setInput('')
+    setBusy(true)
+    setMessages(prev => [
+      ...prev,
+      { role: 'user', parts: [{ kind: 'text', text: message }] },
+      { role: 'assistant', parts: [], status: 'Thinking' },
+    ])
+    track('agent_message_sent', { conversation_id: conversationId, first: !conversationId })
+    try {
+      await streamChat({ family_id: family.id, conversation_id: conversationId, message }, handleEvent)
+    } catch {
+      updateLast(m => ({ ...m, error: 'Connection lost. Please try again.', status: undefined }))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  function newConversation() {
+    setMessages([])
+    setConversationId(null)
+  }
+
+  const empty = messages.length === 0
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 flex gap-6">
+      {/* Conversation */}
+      <section className="flex-1 min-w-0 flex flex-col min-h-[calc(100vh-65px)]">
+        <div className="flex items-center justify-between py-3 lg:hidden">
+          <button onClick={() => setPanelOpen(o => !o)} className="text-sm font-medium text-brand-700">
+            {panelOpen ? 'Hide your family' : 'Your family & calendar'}
+          </button>
+          {!empty && <button onClick={newConversation} className="text-sm text-gray-500">New chat</button>}
+        </div>
+        {panelOpen && family && <div className="lg:hidden mb-4"><FamilyPanel family={family} /></div>}
+
+        {empty ? (
+          <div className="flex-1 flex flex-col justify-center py-12">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 leading-tight">
+              Summer, handled.
+            </h1>
+            <p className="text-gray-600 text-lg mb-8 max-w-xl">
+              Tell me about your kids and your summer. I'll find verified camps, work out the weeks,
+              and put it all on one calendar you can share.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-2 max-w-2xl">
+              {STARTERS.map(s => (
+                <button
+                  key={s}
+                  onClick={() => send(s)}
+                  disabled={!family}
+                  className="text-left text-sm bg-gray-50 hover:bg-brand-50 border border-gray-200 hover:border-brand-300 rounded-xl px-4 py-3 text-gray-700 transition-colors disabled:opacity-50"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            {familyError && (
+              <p className="text-sm text-red-600 mt-6">We couldn't connect right now. Please refresh to try again.</p>
+            )}
+          </div>
+        ) : (
+          <div className="flex-1 py-6 space-y-6">
+            {messages.map((m, i) => <MessageView key={i} message={m} />)}
+            <div ref={bottomRef} />
+          </div>
+        )}
+
+        <form
+          onSubmit={e => { e.preventDefault(); send(input) }}
+          className="sticky bottom-0 bg-white pt-2 pb-4"
+        >
+          <div className="flex gap-2 items-end border border-gray-200 rounded-2xl p-2 shadow-sm focus-within:border-brand-400">
+            <textarea
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input) }
+              }}
+              rows={1}
+              placeholder={empty ? 'Ages, town, interests, weeks you need covered…' : 'Reply…'}
+              className="flex-1 resize-none outline-none px-2 py-2 text-base max-h-40"
             />
-            <input
-              type="number"
-              placeholder="Child's age"
-              value={age}
-              onChange={e => setAge(e.target.value)}
-              min={3} max={18}
-              className="w-full md:w-32 px-4 py-3 text-gray-900 rounded-xl text-base outline-none"
-            />
-            <select
-              value={campType}
-              onChange={e => setCampType(e.target.value)}
-              className="w-full md:w-40 px-4 py-3 text-gray-700 rounded-xl text-base outline-none bg-white"
-            >
-              {CAMP_TYPES.map(t => <option key={t}>{t}</option>)}
-            </select>
             <button
               type="submit"
-              disabled={loading}
-              className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl transition-colors disabled:opacity-60 whitespace-nowrap"
+              disabled={busy || !input.trim() || !family}
+              className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 py-2 rounded-xl transition-colors disabled:opacity-40"
             >
-              {loading ? 'Searching...' : 'Find Camps →'}
+              {busy ? '…' : 'Send'}
             </button>
-          </form>
-
-          <p className="text-brand-200 text-sm mt-4">
-            Covering Providence, Boston, NYC metro + more -- 2027 season
-          </p>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-10 text-gray-900">How CampFinder works</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: '🔍', title: 'Search by what matters', desc: 'Filter by location, age, type, price, transportation, meals, and more.' },
-              { icon: '✅', title: 'Compare verified listings', desc: 'See trust scores, ACA accreditation, and freshness grades on every camp.' },
-              { icon: '📅', title: 'Plan your whole summer', desc: 'Build a week-by-week schedule, spot gaps, and estimate total cost.' },
-            ].map(step => (
-              <div key={step.title} className="text-center p-6 rounded-2xl bg-gray-50">
-                <div className="text-4xl mb-3">{step.icon}</div>
-                <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
-                <p className="text-gray-500 text-sm">{step.desc}</p>
-              </div>
-            ))}
           </div>
-        </div>
+        </form>
       </section>
 
-      {/* Camp type quick links */}
-      <section className="py-12 px-4 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-8 text-gray-900">Browse by type</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { label: '⚽ Sports Camps', q: 'sports' },
-              { label: '🎨 Arts Camps', q: 'arts' },
-              { label: '🤖 STEM Camps', q: 'STEM' },
-              { label: '🌲 Nature Camps', q: 'nature' },
-              { label: '🏕️ Sleepaway Camps', q: 'sleepaway' },
-              { label: '🌟 Specialty Camps', q: 'specialty' },
-            ].map(item => (
-              <a
-                key={item.q}
-                href={`/search?location=Providence%2C+RI&category=${item.q}`}
-                className="bg-white rounded-xl border border-gray-200 p-4 text-center font-medium text-gray-700 hover:border-brand-400 hover:text-brand-700 hover:shadow-sm transition-all"
-              >
-                {item.label}
-              </a>
+      {/* Family panel (desktop) */}
+      <aside className="hidden lg:block w-80 shrink-0 py-6">
+        <div className="sticky top-20 space-y-4">
+          {!empty && (
+            <button onClick={newConversation} className="text-sm text-gray-500 hover:text-gray-800">+ New chat</button>
+          )}
+          {family && <FamilyPanel family={family} />}
+        </div>
+      </aside>
+    </div>
+  )
+}
+
+function MessageView({ message }: { message: Message }) {
+  if (message.role === 'user') {
+    return (
+      <div className="flex justify-end">
+        <div className="bg-brand-600 text-white rounded-2xl rounded-br-md px-4 py-2.5 max-w-[85%] whitespace-pre-wrap">
+          {message.parts.map(p => (p.kind === 'text' ? p.text : '')).join('')}
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="space-y-3 text-gray-800">
+      {message.parts.map((p, i) =>
+        p.kind === 'text' ? <AgentText key={i} text={p.text} /> : <AgentBlock key={i} data={p.data} />,
+      )}
+      {message.status && (
+        <p className="text-sm text-gray-400 flex items-center gap-2">
+          <span className="inline-block w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
+          {message.status}…
+        </p>
+      )}
+      {message.error && <p className="text-sm text-red-600">{message.error}</p>}
+    </div>
+  )
+}
+
+function FamilyPanel({ family }: { family: Family }) {
+  const { profile, events } = family
+  const feed = calendarFeedUrl(family.id)
+  const webcal = feed.replace(/^https?:/, 'webcal:')
+  const [copied, setCopied] = useState(false)
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-gray-50 rounded-2xl p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Your family</p>
+        {profile.kids?.length || profile.home_location ? (
+          <div className="space-y-1.5 text-sm text-gray-700">
+            {profile.home_location && <p>📍 {profile.home_location}</p>}
+            {profile.kids?.map((k, i) => (
+              <p key={i}>
+                👧 {k.name || 'Child'}{k.age != null ? `, ${k.age}` : ''}
+                {k.interests?.length ? <span className="text-gray-500"> · {k.interests.join(', ')}</span> : null}
+              </p>
             ))}
+            {profile.summer_start && profile.summer_end && (
+              <p>☀️ {profile.summer_start} → {profile.summer_end}</p>
+            )}
+            {profile.weekly_budget != null && <p>💵 Up to ${profile.weekly_budget}/week</p>}
+            {profile.needs?.map((n, i) => <p key={i} className="text-gray-500">• {n}</p>)}
           </div>
-        </div>
-      </section>
+        ) : (
+          <p className="text-sm text-gray-400">I'll remember your kids, town and summer plans as we talk.</p>
+        )}
+      </div>
 
-      {/* Operator CTA */}
-      <section className="py-16 px-4 bg-brand-700 text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-3">The easiest way for camps to become discoverable in the AI economy.</h2>
-          <p className="text-brand-100 text-lg mb-8">
-            Structure your data. Verify your listing. Show up when parents ask Claude, ChatGPT, or Google about camps like yours.
-          </p>
-          <a
-            href="/operators"
-            className="inline-block bg-white text-brand-700 font-bold px-8 py-3 rounded-xl hover:bg-brand-50 transition-colors"
-          >
-            Claim or list your camp →
-          </a>
-        </div>
-      </section>
+      <div className="bg-gray-50 rounded-2xl p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Family calendar</p>
+        <CalendarList events={events} compact />
+        {events.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-gray-200 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
+            <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline">
+              Add to Google Calendar
+            </a>
+            <a href={webcal} className="text-brand-700 hover:underline">Apple / Outlook</a>
+            <button
+              onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true) }}
+              className="text-gray-500 hover:text-gray-800"
+            >
+              {copied ? 'Link copied' : 'Copy link to share'}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

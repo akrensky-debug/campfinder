@@ -22,7 +22,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               CampFinder
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-              <a href="/search" className="hover:text-brand-700 transition-colors">Find Camps</a>
+              <a href="/" className="hover:text-brand-700 transition-colors">Plan with CampFinder</a>
+              <a href="/search" className="hover:text-brand-700 transition-colors">Browse Camps</a>
               <a href="/operators" className="hover:text-brand-700 transition-colors">For Camps</a>
               <a href="/operators/claim" className="hover:text-brand-700 transition-colors">Claim Listing</a>
             </nav>
@@ -45,7 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="flex gap-8">
               <div>
                 <p className="font-semibold text-gray-700 mb-2">Parents</p>
-                <a href="/search" className="block hover:text-brand-600">Search Camps</a>
+                <a href="/" className="block hover:text-brand-600">Plan your summer</a>
+                <a href="/search" className="block hover:text-brand-600">Browse camps</a>
               </div>
               <div>
                 <p className="font-semibold text-gray-700 mb-2">Camps</p>

@@ -43,6 +43,12 @@ python -m campfinder.seed.generate
 
 This inserts 50 synthetic camps across Providence/Boston and NYC metro, with sessions and field sources.
 
+Then create the family tables:
+
+```bash
+psql $DATABASE_URL -f schema_family.sql
+```
+
 ### 5. Start the API server
 
 ```bash
@@ -66,7 +72,26 @@ The API is now running at `http://localhost:8000`.
 | `GET`  | `/api/v1/camps/{id}/sessions` | Sessions for a camp |
 | `POST` | `/api/v1/plan` | Build a week-by-week summer plan |
 | `GET`  | `/api/v1/camps/{id}/freshness` | Freshness grade and stale fields |
+| `POST` | `/api/v1/families` | Create a family (the browser keeps its id) |
+| `GET`  | `/api/v1/families/{id}` | Family profile and calendar |
+| `POST` | `/api/v1/agent/chat` | Chat with the family agent (server-sent events) |
+| `GET`  | `/api/v1/families/{id}/calendar.ics` | Subscribable family calendar feed |
+| `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
 | `GET`  | `/health` | API + database health check |
+
+---
+
+## Family agent and MCP server
+
+The site's home page is a chat with a Claude-powered planning agent. It searches,
+compares and plans with the same tools the REST API exposes, remembers each family's
+kids, town, dates and logistics, and keeps a family calendar that parents subscribe
+to from Google, Apple or Outlook Calendar.
+
+- Tools live in `campfinder/agent/tools.py`; the loop is `campfinder/agent/runner.py`.
+- Requires `ANTHROPIC_API_KEY` and the tables in `schema_family.sql`.
+- The same camp tools are served over MCP at `/mcp`, so Claude, ChatGPT and other
+  agents can connect CampFinder as a data source. Family tools stay site-only.
 
 ---
 
@@ -119,6 +144,7 @@ campfinder/
     sessions.py        # GET /camps/{id}/sessions
     planner.py         # POST /plan
     freshness.py       # GET /camps/{id}/freshness
+    agent.py           # Families, agent chat, calendar feed
   services/
     search.py          # Query building and result assembly
     geo.py             # Haversine distance, city geocoding
@@ -129,7 +155,12 @@ campfinder/
   seed/
     generate.py        # Synthetic data generator
     cities.py          # City lat/lng lookup table (50+ cities)
+  agent/
+    tools.py           # Tools shared by the site agent and the MCP server
+    runner.py          # Claude tool-use loop, streamed to the browser
+  mcp_server.py        # MCP server exposing the camp tools
 schema.sql             # Full Postgres/PostGIS schema
+schema_family.sql      # Families, family calendar, agent conversations
 requirements.txt
 .env.example
 ```
