@@ -67,6 +67,6 @@ python -m campfinder.jobs.send_alerts   # daily: emails alerts for registration 
 
 ## Environment
 
-See `.env.example`. `DATABASE_URL` is required. `AUTH_JWT_SECRET` turns on family endpoints.
+See `.env.example`. `DATABASE_URL` is required. `AUTH_JWKS_URL` (or, for legacy projects, `AUTH_JWT_SECRET`) turns on family endpoints.
 `RESEND_API_KEY` turns on real email; without it, emails are logged. `ANTHROPIC_API_KEY` is
 read by the ingest tool.

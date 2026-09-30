@@ -28,9 +28,12 @@ class Settings:
     # Public site URL, used in emails and detail_url fields.
     site_url: str = field(default_factory=lambda: os.environ.get("SITE_URL", "http://localhost:3000"))
 
-    # Parent auth: HS256 JWTs issued by the auth provider (Supabase Auth) and
-    # verified here with the shared secret. Empty means auth is off and every
-    # family endpoint returns 401.
+    # Parent auth: JWTs issued by the auth provider (Supabase Auth). Projects on
+    # asymmetric signing keys (the Supabase default for new projects) are
+    # verified against the public keys at AUTH_JWKS_URL; the legacy shared
+    # secret (HS256) is verified with AUTH_JWT_SECRET. Either or both may be
+    # set. Neither means auth is off and every family endpoint returns 401.
+    auth_jwks_url: str = field(default_factory=lambda: os.environ.get("AUTH_JWKS_URL", ""))
     auth_jwt_secret: str = field(default_factory=lambda: os.environ.get("AUTH_JWT_SECRET", ""))
     auth_jwt_audience: str = field(default_factory=lambda: os.environ.get("AUTH_JWT_AUDIENCE", "authenticated"))
 

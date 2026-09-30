@@ -3,7 +3,8 @@ Security primitives shared by the routers.
 
 - One-time tokens (claims, spot-request responses, alert unsubscribes) are
   random, sent once, and stored only as a SHA-256 hash.
-- Parent identity comes from an HS256 JWT issued by the auth provider.
+- Parent identity comes from a JWT issued by the auth provider: ES256/RS256
+  checked against its published keys, or HS256 checked with the shared secret.
 - Write endpoints are rate limited per client IP.
 """
 
@@ -15,6 +16,7 @@ import threading
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass
+from functools import lru_cache
 
 import jwt
 from fastapi import Depends, HTTPException, Request, status
@@ -49,15 +51,16 @@ def current_identity(
     settings: Settings = Depends(get_settings),
 ) -> Identity:
     """Verify the bearer JWT and return who is calling. 401 on anything else."""
-    if not settings.auth_jwt_secret:
+    if not settings.auth_jwt_secret and not settings.auth_jwks_url:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Authentication is not configured")
     if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Sign in required")
     try:
+        key, algorithms = _verification_key(credentials.credentials, settings)
         claims = jwt.decode(
             credentials.credentials,
-            settings.auth_jwt_secret,
-            algorithms=["HS256"],
+            key,
+            algorithms=algorithms,
             audience=settings.auth_jwt_audience,
             options={"require": ["sub", "exp"]},
         )
@@ -67,6 +70,26 @@ def current_identity(
     if not isinstance(email, str) or "@" not in email:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Session has no email")
     return Identity(subject=str(claims["sub"]), email=email.lower())
+
+
+_ASYMMETRIC = ["ES256", "RS256"]
+
+
+@lru_cache
+def _jwks_client(url: str) -> jwt.PyJWKClient:
+    # Caches the key set; an unknown key id triggers one refetch, so key
+    # rotation on the provider side needs no redeploy here.
+    return jwt.PyJWKClient(url, cache_keys=True, timeout=5)
+
+
+def _verification_key(token: str, settings: Settings) -> tuple[object, list[str]]:
+    """Pick the key by the token's own header, never accepting an algorithm we did not configure."""
+    alg = jwt.get_unverified_header(token).get("alg")
+    if alg in _ASYMMETRIC and settings.auth_jwks_url:
+        return _jwks_client(settings.auth_jwks_url).get_signing_key_from_jwt(token).key, _ASYMMETRIC
+    if alg == "HS256" and settings.auth_jwt_secret:
+        return settings.auth_jwt_secret, ["HS256"]
+    raise jwt.InvalidAlgorithmError(f"Unsupported token algorithm: {alg}")
 
 
 def mint_token(subject: str, email: str, *, settings: Settings, ttl_seconds: int = 3600) -> str:

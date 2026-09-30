@@ -1,8 +1,9 @@
 # Getting the rebuild live
 
-*The April beta is deployed on Railway (API), Vercel (site) and Supabase (database). This is the
-order to move them to the rebuilt code. The April data is synthetic, so the database is reset,
-not migrated.*
+*The April beta is deployed on Railway (API) and Vercel (site). Its Supabase project ("CampFinder
+Project", us-west-2) is paused. The rebuild uses a new, empty Supabase project, "campfinder"
+(us-east-1, ref `cdzzmyambonhkhsoltfw`), created 29 September 2026. Nothing is migrated from the
+beta: its data was synthetic.*
 
 ## Branch strategy
 
@@ -12,24 +13,38 @@ not migrated.*
 - `claude/product-plan` holds the rebuild. It merges to `main` once the three steps below are
   done, in order, because the new code cannot run on the old schema.
 
-## Step 1: reset the database (Supabase)
+## Step 1: the database (Supabase)
 
-In the Supabase SQL editor, run `scripts/reset_beta_database.sql`. It drops the April tables
-and nothing else. Then note two values from Project Settings:
+The new project is empty, checked 29 September: no tables, no sign-ups. The first migration
+turns on PostGIS and builds everything, so there is nothing to reset.
+`scripts/reset_beta_database.sql` is kept only in case the April project is ever pointed at
+again. Leave that project paused, and delete it once the new one is live.
 
-- **Database** > connection string (session mode, port 5432). This is `DATABASE_URL`.
-- **API** > JWT secret. This is `AUTH_JWT_SECRET`, which lets the API trust parent sign-ins.
+From the new project's dashboard, note one value:
+
+- **Connect** > **Session pooler** connection string (port 5432). This is `DATABASE_URL`. Use the
+  session pooler, not the direct connection: the direct host is IPv6 only unless the paid IPv4
+  add-on is on, and the pooler works from anywhere. Do not use the transaction pooler (port 6543): the API's prepared statements need
+  session mode.
+
+Parent sign-in uses Supabase's asymmetric signing keys (ES256, the default for new projects).
+The API checks tokens against the project's public keys, so there is no secret to copy. The
+URL is:
+
+    https://cdzzmyambonhkhsoltfw.supabase.co/auth/v1/.well-known/jwks.json
 
 Turn on Email (magic link) under Authentication > Providers. Nothing else there yet.
 
 ## Step 2: set the environment (Railway)
 
+Put the API service in a US East region to sit near the database.
+
 Variables on the API service:
 
 | Variable | Value |
 |---|---|
-| `DATABASE_URL` | from Supabase, above |
-| `AUTH_JWT_SECRET` | from Supabase, above |
+| `DATABASE_URL` | the session pooler string, above |
+| `AUTH_JWKS_URL` | the JWKS URL, above |
 | `SITE_URL` | the Vercel URL, e.g. `https://campfinder.vercel.app` |
 | `CORS_ORIGINS` | the same Vercel URL, plus `http://localhost:3000` for local work |
 | `RESEND_API_KEY` | from Resend, once the sending domain is verified. Empty until then: emails are logged, not sent |
@@ -37,7 +52,8 @@ Variables on the API service:
 | `ANTHROPIC_API_KEY` | from the Anthropic Console, for the listing tool |
 
 Remove the old `SUPABASE_*`, `STRIPE_*` and `RESEND_API_KEY` (if it was a test key) variables.
-The API no longer reads them.
+The API no longer reads them. Leave `AUTH_JWT_SECRET` unset: it is only for projects on the legacy
+shared secret, and the API rejects shared-secret tokens when it is empty.
 
 On Vercel, `NEXT_PUBLIC_API_URL` should already point at the Railway URL. Check it.
 

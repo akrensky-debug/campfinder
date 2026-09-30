@@ -8,7 +8,7 @@
 |---|---|---|
 | Database | Postgres with PostGIS, hosted on Supabase | Geo search in SQL, one managed instance, room to grow to millions of rows |
 | API | Python, FastAPI, asyncpg | Small, fast, typed; raw SQL keeps every query visible and parameterised |
-| Parent auth | Supabase Auth (magic link), verified here as HS256 JWTs | No passwords to store; the API only ever checks a signature |
+| Parent auth | Supabase Auth (magic link), verified here as ES256 JWTs against the project's published keys | No passwords to store; the API only ever checks a signature |
 | Email | Resend | Simple transactional email with a clean API |
 | Listing ingest | Claude (`claude-opus-5-5`) with structured output | Reads a brochure or website into the listing schema with evidence per field |
 | Web | Next.js on Vercel | Already built; server rendering for camp pages helps search engines |
@@ -79,7 +79,7 @@ and ranking runs in Python on that set. This holds well past 100,000 camps.
 
 | Concern | What we do |
 |---|---|
-| Who is the parent | HS256 JWT from the auth provider, verified with the shared secret, `sub` mapped to `families.auth_subject`. Children never have accounts. |
+| Who is the parent | ES256 JWT from the auth provider, verified against its published keys (JWKS; HS256 with a shared secret for legacy projects and tests), `sub` mapped to `families.auth_subject`. Children never have accounts. |
 | One-time links (claims, camp responses, unsubscribes) | 256-bit random token, sent once, stored only as SHA-256, single use, expiring |
 | Abuse of write endpoints | Per-IP sliding-window rate limit (in memory now, Redis when there is more than one API instance) |
 | Cross-site requests | Explicit CORS origins; credentials are never combined with a wildcard |
