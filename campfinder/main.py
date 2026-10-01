@@ -19,6 +19,7 @@ from campfinder.routers import (
     events,
     families,
     operators,
+    owners,
     planner,
     search,
     spot_requests,
@@ -79,6 +80,7 @@ def create_app(*, manage_pool: bool = True) -> FastAPI:
     app.include_router(families.router, prefix=prefix, tags=["Family"])
     app.include_router(spot_requests.router, prefix=prefix, tags=["Spot requests"])
     app.include_router(operators.router, prefix=prefix, tags=["Operators"])
+    app.include_router(owners.router, prefix=prefix, tags=["Owners"])
     app.include_router(events.router, prefix=prefix, tags=["Analytics"])
 
     @app.get("/health", tags=["Health"], summary="Health check")

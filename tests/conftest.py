@@ -42,6 +42,7 @@ TABLES_IN_DELETE_ORDER = [
     "families",
     "camp_submissions",
     "claim_requests",
+    "listing_confirmations",
     "camp_contacts",
     "listing_changes",
     "field_sources",
@@ -132,4 +133,5 @@ async def client(conn: asyncpg.Connection) -> AsyncIterator[httpx.AsyncClient]:
 def outbox():
     from campfinder.services import email
 
+    email.reset_outbox()
     return email.OUTBOX

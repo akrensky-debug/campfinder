@@ -1,7 +1,7 @@
 export default function TrustBadge({ status, aca }: { status: string; aca?: boolean | null }) {
   const map: Record<string, { label: string; cls: string }> = {
-    team_verified: { label: '✓ Team Verified',  cls: 'bg-green-100 text-green-800' },
-    camp_verified: { label: '✓ Camp Verified',  cls: 'bg-blue-100 text-blue-800' },
+    team_verified: { label: '✓ Checked by our team', cls: 'bg-green-100 text-green-800' },
+    camp_verified: { label: '✓ Confirmed by the camp', cls: 'bg-blue-100 text-blue-800' },
     claimed:       { label: '⚑ Claimed',        cls: 'bg-yellow-100 text-yellow-800' },
     unverified:    { label: 'Unverified',        cls: 'bg-gray-100 text-gray-500' },
   }

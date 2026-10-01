@@ -55,6 +55,7 @@ export interface SearchResponse {
 export interface TrustSummary {
   verification_status: string
   last_updated: string | null
+  confirmed_by_camp_at: string | null
   fields_verified: string[]
   fields_unverified: string[]
   fields_missing: string[]
@@ -147,4 +148,49 @@ export function submitCamp(data: {
   notes?: string
 }): Promise<{ id: string; name: string; status: string }> {
   return post('/api/v1/submissions', data)
+}
+
+// ── Owner confirmation ─────────────────────────────────────────────────────
+
+export interface ListingSnapshot {
+  camp: {
+    name: string
+    city: string
+    state: string
+    camp_type: string
+    age_min: number | null
+    age_max: number | null
+    grade_min: number | null
+    grade_max: number | null
+    price_per_week: string | null
+    website_url: string | null
+    registration_url: string | null
+  }
+  sessions: {
+    name: string | null
+    start_date: string
+    end_date: string
+    price: string | null
+    registration_opens_at: string | null
+  }[]
+}
+
+export interface ListingConfirmation {
+  camp_name: string
+  snapshot: ListingSnapshot
+  changed_since_sent: boolean
+}
+
+export async function getListingConfirmation(token: string): Promise<ListingConfirmation> {
+  const res = await fetch(`${API}/api/v1/owners/listing-confirmation?token=${encodeURIComponent(token)}`)
+  if (!res.ok) {
+    let detail = 'This link has expired or was already used.'
+    try { detail = (await res.json()).detail ?? detail } catch { /* keep default */ }
+    throw new Error(detail)
+  }
+  return res.json()
+}
+
+export function answerListingConfirmation(token: string, answer: 'confirm' | 'remove'): Promise<{ outcome: 'confirmed' | 'removed' | 'changed'; camp_name: string }> {
+  return post('/api/v1/owners/listing-confirmation/respond', { token, answer })
 }

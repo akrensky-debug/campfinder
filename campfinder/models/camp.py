@@ -44,6 +44,8 @@ class AccreditationSummary(BaseModel):
 class TrustSummary(BaseModel):
     verification_status: str
     last_updated: datetime | None = None
+    # When the owner last said "looks right" to the listing email.
+    confirmed_by_camp_at: datetime | None = None
     fields_verified: list[str] = Field(default_factory=list)
     fields_unverified: list[str] = Field(default_factory=list)
     fields_missing: list[str] = Field(default_factory=list)

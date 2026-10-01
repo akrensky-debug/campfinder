@@ -45,6 +45,9 @@ class Settings:
         default_factory=lambda: os.environ.get("EMAIL_FROM", "CampFinder <hello@localhost>")
     )
     team_email: str = field(default_factory=lambda: os.environ.get("TEAM_EMAIL", ""))
+    # Sign-off on the owner emails a person sends (docs/brand/OUTREACH-CAMPS.md).
+    team_signature: str = field(default_factory=lambda: os.environ.get("TEAM_SIGNATURE", "Andrew"))
+    team_phone: str = field(default_factory=lambda: os.environ.get("TEAM_PHONE", ""))
 
     # Listing ingest (Claude). The SDK reads ANTHROPIC_API_KEY itself.
     ingest_model: str = field(default_factory=lambda: os.environ.get("INGEST_MODEL", "claude-opus-5-5"))

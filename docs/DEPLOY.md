@@ -46,6 +46,8 @@ Variables on the API service:
 | `CORS_ORIGINS` | the same Vercel URL, plus `http://localhost:3000` for local work |
 | `RESEND_API_KEY` | from Resend, once the sending domain is verified. Empty until then: emails are logged, not sent |
 | `EMAIL_FROM` | `CampFinder <hello@yourdomain>` |
+| `TEAM_EMAIL` | where owners' replies go (the Reply-To on owner emails), e.g. your own inbox |
+| `TEAM_SIGNATURE`, `TEAM_PHONE` | the sign-off on owner emails; defaults to "Andrew" with no phone |
 | `ANTHROPIC_API_KEY` | from the Anthropic Console, for the listing tool |
 
 Remove the old `SUPABASE_*`, `FRONTEND_URL`, `STRIPE_*` and `RESEND_API_KEY` (if it was a test key) variables.
@@ -72,6 +74,23 @@ python -m campfinder.ingest https://... --import   # a real camp from its websit
 
 Every ingested camp lands as `unverified`. A person checks it on the site before we email the
 owner.
+
+## Step 5: ask owners to confirm
+
+One camp at a time, by a person (`python -m campfinder.owners --help`):
+
+```bash
+python -m campfinder.owners checked <slug> --by andrew      # I checked it against its source
+python -m campfinder.owners send <slug> --by andrew         # preview the email; sends nothing
+python -m campfinder.owners send <slug> --by andrew --send  # record it and send it
+```
+
+The email shows the listing and links to `/owners/confirm` on the site, where the owner presses
+"It looks right" or "Take my camp off the site". Opening the link changes nothing, so mail
+scanners are harmless. A "looks right" confirms exactly what the email showed: if the listing
+changed in between, it is refused and a fresh email is needed. Corrections come back as replies
+to `TEAM_EMAIL`, handled by a person until listing updates by email reply are built. Links last
+30 days; sending again replaces the old link.
 
 ## Where the Anthropic key comes from
 

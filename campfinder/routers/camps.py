@@ -56,6 +56,7 @@ def _build_trust_summary(camp: dict[str, Any], field_sources: list[dict[str, Any
     return TrustSummary(
         verification_status=camp["verification_status"],
         last_updated=camp.get("updated_at"),
+        confirmed_by_camp_at=camp.get("last_reviewed_at") if camp["verification_status"] == "camp_verified" else None,
         fields_verified=verified, fields_unverified=unverified, fields_missing=missing,
         accreditation=AccreditationSummary(
             status="confirmed" if camp.get("aca_accredited") else "not_confirmed",
