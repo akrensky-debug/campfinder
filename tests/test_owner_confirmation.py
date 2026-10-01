@@ -129,6 +129,16 @@ async def test_owner_takes_the_camp_down(client: httpx.AsyncClient, conn: asyncp
     r = await client.post("/api/v1/search", json={"location": "Providence, RI"})
     assert r.json()["results"] == []
 
+    # Parents waiting on its registration are not emailed about a camp that asked to leave.
+    from datetime import timedelta
+
+    from campfinder.repositories import bookings
+    from tests.factories import soon
+
+    await conn.execute("UPDATE sessions SET registration_opens_at = $2 WHERE camp_id = $1", camp_id, soon(2))
+    await bookings.create_alert(conn, email="parent@example.com", camp_id=camp_id, family_id=None)
+    assert await bookings.alerts_due(conn, within=timedelta(days=7)) == []
+
 
 async def test_only_the_newest_link_works(client: httpx.AsyncClient, conn: asyncpg.Connection, outbox) -> None:
     camp_id = await _checked_camp(conn)

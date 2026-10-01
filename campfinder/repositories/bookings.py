@@ -186,7 +186,7 @@ async def unsubscribe_alert(conn: asyncpg.Connection, token: str) -> bool:
 
 
 async def alerts_due(conn: asyncpg.Connection, *, within: timedelta) -> list[dict[str, Any]]:
-    """Active alerts for camps with a session whose registration opens within the window."""
+    """Active alerts for listed camps with a session whose registration opens within the window."""
     rows = await conn.fetch(
         """
         SELECT a.id, a.email, a.unsubscribe_token_hash, c.id AS camp_id, c.name AS camp_name, c.slug,
@@ -195,6 +195,7 @@ async def alerts_due(conn: asyncpg.Connection, *, within: timedelta) -> list[dic
         JOIN camps c ON c.id = a.camp_id
         JOIN sessions s ON s.camp_id = c.id
         WHERE a.status = 'active'
+          AND c.is_active
           AND s.registration_opens_at BETWEEN NOW() AND NOW() + $1
         GROUP BY a.id, a.email, a.unsubscribe_token_hash, c.id, c.name, c.slug
         """,
