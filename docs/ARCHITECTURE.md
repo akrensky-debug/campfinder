@@ -79,7 +79,7 @@ and ranking runs in Python on that set. This holds well past 100,000 camps.
 
 | Concern | What we do |
 |---|---|
-| Who is the parent | ES256 JWT from the auth provider, verified against its published keys (JWKS; HS256 with a shared secret for legacy projects and tests), `sub` mapped to `families.auth_subject`. Children never have accounts. |
+| Who is the parent | ES256 JWT from the auth provider, verified against its published key set (cached, refetched on rotation), with audience and issuer checked; HS256 with a shared secret for older projects. Each algorithm is tied to one key type. `sub` maps to `families.auth_subject`. Children never have accounts. |
 | One-time links (claims, camp responses, unsubscribes) | 256-bit random token, sent once, stored only as SHA-256, single use, expiring |
 | Abuse of write endpoints | Per-IP sliding-window rate limit (in memory now, Redis when there is more than one API instance) |
 | Cross-site requests | Explicit CORS origins; credentials are never combined with a wildcard |

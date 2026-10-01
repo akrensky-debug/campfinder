@@ -3,8 +3,8 @@ Security primitives shared by the routers.
 
 - One-time tokens (claims, spot-request responses, alert unsubscribes) are
   random, sent once, and stored only as a SHA-256 hash.
-- Parent identity comes from a JWT issued by the auth provider: ES256/RS256
-  checked against its published keys, or HS256 checked with the shared secret.
+- Parent identity comes from a JWT issued by the auth provider: ES256 or
+  RS256 against its published keys, or HS256 with a shared secret.
 - Write endpoints are rate limited per client IP.
 """
 
@@ -19,11 +19,11 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 import jwt
+from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from campfinder.config import Settings, get_settings
-
 
 # ── One-time tokens ────────────────────────────────────────────────────────
 
@@ -45,51 +45,57 @@ class Identity:
 
 _bearer = HTTPBearer(auto_error=False)
 
+# Each algorithm is tied to one kind of key, so a token can't pick a weaker
+# check (an HS256 token "signed" with our public key is refused, for example).
+ASYMMETRIC_KEY_TYPES = {"ES256": ec.EllipticCurvePublicKey, "RS256": rsa.RSAPublicKey}
+
+
+@lru_cache(maxsize=4)
+def _jwks_client(url: str) -> jwt.PyJWKClient:
+    # Keys are cached for five minutes; an unknown key id triggers one refetch,
+    # which is how a key rotation at the auth provider reaches us.
+    return jwt.PyJWKClient(url, cache_keys=True, lifespan=300, timeout=5)
+
+
+def _verification_key(token: str, settings: Settings) -> tuple[object, str]:
+    header = jwt.get_unverified_header(token)
+    alg = header.get("alg")
+    if alg in ASYMMETRIC_KEY_TYPES and settings.auth_jwks_url:
+        key = _jwks_client(settings.auth_jwks_url).get_signing_key_from_jwt(token).key
+        if not isinstance(key, ASYMMETRIC_KEY_TYPES[alg]):
+            raise jwt.InvalidAlgorithmError("Token algorithm does not match its key")
+        return key, alg
+    if alg == "HS256" and settings.auth_jwt_secret:
+        return settings.auth_jwt_secret, alg
+    raise jwt.InvalidAlgorithmError(f"Algorithm {alg!r} is not accepted")
+
 
 def current_identity(
     credentials: HTTPAuthorizationCredentials | None = Depends(_bearer),
     settings: Settings = Depends(get_settings),
 ) -> Identity:
     """Verify the bearer JWT and return who is calling. 401 on anything else."""
-    if not settings.auth_jwt_secret and not settings.auth_jwks_url:
+    if not (settings.auth_jwks_url or settings.auth_jwt_secret):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Authentication is not configured")
     if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Sign in required")
+    token = credentials.credentials
     try:
-        key, algorithms = _verification_key(credentials.credentials, settings)
+        key, alg = _verification_key(token, settings)
         claims = jwt.decode(
-            credentials.credentials,
+            token,
             key,
-            algorithms=algorithms,
+            algorithms=[alg],
             audience=settings.auth_jwt_audience,
+            issuer=settings.auth_jwt_issuer or None,
             options={"require": ["sub", "exp"]},
         )
-    except jwt.PyJWTError:
+    except jwt.PyJWTError:  # includes key-set fetch failures
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired session")
     email = claims.get("email")
     if not isinstance(email, str) or "@" not in email:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Session has no email")
     return Identity(subject=str(claims["sub"]), email=email.lower())
-
-
-_ASYMMETRIC = ["ES256", "RS256"]
-
-
-@lru_cache
-def _jwks_client(url: str) -> jwt.PyJWKClient:
-    # Caches the key set; an unknown key id triggers one refetch, so key
-    # rotation on the provider side needs no redeploy here.
-    return jwt.PyJWKClient(url, cache_keys=True, timeout=5)
-
-
-def _verification_key(token: str, settings: Settings) -> tuple[object, list[str]]:
-    """Pick the key by the token's own header, never accepting an algorithm we did not configure."""
-    alg = jwt.get_unverified_header(token).get("alg")
-    if alg in _ASYMMETRIC and settings.auth_jwks_url:
-        return _jwks_client(settings.auth_jwks_url).get_signing_key_from_jwt(token).key, _ASYMMETRIC
-    if alg == "HS256" and settings.auth_jwt_secret:
-        return settings.auth_jwt_secret, ["HS256"]
-    raise jwt.InvalidAlgorithmError(f"Unsupported token algorithm: {alg}")
 
 
 def mint_token(subject: str, email: str, *, settings: Settings, ttl_seconds: int = 3600) -> str:

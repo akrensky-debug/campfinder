@@ -27,9 +27,11 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
+      - run: python -m playwright install --with-deps chromium
       - run: pytest -q
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/campfinder_test
+          REQUIRE_BROWSER_TESTS: "1"
 
   web:
     runs-on: ubuntu-latest

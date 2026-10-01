@@ -153,20 +153,22 @@ Parents book summer 2027 from about January to March. Early-bird registration op
   and measure accuracy.
 - Talk to 10 camp owners and 10 parents (see Open questions).
 
-### November: real data and alerts
+### November: owners, real data and agents
 
-- Load about 150 camps around Providence with the tool. Check each by hand.
 - Owners confirm or claim their listing by email or text.
+- Updates to listings by text or email.
+- A read-only MCP server so Claude and ChatGPT can answer parents from our data, with
+  sources and dates. Public camp facts only.
+- Load about 150 camps around Providence with the tool. Check each by hand.
 - Launch registration alerts for parents and start the waitlist.
 - Build the family profile, with the trust rules built in.
 
-### December: requests and AI
+### December: requests
 
-- "Request a spot": the parent requests, the camp confirms, the camp collects payment itself.
+- "Request a spot" on our site: the parent requests, the camp confirms, the camp collects
+  payment itself.
 - Booking notices to camps by email and text.
-- Updates to listings by text or email.
-- An MCP server so Claude and ChatGPT can answer parents from our data.
-- Refresh the parent site and planner.
+- Clean camp pages, which are what agents link to. A lighter refresh of the planner.
 
 ### January to March: booking season
 

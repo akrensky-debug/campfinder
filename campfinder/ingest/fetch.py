@@ -1,9 +1,10 @@
 """
 Fetch a camp's web page or PDF as plain text, safely.
 
-Rules: public hosts only (no loopback, private or link-local addresses, so the
-tool cannot be pointed at internal services), a size cap, a short timeout, and
-only HTML, text and PDF content types.
+Rules: an honest bot name; public hosts only, checked on every redirect hop
+(no loopback, private or link-local addresses, so the tool cannot be pointed at
+internal services); a size cap, a short timeout, and only HTML, text and PDF
+content types. A host that refuses us is not retried with a browser.
 """
 
 from __future__ import annotations
@@ -22,14 +23,16 @@ import httpx
 
 MAX_BYTES = 8 * 1024 * 1024
 TIMEOUT_SECONDS = 20.0
-# A browser user agent. Camp websites sit behind hosting firewalls that refuse
-# anything that calls itself a bot, and we fetch one page per camp.
-USER_AGENT = (
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
-)
+# We say who we are. A host that refuses an honest bot has told us no; the
+# answer is to ask the owner for their brochure, not to look like a person.
+USER_AGENT = "CampFinderBot/1.0 (+listing verification; contact via site)"
+# Below this many words a page has nothing to extract (a bot check, a script-only shell, a scanned PDF).
+MIN_WORDS = 40
+# A plain fetch shorter than this on an HTML page may be a shell that fills in by script.
 MIN_USEFUL_CHARS = 600
-INTERSTITIAL = re.compile(r"one moment|just a moment|please wait|checking your browser|attention required", re.I)
+# Bot-check interstitials answer 200 with a line or two of text. Only checked on short pages.
+BOT_CHECK_PHRASES = ("request is being verified", "checking your browser", "one moment, please",
+                     "just a moment", "verify you are human", "enable javascript and cookies")
 # Path to a Chromium binary when Playwright's own download is not present
 # (the Claude Code environment ships one at /opt/pw-browsers/chromium).
 CHROMIUM_PATH = os.environ.get("CHROMIUM_PATH") or (
@@ -53,6 +56,10 @@ class UnsafeURL(ValueError):
 
 class FetchError(RuntimeError):
     pass
+
+
+class Refused(FetchError):
+    """The host answered, and the answer was no (401, 403, 429). Not retried with a browser."""
 
 
 def _is_public_address(host: str) -> bool:
@@ -151,10 +158,21 @@ def pdf_to_text(data: bytes) -> str:
 
 async def fetch_url(url: str) -> Source:
     check_url(url)
+
+    async def check_hop(request: httpx.Request) -> None:
+        # Runs for every request, redirects included, so no hop can reach a private address.
+        check_url(str(request.url))
+
     async with httpx.AsyncClient(
-        timeout=TIMEOUT_SECONDS, follow_redirects=True, headers={"User-Agent": USER_AGENT}, max_redirects=5
+        timeout=TIMEOUT_SECONDS, follow_redirects=True, headers={"User-Agent": USER_AGENT}, max_redirects=5,
+        event_hooks={"request": [check_hop]},
     ) as client:
         async with client.stream("GET", url) as response:
+            if response.status_code in (401, 403, 429):
+                raise Refused(
+                    f"{url} refused an automated request ({response.status_code}); "
+                    "ask the owner for the brochure or a page we may read"
+                )
             if response.status_code >= 400:
                 raise FetchError(f"{url} returned {response.status_code}")
             final_url = str(response.url)
@@ -179,6 +197,17 @@ async def fetch_url(url: str) -> Source:
     raise FetchError(f"Unsupported content type: {content_type or 'unknown'}")
 
 
+def check_content(source: Source) -> Source:
+    """Refuse pages with nothing to extract, so the model never sees a bot check or an empty shell."""
+    words = len(source.text.split())
+    low = source.text.lower()
+    if words < 200 and any(phrase in low for phrase in BOT_CHECK_PHRASES):
+        raise FetchError(f"{source.url} returned a bot-check page, not the camp page")
+    if words < MIN_WORDS:
+        raise FetchError(f"{source.url} has almost no text ({words} words); it may need a browser or be a scanned PDF")
+    return source
+
+
 def read_file(path: str | Path) -> Source:
     p = Path(path)
     data = p.read_bytes()
@@ -192,25 +221,47 @@ def read_file(path: str | Path) -> Source:
 
 async def fetch_with_browser(url: str) -> Source:
     """
-    Load the page in headless Chromium and read the rendered HTML. For pages
-    that fill in by script (town sites on CivicPlus, site builders) and for
-    hosts that refuse plain HTTP clients.
+    Load the page in headless Chromium and read the rendered HTML, for pages
+    that fill in by script. Only called after a plain fetch of the same URL
+    succeeded, never to get past a host that refused us.
+
+    Every request the page makes goes through check_url, and navigation
+    redirects are followed one hop at a time so each hop is checked too.
     """
     from playwright.async_api import async_playwright
 
     check_url(url)
+
+    async def guard(route, request) -> None:
+        try:
+            check_url(request.url)
+        except UnsafeURL:
+            await route.abort("blockedbyclient")
+            return
+        if not request.is_navigation_request():
+            await route.continue_()
+            return
+        # Playwright calls route handlers only for the first URL of a redirect
+        # chain, so fetch the document ourselves without following redirects
+        # and check where each one points before the browser goes there.
+        response = await route.fetch(max_redirects=0)
+        location = response.headers.get("location")
+        if 300 <= response.status < 400 and location:
+            try:
+                check_url(urljoin(request.url, location))
+            except UnsafeURL:
+                await route.abort("blockedbyclient")
+                return
+        await route.fulfill(response=response)
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(executable_path=CHROMIUM_PATH)
         try:
             page = await browser.new_page(user_agent=USER_AGENT)
+            await page.route("**/*", guard)
             response = await page.goto(url, wait_until="networkidle", timeout=int(TIMEOUT_SECONDS * 1000))
             if response is not None and response.status >= 400:
                 raise FetchError(f"{url} returned {response.status} in the browser")
-            # Some hosts serve a "one moment, please" page that reloads itself
-            # once a cookie is set. Give it one chance to finish.
-            if INTERSTITIAL.search(await page.title() or ""):
-                await page.wait_for_timeout(7000)
-                await page.wait_for_load_state("networkidle", timeout=int(TIMEOUT_SECONDS * 1000))
             final_url = page.url
             check_url(final_url)
             html = await page.content()
@@ -222,22 +273,19 @@ async def fetch_with_browser(url: str) -> Source:
 
 async def fetch(target: str, *, browser_fallback: bool = True) -> Source:
     """
-    A URL or a local file path. A plain fetch first; if the host refuses it or
-    the page comes back nearly empty, the browser has a go.
+    A URL or a local file path. A plain fetch first. If it worked but the page
+    is nearly empty, it may fill in by script, so the browser has a go. If the
+    host refused us, we stop: the owner can send the brochure instead.
     """
     if not target.startswith(("http://", "https://")):
-        return read_file(target)
+        return check_content(read_file(target))
     try:
         source = await fetch_url(target)
-    except (FetchError, httpx.HTTPError) as exc:
-        if not browser_fallback:
-            raise
-        source = await fetch_with_browser(target)
-        source.notes = f"plain fetch failed ({exc}); used the browser"
-        return source
+    except httpx.HTTPError as exc:
+        raise FetchError(f"{target} could not be reached ({type(exc).__name__}); try again later") from exc
     if browser_fallback and source.kind == "html" and len(source.text) < MIN_USEFUL_CHARS:
-        rendered = await fetch_with_browser(target)
+        rendered = await fetch_with_browser(source.url)
         if len(rendered.text) > len(source.text):
             rendered.notes = "plain fetch was nearly empty; used the browser"
-            return rendered
-    return source
+            source = rendered
+    return check_content(source)
