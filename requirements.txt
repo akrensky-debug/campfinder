@@ -9,3 +9,4 @@ supabase>=2.0.0
 stripe>=8.0.0
 anthropic>=1.9.0
 mcp>=2.2.0
+cryptography>=42.0.0

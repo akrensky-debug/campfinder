@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { track } from '@/lib/analytics'
 import {
-  calendarFeedUrl, loadFamily, streamChat,
+  loadFamily, resetCalendarLink, streamChat,
   type AgentEvent, type Family, type UIData,
 } from '@/lib/agent'
 import { AgentBlock, AgentText, CalendarList } from '@/components/agent/AgentBlocks'
@@ -121,7 +121,7 @@ export default function AgentHome() {
           </button>
           {!empty && <button onClick={newConversation} className="text-sm text-gray-500">New chat</button>}
         </div>
-        {panelOpen && family && <div className="lg:hidden mb-4"><FamilyPanel family={family} /></div>}
+        {panelOpen && family && <div className="lg:hidden mb-4"><FamilyPanel family={family} onChange={setFamily} /></div>}
 
         {empty ? (
           <div className="flex-1 flex flex-col justify-center py-12">
@@ -187,7 +187,7 @@ export default function AgentHome() {
           {!empty && (
             <button onClick={newConversation} className="text-sm text-gray-500 hover:text-gray-800">+ New chat</button>
           )}
-          {family && <FamilyPanel family={family} />}
+          {family && <FamilyPanel family={family} onChange={setFamily} />}
         </div>
       </aside>
     </div>
@@ -220,11 +220,17 @@ function MessageView({ message }: { message: Message }) {
   )
 }
 
-function FamilyPanel({ family }: { family: Family }) {
+function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Family) => void }) {
   const { profile, events } = family
-  const feed = calendarFeedUrl(family.id)
-  const webcal = feed.replace(/^https?:/, 'webcal:')
+  const feed = family.calendar_url
+  const webcal = feed?.replace(/^https?:/, 'webcal:')
   const [copied, setCopied] = useState(false)
+
+  async function resetLink() {
+    if (!confirm('Anyone using the current calendar link will lose access. Make a new link?')) return
+    onChange(await resetCalendarLink(family.id))
+    setCopied(false)
+  }
 
   return (
     <div className="space-y-4">
@@ -253,7 +259,7 @@ function FamilyPanel({ family }: { family: Family }) {
       <div className="bg-gray-50 rounded-2xl p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Family calendar</p>
         <CalendarList events={events} compact />
-        {events.length > 0 && (
+        {events.length > 0 && feed && webcal && (
           <div className="mt-3 pt-3 border-t border-gray-200 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
             <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline">
               Add to Google Calendar
@@ -263,9 +269,29 @@ function FamilyPanel({ family }: { family: Family }) {
               onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true) }}
               className="text-gray-500 hover:text-gray-800"
             >
-              {copied ? 'Link copied' : 'Copy link to share'}
+              {copied ? 'Link copied' : 'Copy private link'}
             </button>
+            <button onClick={resetLink} className="text-gray-500 hover:text-gray-800">Reset link</button>
           </div>
+        )}
+      </div>
+
+      <div className="bg-gray-50 rounded-2xl p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Info kit</p>
+        {family.signed_in ? (
+          <>
+            <p className="text-sm text-gray-600 mb-2">
+              Allergies, emergency contacts, insurance: fill them in once, share only what each camp asks for.
+            </p>
+            <a href="/kit" className="text-sm font-medium text-brand-700 hover:underline">Open your info kit →</a>
+          </>
+        ) : (
+          <>
+            <p className="text-sm text-gray-600 mb-2">
+              Save your family to an account to keep it safe and fill in camp forms once.
+            </p>
+            <a href="/signin" className="text-sm font-medium text-brand-700 hover:underline">Save to an account →</a>
+          </>
         )}
       </div>
     </div>

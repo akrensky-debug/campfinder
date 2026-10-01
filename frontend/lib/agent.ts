@@ -1,4 +1,5 @@
 import type { CampSearchResult } from '@/lib/api'
+import { authHeaders } from '@/lib/auth'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 const FAMILY_KEY = 'cf_family_id'
@@ -34,6 +35,8 @@ export interface Family {
   id: string
   profile: FamilyProfile
   events: FamilyEvent[]
+  calendar_url: string | null
+  signed_in: boolean
 }
 
 export interface Comparison {
@@ -91,22 +94,65 @@ function writeFamilyId(id: string) {
   try { localStorage.setItem(FAMILY_KEY, id) } catch {}
 }
 
-/** Load this browser's family, creating one on first visit. */
-export async function loadFamily(): Promise<Family> {
-  const existing = readFamilyId()
-  if (existing) {
-    const res = await fetch(`${API}/api/v1/families/${existing}`, { cache: 'no-store' })
-    if (res.ok) return res.json()
-  }
+async function createGuestFamily(): Promise<Family> {
   const res = await fetch(`${API}/api/v1/families`, { method: 'POST' })
   if (!res.ok) throw new Error('Could not start a session')
   const family: Family = await res.json()
   writeFamilyId(family.id)
-  return { ...family, events: family.events ?? [] }
+  return family
 }
 
-export function calendarFeedUrl(familyId: string): string {
-  return `${API}/api/v1/families/${familyId}/calendar.ics`
+/**
+ * Load this browser's family. Signed in: the account's family, saving the current
+ * guest family to the account the first time. Signed out: the guest family, created
+ * on first visit.
+ */
+export async function loadFamily(): Promise<Family> {
+  const auth = await authHeaders()
+  const existing = readFamilyId()
+
+  if (auth.Authorization) {
+    const mine = await fetch(`${API}/api/v1/me/family`, { headers: auth, cache: 'no-store' })
+    if (mine.ok) {
+      const family: Family = await mine.json()
+      writeFamilyId(family.id)
+      return family
+    }
+    const guestId = existing ?? (await createGuestFamily()).id
+    let claimed = await fetch(`${API}/api/v1/families/${guestId}/claim`, { method: 'POST', headers: auth })
+    if (!claimed.ok) {
+      // The stored guest family is gone or belongs to someone else: start fresh.
+      const fresh = await createGuestFamily()
+      claimed = await fetch(`${API}/api/v1/families/${fresh.id}/claim`, { method: 'POST', headers: auth })
+    }
+    if (claimed.ok) {
+      const family: Family = await claimed.json()
+      writeFamilyId(family.id)
+      return family
+    }
+  }
+
+  if (existing) {
+    const res = await fetch(`${API}/api/v1/families/${existing}`, { headers: auth, cache: 'no-store' })
+    if (res.ok) return res.json()
+  }
+  return createGuestFamily()
+}
+
+/** New private calendar link; anyone holding the old one loses access. */
+export async function resetCalendarLink(familyId: string): Promise<Family> {
+  const res = await fetch(`${API}/api/v1/families/${familyId}/calendar/reset`, {
+    method: 'POST', headers: await authHeaders(),
+  })
+  if (!res.ok) throw new Error('Could not reset the link')
+  return res.json()
+}
+
+/** Permanently delete the family, its calendar, conversations and info kit. */
+export async function deleteFamily(familyId: string): Promise<void> {
+  const res = await fetch(`${API}/api/v1/families/${familyId}`, { method: 'DELETE', headers: await authHeaders() })
+  if (!res.ok) throw new Error('Could not delete')
+  try { localStorage.removeItem(FAMILY_KEY) } catch {}
 }
 
 /** Stream one agent turn. Calls onEvent for each server-sent event. */
@@ -117,7 +163,7 @@ export async function streamChat(
 ): Promise<void> {
   const res = await fetch(`${API}/api/v1/agent/chat`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...(await authHeaders()) },
     body: JSON.stringify(body),
     signal,
   })

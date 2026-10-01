@@ -48,6 +48,7 @@ Then create the family tables:
 ```bash
 psql $DATABASE_URL -f schema_family.sql
 psql $DATABASE_URL -f schema_activity_api.sql
+psql $DATABASE_URL -f schema_accounts_kit.sql
 ```
 
 ### 5. Start the API server
@@ -60,6 +61,31 @@ The API is now running at `http://localhost:8000`.
 
 - Interactive docs: http://localhost:8000/docs
 - Health check: http://localhost:8000/health
+
+### Parent sign-in and the info kit
+
+Sign-in uses Supabase Auth email links. In the Supabase dashboard, enable the Email
+provider and add your frontend URL (and `<frontend>/signin`) to Auth > URL Configuration.
+
+Backend env:
+
+```
+KIT_ENCRYPTION_KEY=   # python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+FRONTEND_URL=         # used to build share links
+```
+
+Frontend env (Vercel):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
+
+Families start as guests (no account) so parents get value first. Signing in saves the
+family to the account and locks it there. The info kit needs an account: it is encrypted
+with AES-GCM before storage, never sent to the AI model, and shared as packages (chosen
+fields for chosen kids) behind expiring, revocable links that log every open. Losing
+`KIT_ENCRYPTION_KEY` makes stored kits unreadable, so keep it in a secrets manager.
 
 ---
 
@@ -76,7 +102,15 @@ The API is now running at `http://localhost:8000`.
 | `POST` | `/api/v1/families` | Create a family (the browser keeps its id) |
 | `GET`  | `/api/v1/families/{id}` | Family profile and calendar |
 | `POST` | `/api/v1/agent/chat` | Chat with the family agent (server-sent events) |
-| `GET`  | `/api/v1/families/{id}/calendar.ics` | Subscribable family calendar feed |
+| `POST` | `/api/v1/families/{id}/claim` | Save a guest family to the signed-in account |
+| `GET`  | `/api/v1/me/family` | The signed-in parent's family |
+| `POST` | `/api/v1/families/{id}/calendar/reset` | Issue a new private calendar link |
+| `DELETE` | `/api/v1/families/{id}` | Delete everything about a family |
+| `GET`  | `/api/v1/calendar/{token}.ics` | Private, resettable family calendar feed |
+| `GET/PUT` | `/api/v1/families/{id}/kit` | The encrypted info kit (account required) |
+| `GET/POST` | `/api/v1/families/{id}/kit/shares` | List or create share packages |
+| `POST` | `/api/v1/families/{id}/kit/shares/{share_id}/revoke` | Withdraw a share |
+| `GET`  | `/api/v1/shares/{token}` | Recipient view of a shared package |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
 | `GET`  | `/health` | API + database health check |

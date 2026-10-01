@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import AccountLink from '@/components/AccountLink'
 
 export const metadata: Metadata = {
   title: 'CampFinder -- There is finally a better way to plan your kid\'s summer.',
@@ -27,12 +28,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/operators" className="hover:text-brand-700 transition-colors">For Camps</a>
               <a href="/operators/claim" className="hover:text-brand-700 transition-colors">Claim Listing</a>
             </nav>
+            <div className="flex items-center gap-4">
+            <AccountLink />
             <a
               href="/operators/submit"
               className="bg-brand-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors"
             >
               List your camp
             </a>
+            </div>
           </div>
         </header>
         <main>{children}</main>

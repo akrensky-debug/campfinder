@@ -3,16 +3,19 @@
 from __future__ import annotations
 
 import json
+import secrets
 from datetime import date, datetime, timedelta, timezone
 from typing import Any, AsyncIterator
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from campfinder.agent.runner import run_agent
 from campfinder.agent.tools import list_family_events
+from campfinder.auth import authorize_family, optional_user, required_user
+from campfinder.kit.service import delete_family_data
 from campfinder.database import get_supabase
 
 router = APIRouter()
@@ -22,6 +25,8 @@ class FamilyResponse(BaseModel):
     id: UUID
     profile: dict[str, Any]
     events: list[dict[str, Any]] = []
+    calendar_url: str | None = None
+    signed_in: bool = Field(default=False, description="True when the family belongs to the caller's account.")
 
 
 class ChatRequest(BaseModel):
@@ -30,28 +35,75 @@ class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=4000)
 
 
-def _get_family(family_id: UUID) -> dict[str, Any]:
-    rows = get_supabase().table("families").select("*").eq("id", str(family_id)).execute().data
-    if not rows:
-        raise HTTPException(status_code=404, detail="Family not found")
-    return rows[0]
+def _calendar_url(request: Request, family: dict[str, Any]) -> str | None:
+    token = family.get("calendar_token")
+    return f"{str(request.base_url).rstrip('/')}/api/v1/calendar/{token}.ics" if token else None
 
 
-@router.post("/families", response_model=FamilyResponse, summary="Create a family")
-async def create_family() -> FamilyResponse:
+def _family_response(request: Request, family: dict[str, Any]) -> FamilyResponse:
+    return FamilyResponse(
+        id=family["id"],
+        profile=family.get("profile") or {},
+        events=list_family_events(family["id"]),
+        calendar_url=_calendar_url(request, family),
+        signed_in=family.get("owner_user_id") is not None,
+    )
+
+
+@router.post("/families", response_model=FamilyResponse, summary="Create a guest family")
+async def create_family(request: Request) -> FamilyResponse:
     row = get_supabase().table("families").insert({}).execute().data[0]
-    return FamilyResponse(id=row["id"], profile=row["profile"] or {})
+    return _family_response(request, row)
 
 
 @router.get("/families/{family_id}", response_model=FamilyResponse, summary="Get a family")
-async def get_family(family_id: UUID) -> FamilyResponse:
-    row = _get_family(family_id)
-    return FamilyResponse(id=row["id"], profile=row["profile"] or {}, events=list_family_events(row["id"]))
+async def get_family(request: Request, family_id: UUID, user_id: str | None = Depends(optional_user)) -> FamilyResponse:
+    return _family_response(request, authorize_family(family_id, user_id))
+
+
+@router.get("/me/family", response_model=FamilyResponse, summary="The signed-in parent's family")
+async def my_family(request: Request, user_id: str = Depends(required_user)) -> FamilyResponse:
+    rows = get_supabase().table("families").select("*").eq("owner_user_id", user_id).execute().data
+    if not rows:
+        raise HTTPException(status_code=404, detail="No family saved to this account yet")
+    return _family_response(request, rows[0])
+
+
+@router.post("/families/{family_id}/claim", response_model=FamilyResponse, summary="Save a guest family to your account")
+async def claim_family(request: Request, family_id: UUID, user_id: str = Depends(required_user)) -> FamilyResponse:
+    """Attach a guest family to the signed-in account. If the account already has a
+    family, that one is returned and the guest family is left as it was."""
+    sb = get_supabase()
+    existing = sb.table("families").select("*").eq("owner_user_id", user_id).execute().data
+    if existing:
+        return _family_response(request, existing[0])
+    family = authorize_family(family_id, user_id)
+    if family.get("owner_user_id") is None:
+        sb.table("families").update({"owner_user_id": user_id}).eq("id", str(family_id)).execute()
+        family["owner_user_id"] = user_id
+    return _family_response(request, family)
+
+
+@router.post("/families/{family_id}/calendar/reset", response_model=FamilyResponse, summary="Reset the calendar link")
+async def reset_calendar_link(request: Request, family_id: UUID, user_id: str | None = Depends(optional_user)) -> FamilyResponse:
+    """Issue a new private calendar link; the old one stops working at once."""
+    family = authorize_family(family_id, user_id)
+    token = secrets.token_hex(16)
+    get_supabase().table("families").update({"calendar_token": token}).eq("id", str(family_id)).execute()
+    family["calendar_token"] = token
+    return _family_response(request, family)
+
+
+@router.delete("/families/{family_id}", status_code=204, summary="Delete everything about this family")
+async def delete_family(family_id: UUID, user_id: str | None = Depends(optional_user)) -> Response:
+    authorize_family(family_id, user_id)
+    delete_family_data(str(family_id))
+    return Response(status_code=204)
 
 
 @router.post("/agent/chat", summary="Chat with the family agent (server-sent events)")
-async def chat(req: ChatRequest) -> StreamingResponse:
-    _get_family(req.family_id)
+async def chat(req: ChatRequest, user_id: str | None = Depends(optional_user)) -> StreamingResponse:
+    authorize_family(req.family_id, user_id)
 
     async def events() -> AsyncIterator[str]:
         async for event in run_agent(
@@ -68,14 +120,19 @@ async def chat(req: ChatRequest) -> StreamingResponse:
     )
 
 
-@router.get("/families/{family_id}/calendar.ics", summary="Family calendar feed")
-async def family_calendar(family_id: UUID) -> Response:
-    """iCalendar feed that Google, Apple and Outlook Calendar can subscribe to."""
-    _get_family(family_id)
+@router.get("/calendar/{token}.ics", summary="Family calendar feed")
+async def family_calendar(token: str) -> Response:
+    """Private iCalendar feed for Google, Apple and Outlook Calendar. The link is the key;
+    resetting it cuts off anyone holding the old one."""
+    if len(token) < 32:
+        raise HTTPException(status_code=404, detail="Calendar not found")
+    rows = get_supabase().table("families").select("id").eq("calendar_token", token).execute().data
+    if not rows:
+        raise HTTPException(status_code=404, detail="Calendar not found")
     return Response(
-        content=build_ics(list_family_events(str(family_id))),
+        content=build_ics(list_family_events(rows[0]["id"])),
         media_type="text/calendar; charset=utf-8",
-        headers={"Content-Disposition": 'inline; filename="campfinder.ics"'},
+        headers={"Content-Disposition": 'inline; filename="campfinder.ics"', "Cache-Control": "private, no-store"},
     )
 
 
