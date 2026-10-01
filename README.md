@@ -47,6 +47,7 @@ Then create the family tables:
 
 ```bash
 psql $DATABASE_URL -f schema_family.sql
+psql $DATABASE_URL -f schema_activity_api.sql
 ```
 
 ### 5. Start the API server
@@ -76,6 +77,7 @@ The API is now running at `http://localhost:8000`.
 | `GET`  | `/api/v1/families/{id}` | Family profile and calendar |
 | `POST` | `/api/v1/agent/chat` | Chat with the family agent (server-sent events) |
 | `GET`  | `/api/v1/families/{id}/calendar.ics` | Subscribable family calendar feed |
+| `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
 | `GET`  | `/health` | API + database health check |
 
@@ -90,6 +92,9 @@ to from Google, Apple or Outlook Calendar.
 
 - Tools live in `campfinder/agent/tools.py`; the loop is `campfinder/agent/runner.py`.
 - Requires `ANTHROPIC_API_KEY` and the tables in `schema_family.sql`.
+- The partner-facing Activity API (`campfinder/activity/`, `docs/activity-api.md`) serves the
+  same data in the Family Activity schema, with API keys, rate limits, per-session calendar
+  files and anonymous demand reporting. Requires `schema_activity_api.sql`.
 - The same camp tools are served over MCP at `/mcp`, so Claude, ChatGPT and other
   agents can connect CampFinder as a data source. Family tools stay site-only.
 

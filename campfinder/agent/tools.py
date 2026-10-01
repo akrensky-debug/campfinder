@@ -21,6 +21,7 @@ from uuid import UUID
 from fastapi import HTTPException
 from pydantic import BaseModel, Field, ValidationError
 
+from campfinder.activity.sources import find_sessions
 from campfinder.database import get_supabase
 from campfinder.models.plan import PlanRequest, PlanSessionInput
 from campfinder.routers.camps import get_camp
@@ -73,6 +74,17 @@ class SearchCampsInput(BaseModel):
     requires_accreditation: bool = False
     sort: Literal["best_match", "distance", "price"] = "best_match"
     limit: int = Field(default=8, ge=1, le=20)
+
+
+class FindSessionsInput(BaseModel):
+    location: str = Field(description=LOCATION_HELP)
+    radius_miles: float = Field(default=25.0, ge=1, le=150)
+    age: int | None = Field(default=None, ge=2, le=19)
+    categories: list[str] | None = None
+    max_price_per_week: float | None = Field(default=None, ge=0)
+    starts_on_or_after: date | None = None
+    ends_on_or_before: date | None = None
+    limit: int = Field(default=15, ge=1, le=40)
 
 
 class GetCampDetailsInput(BaseModel):
@@ -161,6 +173,8 @@ async def search_camps_tool(inp: SearchCampsInput) -> ToolOutput:
     )
     res = await search(req)
     camps = [r.model_dump(mode="json") for r in res.results]
+    if not camps:
+        _record_unmet_demand(inp)
     return ToolOutput(
         content={
             "total": res.total,
@@ -169,6 +183,42 @@ async def search_camps_tool(inp: SearchCampsInput) -> ToolOutput:
         },
         ui={"type": "camps", "camps": camps, "query": inp.model_dump(mode="json", exclude_none=True)},
     )
+
+
+def _record_unmet_demand(inp: SearchCampsInput) -> None:
+    """Log a search that found nothing, anonymously, to the shared demand dataset."""
+    try:
+        get_supabase().table("activity_demand").insert({
+            "location": inp.location,
+            "ages": [inp.age] if inp.age is not None else [],
+            "kinds": ["camp"],
+            "categories": inp.categories or [],
+            "weeks": [w.isoformat() for w in inp.weeks or []],
+            "max_price_per_week": inp.max_price_per_week,
+            "needs": [n for n, on in (("extended care", inp.requires_extended_care),
+                                      ("transportation", inp.requires_transport),
+                                      ("meals", inp.requires_meals)) if on],
+            "results_shown": 0,
+            "satisfied": False,
+        }).execute()
+    except Exception:
+        pass  # demand logging never blocks the family
+
+
+async def find_sessions_tool(inp: FindSessionsInput) -> ToolOutput:
+    matches = await find_sessions(
+        near=inp.location, api_base="", radius_miles=inp.radius_miles, age=inp.age,
+        categories=inp.categories, max_price_per_week=inp.max_price_per_week,
+        starts_on_or_after=inp.starts_on_or_after, ends_on_or_before=inp.ends_on_or_before,
+        open_only=True, limit=inp.limit,
+    )
+    rows = [
+        {"camp_id": str(p.id), "camp": p.name, "session_id": str(s.id), "session": s.name,
+         "start_date": s.start_date.isoformat(), "end_date": s.end_date.isoformat(),
+         "price": s.price, "availability": s.availability, "distance_miles": p.distance_miles}
+        for s, p in matches
+    ]
+    return ToolOutput(content={"sessions": rows, "note": None if rows else "Nothing open in that window."})
 
 
 async def get_camp_details_tool(inp: GetCampDetailsInput) -> ToolOutput:
@@ -280,6 +330,12 @@ CAMP_TOOLS: list[ToolSpec] = [
         "interests, budget, weeks and logistics. Returns ranked camps with match reasons. "
         "Results are also shown to the parent as cards, so do not repeat every field back.",
         SearchCampsInput, search_camps_tool, status="Searching camps",
+    ),
+    ToolSpec(
+        "find_sessions",
+        "Open camp sessions that fit a child and a date window, soonest first, e.g. everything "
+        "for an 8-year-old the week of July 6. Use this to fill specific weeks or check gaps.",
+        FindSessionsInput, find_sessions_tool, status="Checking open weeks",
     ),
     ToolSpec(
         "get_camp_details",
