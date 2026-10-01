@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Run the listing tool against the ten camps in docs/ingest-test-set.md and push the results.
 # Usage: ANTHROPIC_API_KEY=sk-ant-... scripts/run_ingest_eval.sh
+# In a Claude Code cloud session, where ANTHROPIC_API_KEY may not reach the shell, set
+# CAMPFINDER_ANTHROPIC_API_KEY in the environment's variables instead.
 set -uo pipefail
 cd "$(dirname "$0")/.."
-: "${ANTHROPIC_API_KEY:?Set ANTHROPIC_API_KEY first}"
+export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-${CAMPFINDER_ANTHROPIC_API_KEY:-}}"
+: "${ANTHROPIC_API_KEY:?Set ANTHROPIC_API_KEY or CAMPFINDER_ANTHROPIC_API_KEY first}"
 [ -d .venv ] || python3 -m venv .venv
 source .venv/bin/activate
 pip install -q -r requirements.txt
