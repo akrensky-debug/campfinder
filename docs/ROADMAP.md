@@ -158,28 +158,41 @@ have written down what the 20 conversations taught us.
 
 ### Phase 2: Supply and identity (Nov)
 
-Build:
+*Reordered 1 October 2026 for a world where parents ask Claude or ChatGPT first. An agent can
+read any camp's website, so a directory is worth nothing. What agents cannot get is facts the
+owner has confirmed, with a date, and the spots actually left. So the owner loop comes first,
+and our data reaches parents through their agents as early as possible.*
 
-- Load about 150 camps around Providence with the tool. Hand-check each one.
-- Owner confirmation by email or text: "here is your listing, reply if anything is wrong".
-- Registration alerts for parents, with a waitlist page under the new brand.
-- The family profile, with the trust rules built in from the first line: ownership, export,
-  delete, minimal fields, medical details kept apart.
-- Listing updates by email or text: the owner writes "Week 3 is full", the listing changes.
+Build, in this order:
 
-Done when: 150 camps are live, at least 30 owners have confirmed, and parents can sign up
-for alerts under the new brand.
+1. Owner confirmation by email or text: "here is your listing, reply if anything is wrong".
+2. In parallel:
+   - Listing updates by email or text: the owner writes "Week 3 is full", the listing
+     changes, and the owner gets back "here is what changed, reply if wrong". Some owners will
+     answer with their own AI, so the confirmation back always shows the change in full.
+   - A read-only MCP server so Claude and ChatGPT can answer parents from our data: public
+     camp facts only, each with its source, its date and whether the owner confirmed it. No
+     family data goes through it.
+3. Load about 150 camps around Providence with the tool. Hand-check each one.
+4. Registration alerts for parents, with a waitlist page under the new brand.
+5. The family profile, with the trust rules built in from the first line: ownership, export,
+   delete, minimal fields, medical details kept apart.
+
+Done when: 150 camps are live, at least 30 owners have confirmed, Claude or ChatGPT can answer
+a camp question from our data with the source shown, and parents can sign up for alerts under
+the new brand.
 
 ### Phase 3: Soft launch (Dec)
 
 Build:
 
-- Request a spot: the parent asks, the camp confirms by replying to an email or text, the
-  camp collects payment itself for now.
+- Request a spot, on our site: the parent asks, the camp confirms by replying to an email or
+  text, the camp collects payment itself for now. Not through an agent yet: that would send
+  a child's details to a third party, which trust rule 2 forbids until counsel has reviewed it.
 - Booking notices to camps with the kid's details and forms.
-- The MCP server so Claude and ChatGPT can answer parents from our data, and the AI question
-  box on the site.
-- Refreshed parent site and summer planner.
+- A camp page for each camp that is clean and trustworthy, because it is what agents link to.
+  The parent site and summer planner get less than planned: parents will plan in the
+  assistant they already use.
 
 Done when: a real parent has requested a spot at a real camp and the camp has confirmed it.
 
