@@ -1,0 +1,1771 @@
+{
+  "metro": "Providence, RI",
+  "camps": [
+    {
+      "slug": "hockomock-ymca-camp-elmwood-north-attleborough",
+      "name": "Camp Elmwood (Hurley Family YMCA Day Camp)",
+      "operator_name": "Hockomock Area YMCA",
+      "website_url": "https://www.hockymca.org/camp/options/core-day-camp-north-attleboro/",
+      "registration_url": "https://hockymcanorth.campbrainregistration.com/",
+      "street_address": "300 Elmwood Street",
+      "city": "North Attleborough",
+      "state": "MA",
+      "zip": "02760",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "swim lessons",
+        "field trips",
+        "arts",
+        "climbing",
+        "gardening",
+        "singing"
+      ],
+      "age_min": 3,
+      "age_max": 12,
+      "grade_max": 6,
+      "description_short": "Traditional YMCA day camp at the North Attleboro Y for preschoolers and grades 1-6, with weekly swim lessons, themed weeks, and field trips for grades 2-6.",
+      "price_per_week": 443,
+      "price_min": 404,
+      "price_max": 561,
+      "price_per": "week",
+      "extended_care": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-19",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 10",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 11",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 12",
+          "start_date": "2026-08-31",
+          "end_date": "2026-09-04",
+          "availability": "unknown",
+          "price": 443
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hockymca.org/camp/north-attleboro-day-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "registration_url"
+          ]
+        },
+        {
+          "url": "https://www.hockymca.org/camp/options/core-day-camp-north-attleboro/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_max",
+            "description_short",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Preschoolers ages 3-5 and grades 1-6; age_max derived from grade 6. Prices are non-member rates: school-age full week $443; range covers preschool half-day to preschool full-day. Session prices are the school-age non-member weekly rate. Pre-camp 7-9am and post-camp 4-6pm add-ons."
+        },
+        {
+          "url": "https://www.hockymca.org/camp/camp-info/",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included",
+            "financial_aid"
+          ],
+          "note": "Packing list says campers bring a healthy lunch; financial assistance page linked."
+        }
+      ]
+    },
+    {
+      "slug": "hockomock-ymca-camp-wapawca-foxborough",
+      "name": "Camp Wapawca (Invensys Foxboro YMCA Day Camp)",
+      "operator_name": "Hockomock Area YMCA",
+      "website_url": "https://www.hockymca.org/camp/options/core-day-camp-foxboro/",
+      "registration_url": "https://hockymcafoxboro.campbrainregistration.com/",
+      "street_address": "67 Mechanic Street",
+      "city": "Foxborough",
+      "state": "MA",
+      "zip": "02035",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "swim lessons",
+        "field trips",
+        "arts",
+        "games"
+      ],
+      "age_min": 3,
+      "age_max": 11,
+      "grade_max": 5,
+      "description_short": "Traditional YMCA day camp at the Foxboro Y for preschoolers and grades 1-5, with weekly swim lessons, themed weeks, and field trips for grades 2-5.",
+      "price_per_week": 459,
+      "price_min": 418,
+      "price_max": 579,
+      "price_per": "week",
+      "extended_care": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-19",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 10",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 11",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown",
+          "price": 459
+        },
+        {
+          "name": "Week 12",
+          "start_date": "2026-08-31",
+          "end_date": "2026-09-04",
+          "availability": "unknown",
+          "price": 459
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hockymca.org/camp/foxboro-day-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "registration_url"
+          ]
+        },
+        {
+          "url": "https://www.hockymca.org/camp/options/core-day-camp-foxboro/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_max",
+            "description_short",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Preschoolers ages 3-5 and grades 1-5; age_max derived from grade 5. Prices are non-member rates: school-age full week $459; range covers preschool half-day to preschool full-day. Session prices are the school-age non-member weekly rate. Pre-camp 7-9am and post-camp 4-6pm add-ons."
+        },
+        {
+          "url": "https://www.hockymca.org/camp/camp-info/",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included",
+            "financial_aid"
+          ],
+          "note": "Packing list says campers bring a healthy lunch; financial assistance page linked."
+        }
+      ]
+    },
+    {
+      "slug": "hockomock-ymca-camp-wiggi-franklin",
+      "name": "Camp Wiggi (Bernon Family YMCA Day Camp)",
+      "operator_name": "Hockomock Area YMCA",
+      "website_url": "https://www.hockymca.org/camp/options/core-day-camp-franklin/",
+      "registration_url": "https://hockymcafranklin.campbrainregistration.com/",
+      "street_address": "45 Forge Hill Road",
+      "city": "Franklin",
+      "state": "MA",
+      "zip": "02038",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "swim lessons",
+        "field trips",
+        "arts",
+        "games"
+      ],
+      "age_min": 3,
+      "age_max": 12,
+      "grade_max": 6,
+      "description_short": "Traditional YMCA day camp at the Franklin Y for preschoolers and grades 1-6, with weekly swim lessons, themed weeks, and field trips for grades 2-6.",
+      "price_per_week": 443,
+      "price_min": 404,
+      "price_max": 561,
+      "price_per": "week",
+      "extended_care": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-19",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 10",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 11",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown",
+          "price": 443
+        },
+        {
+          "name": "Week 12",
+          "start_date": "2026-08-31",
+          "end_date": "2026-09-04",
+          "availability": "unknown",
+          "price": 443
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hockymca.org/camp/franklin-day-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "registration_url"
+          ]
+        },
+        {
+          "url": "https://www.hockymca.org/camp/options/core-day-camp-franklin/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_max",
+            "description_short",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Preschoolers ages 3-5 and grades 1-6; age_max derived from grade 6. Prices are non-member rates: school-age full week $443; range covers preschool half-day to preschool full-day. Session prices are the school-age non-member weekly rate. Pre-camp 7-9am and post-camp 4-6pm add-ons."
+        },
+        {
+          "url": "https://www.hockymca.org/camp/camp-info/",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included",
+            "financial_aid"
+          ],
+          "note": "Packing list says campers bring a healthy lunch; financial assistance page linked."
+        }
+      ]
+    },
+    {
+      "slug": "hockomock-ymca-camp-blackhawk-bellingham",
+      "name": "Blackhawk YMCA Day Camp",
+      "operator_name": "Hockomock Area YMCA",
+      "website_url": "https://www.hockymca.org/camp/blackhawk-day-camp/",
+      "registration_url": "https://hockymcafranklin.campbrainregistration.com/",
+      "street_address": "100 Cross Street",
+      "city": "Bellingham",
+      "state": "MA",
+      "zip": "02019",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "sports",
+        "games",
+        "arts and crafts",
+        "water games",
+        "swimming",
+        "paddle boarding",
+        "swim lessons"
+      ],
+      "age_min": 6,
+      "age_max": 12,
+      "grade_min": 1,
+      "grade_max": 6,
+      "description_short": "YMCA day camp at Silver Lake Park in Bellingham, run with the town, for grades 1-6. Campers rotate through sports, crafts, water games, swimming and paddle boarding, with swim lessons in the camp day.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 471,
+      "price_min": 358,
+      "price_max": 471,
+      "price_per": "week",
+      "extended_care": false,
+      "meals_included": false,
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 471
+        },
+        {
+          "name": "Week 10",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 471
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hockymca.org/camp/blackhawk-day-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_min",
+            "grade_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 1-6. Non-member rates: $471/week, $358 for 3-day option. Weeks 2-10 offered (Weeks 1, 11, 12 not offered). Hours 8am-5:30pm."
+        },
+        {
+          "url": "https://www.hockymca.org/camp/camp-info/",
+          "checked": "2026-10-02",
+          "fields": [
+            "extended_care",
+            "meals_included",
+            "financial_aid"
+          ],
+          "note": "FAQ: no pre or post camp for Blackhawk (full day already 8am-5:30pm); campers bring lunch; financial assistance linked."
+        }
+      ]
+    },
+    {
+      "slug": "hockomock-ymca-mansfield-theatre-production-camp",
+      "name": "Mansfield Arts YMCA Theatre Production Camp",
+      "operator_name": "Hockomock Area YMCA",
+      "website_url": "https://www.hockymca.org/camp/mansfield-day-camp/",
+      "registration_url": "https://hockymcafoxboro.campbrainregistration.com/",
+      "street_address": "40 Balcom Street",
+      "city": "Mansfield",
+      "state": "MA",
+      "zip": "02048",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "performing_arts"
+      ],
+      "activities": [
+        "musical theatre",
+        "choreography",
+        "singing",
+        "acting",
+        "outdoor play"
+      ],
+      "age_min": 7,
+      "age_max": 15,
+      "grade_min": 2,
+      "grade_max": 9,
+      "description_short": "Two- and three-week sessions at the Mansfield Arts YMCA where campers in grades 2-9 rehearse and stage a full musical, with outdoor play in the afternoons and two public performances at the end.",
+      "price_min": 1077,
+      "price_max": 1331,
+      "price_per": "session",
+      "extended_care": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Frozen Jr. (Weeks 3-4)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 1077
+        },
+        {
+          "name": "The Wizard of Oz: YPE (Weeks 5-6)",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 1077
+        },
+        {
+          "name": "Disney's Descendants: The Musical (Weeks 7-9)",
+          "start_date": "2026-07-27",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 1331
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hockymca.org/camp/mansfield-day-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "extended_care"
+          ],
+          "note": "Pre & Post Camp add-on listed for weeks 4-9."
+        },
+        {
+          "url": "https://www.hockymca.org/camp/options/theatre-production-camp-1/",
+          "checked": "2026-10-02",
+          "fields": [
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_min",
+            "grade_max",
+            "description_short",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 2-9. Non-member prices: $1,077 for each 2-week show, $1,331 for the 3-week show (from theatre-production-camp-2 and -3 pages). Daily camp held at 40 Balcom Street; extra Saturday dress rehearsal."
+        }
+      ]
+    },
+    {
+      "slug": "newman-ymca-summer-day-camp-seekonk",
+      "name": "Newman YMCA Summer Day Camp",
+      "operator_name": "YMCA of Greater Providence",
+      "website_url": "https://ymcagreaterprovidence.org/programs/summer-camp",
+      "registration_url": "https://operations.daxko.com/Online/3038/ProgramsV2/Search.mvc?keywords=&program_id=&expanded=categories%2Clocations&coming_soon=False&category_ids=CAT2574958&all_categories=true&all_locations=false&date_ranges%5B0%5D.start=&date_ranges%5B0%5D.end=&birth_dates=",
+      "street_address": "464 Taunton Ave",
+      "city": "Seekonk",
+      "state": "MA",
+      "zip": "02771",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "arts",
+        "STEM"
+      ],
+      "activities": [
+        "swimming",
+        "water games",
+        "arts and crafts",
+        "musical theater",
+        "dance",
+        "science experiments",
+        "STEM",
+        "team challenges"
+      ],
+      "age_min": 5,
+      "age_max": 14,
+      "grade_min": 0,
+      "grade_max": 8,
+      "description_short": "YMCA day camp at the Newman Y in Seekonk for children entering K-8, grouped by grade, with swimming, water games, crafts and themed weeks; optional dance, tumbling and aquatics weeks and a leaders program for grades 6-8.",
+      "extended_care": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Deposits and registration fees are non-refundable. Before June 1, withdrawals get a refund or Y credit; after June 1 with 14 days written notice, Y credit only; with less notice, no refund and a $25/week fee. No refunds once a session starts except verified medical reasons.",
+      "special_needs_notes": "Welcomes campers of all abilities and makes reasonable modifications; families should contact the branch before camp to plan for specific needs.",
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcagreaterprovidence.org/programs/summer-camp",
+      "price_min": 390,
+      "price_max": 435,
+      "price_per": "week",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-19",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcagreaterprovidence.org/programs/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "description_short",
+            "financial_aid",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "aca_accredited",
+            "aca_source_url",
+            "meals_included"
+          ],
+          "note": "Page states GPYMCA camps are ACA accredited; FAQ asks campers to bring a bag lunch."
+        },
+        {
+          "url": "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Newman%20Camp%20Info%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_min",
+            "grade_max",
+            "extended_care",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Grades entering K-8 in fall 2026; ages derived. Non-member weekly prices conflict within the PDF (table: $390 traditional/$405 themed; text: $420 traditional/$435 themed), so the range spans both; no per-session price recorded. PDF prints Week 4 as 7/13-7/19 (recorded as printed). Camp closed 7/3. AM extended day 7-8:30am, PM 4-5:30pm for a fee."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-southcoast-camp-quequechan-fall-river",
+      "name": "Camp Quequechan",
+      "operator_name": "YMCA Southcoast",
+      "website_url": "https://ymcasouthcoast.org/locations/fall-river/camp",
+      "email": "tantil@ymcasc.org",
+      "phone": "(508) 675-7841 x 117",
+      "street_address": "199 North Main Street",
+      "city": "Fall River",
+      "state": "MA",
+      "zip": "02720",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "outdoor",
+        "STEM"
+      ],
+      "activities": [
+        "swimming",
+        "gym games",
+        "walking field trips",
+        "STEM projects",
+        "field games",
+        "archery",
+        "ropes course",
+        "splash pad"
+      ],
+      "age_min": 5,
+      "age_max": 14,
+      "description_short": "YMCA day camp based at the Fall River Y with swimming, gym time, hands-on projects and walking trips; on Tuesdays and Thursdays campers go to the Swansea YMCA grounds for archery, ropes and the splash pad.",
+      "indoor_outdoor": "both",
+      "meals_included": true,
+      "price_min": 365,
+      "price_max": 390,
+      "price_per": "week",
+      "extended_care": true,
+      "transportation": true,
+      "financial_aid": true,
+      "refund_policy_summary": "Four weeks written notice required to withdraw for a refund of tuition minus the $50 non-refundable deposit; after sessions start, refunds only for illness or injury with a doctor's note. $25 fee for session changes.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session A",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session B",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session C",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session D",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session E",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session F",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session G",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session H",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session I",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session J",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcasouthcoast.org/locations/fall-river/camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "description_short",
+            "activities",
+            "indoor_outdoor",
+            "meals_included",
+            "primary_categories",
+            "secondary_categories",
+            "camp_type",
+            "zip"
+          ],
+          "note": "Breakfast, lunch and snack provided daily. ZIP from the Fall River YMCA address in the page footer."
+        },
+        {
+          "url": "https://ymcasouthcoast.org/wp-content/uploads/2026/04/2026_CampRegistration_Fill.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "age_min",
+            "age_max",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "transportation",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Traditional camp non-member (program participant) rates: ages 5-6 $390/week, ages 7-14 $365/week (age 4 only at Metacomet/Weetamoe). Extended care 7-9am and 4-6pm at Fall River ($60 AM/$40 PM per week). Bus service available for Quequechan ($40 one-way/$80 two-way per week). Sessions A-J."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-southcoast-camp-weetamoe-swansea",
+      "name": "Camp Weetamoe",
+      "operator_name": "YMCA Southcoast",
+      "website_url": "https://ymcasouthcoast.org/location/camp-weetamoe/",
+      "email": "mcamara@ymcasc.org",
+      "phone": "(508) 678-9622 x 16",
+      "street_address": "271 Sharps Lot Road",
+      "city": "Swansea",
+      "state": "MA",
+      "zip": "02777",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "sports",
+        "arts",
+        "adventure"
+      ],
+      "activities": [
+        "sports",
+        "arts and crafts",
+        "high ropes",
+        "low ropes",
+        "archery",
+        "splash pad",
+        "dance",
+        "acro",
+        "cheer"
+      ],
+      "age_min": 4,
+      "age_max": 14,
+      "description_short": "YMCA day camp on 36 acres at the Stoico/FIRSTFED YMCA in Swansea, where campers rotate through sports, crafts, ropes course elements, archery and a splash pad; dance, cheer and acro specialty weeks and a 4-year-old Scamper Camp are offered.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 365,
+      "price_max": 390,
+      "price_per": "week",
+      "extended_care": true,
+      "financial_aid": true,
+      "refund_policy_summary": "Four weeks written notice required to withdraw for a refund of tuition minus the $50 non-refundable deposit; after sessions start, refunds only for illness or injury with a doctor's note. $25 fee for session changes.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session A",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session B",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session C",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session D",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session E",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session F",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session G",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session H",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session I",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        },
+        {
+          "name": "Session J",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcasouthcoast.org/location/camp-weetamoe/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "description_short",
+            "indoor_outdoor",
+            "extended_care"
+          ],
+          "note": "Extended care 7-9am and 4-5pm."
+        },
+        {
+          "url": "https://ymcasouthcoast.org/wp-content/uploads/2026/04/2026_CampRegistration_Fill.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "age_min",
+            "age_max",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Non-member (program participant) rates: ages 4-6 $390/week, ages 7-14 $365/week; specialty dance/cheer/acro weeks $390. Sessions A-J. Bus service is listed only for other camps."
+        }
+      ]
+    },
+    {
+      "slug": "capron-park-zoo-summer-outdoor-adventures",
+      "name": "Capron Park Zoo Summer Outdoor Adventures",
+      "operator_name": "Capron Park Zoo",
+      "website_url": "https://capron-park-zoo.square.site/capron-park-zoo-summer-outdoor-adventures",
+      "phone": "774-203-1866",
+      "street_address": "201 County St",
+      "city": "Attleboro",
+      "state": "MA",
+      "zip": "02703",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "nature"
+      ],
+      "secondary_categories": [
+        "STEM",
+        "arts"
+      ],
+      "activities": [
+        "zoo exploration",
+        "animal encounters",
+        "crafts",
+        "games",
+        "science experiments",
+        "splash pad"
+      ],
+      "age_min": 4,
+      "age_max": 13,
+      "description_short": "Week-long zoo programs at Capron Park Zoo grouped by age, mixing daily zoo walks, animal ambassador encounters, crafts, games and science; 4-5 year olds attend a half-day morning or afternoon session.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 360,
+      "price_min": 200,
+      "price_max": 360,
+      "price_per": "week",
+      "extended_care": false,
+      "meals_included": false,
+      "refund_policy_summary": "Cancel before June 1 for a refund minus a $25 processing fee; no refunds after June 1.",
+      "special_needs_notes": "Reasonable accommodations for medical needs; families of children with emotional or learning challenges are asked to contact the education curator. Sessions capped at 15 participants.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Outdoor Adventures, ages 4-5 (AM or PM)",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 200
+        },
+        {
+          "name": "Ages 6-7: Wild Crafts",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 8-9: Welcome Home",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 10-11: Zoo Investigators",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 12-13: Zookeepers in Training, session 1",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 8-9: We Are Survivors",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 12-13: Zookeepers in Training, session 2",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 6-7: Animal Tales",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Ages 10-11: Inside Out",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 360
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://capron-park-zoo.square.site/capron-park-zoo-summer-outdoor-adventures",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "phone",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "meals_included",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "sessions"
+          ],
+          "note": "Non-member prices: $360 for ages 6-13 (9am-3pm), $200 for ages 4-5 half-day. Site says no before/after care and children bring lunch."
+        },
+        {
+          "url": "https://capron-park-zoo.square.site/contact-us",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "attleboro-arts-museum-summer-art-weeks",
+      "name": "Attleboro Arts Museum Summer Art Weeks",
+      "operator_name": "Attleboro Arts Museum",
+      "website_url": "https://attleboroartsmuseum.org/our-classes/",
+      "registration_url": "https://attleboroartsmuseum.gosignmeup.com/",
+      "phone": "508-222-2644",
+      "street_address": "86 Park St",
+      "city": "Attleboro",
+      "state": "MA",
+      "zip": "02703",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "arts"
+      ],
+      "activities": [
+        "drawing",
+        "painting",
+        "printmaking",
+        "cartooning",
+        "mixed media",
+        "weaving",
+        "oil pastels",
+        "pen and ink"
+      ],
+      "age_min": 5,
+      "age_max": 14,
+      "grade_min": 0,
+      "grade_max": 8,
+      "description_short": "Week-long art sessions in the museum's studios for students who have finished K-3 or grades 4-8, pairing gallery visits with a different medium each morning and afternoon and ending with a Friday student art show.",
+      "indoor_outdoor": "indoor",
+      "price_per_week": 360,
+      "price_min": 265,
+      "price_max": 360,
+      "price_per": "week",
+      "financial_aid": true,
+      "refund_policy_summary": "No refunds, credits or transfers once payment is made, including missed or sick days.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1: Drawing / Printmaking",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 2: Painting / Pen and Ink",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 3: Cartooning / Mixed Media",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 4: Drawing / Weaving",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 5: Oil Pastels / Painting",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 6: Printmaking / Drawing",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 7: Painting / Oil Pastels",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 360
+        },
+        {
+          "name": "Week 8: Mixed Media / Cartooning",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 360
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://attleboroartsmuseum.org/our-classes/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ]
+        },
+        {
+          "url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4780/Fpsd/d4b90e4a-9226-4de0-96f7-9ce4bb765d4a/2026-Summer-Art-Weeks-%26-Classes_Attleboro-Arts-Museum.pdf?disposition=inline",
+          "checked": "2026-10-02",
+          "fields": [
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_min",
+            "grade_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Museum's own 2026 flyer, hosted on a school district site. Groups by grade the student is leaving (K-3 or 4-8); ages derived from grades. Non-member: full day 9am-3pm $360, half day 9am-12:30pm $265; materials included. Scholarships available."
+        }
+      ]
+    },
+    {
+      "slug": "camp-ramsbottom-rehoboth",
+      "name": "Camp Ramsbottom",
+      "operator_name": "Boys & Girls Club of Pawtucket",
+      "website_url": "https://bgcpawt.org/summer-programs/",
+      "registration_url": "https://operations.daxko.com/Online/5299/ProgramsV2/Home.mvc",
+      "email": "ramsbottom@bgcpawt.org",
+      "phone": "508-252-6300",
+      "street_address": "205 Winthrop Street (Route 44)",
+      "city": "Rehoboth",
+      "state": "MA",
+      "zip": "02769",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "sports",
+        "nature",
+        "swimming"
+      ],
+      "activities": [
+        "archery",
+        "arts and crafts",
+        "basketball",
+        "drama",
+        "fishing",
+        "gaga ball",
+        "pioneering",
+        "soccer",
+        "swimming",
+        "tennis",
+        "pickleball",
+        "miniature golf",
+        "model rocketry",
+        "marksmanship",
+        "nature",
+        "gardening",
+        "campfire cooking",
+        "street hockey"
+      ],
+      "age_min": 6,
+      "age_max": 13,
+      "description_short": "Day camp on 170 acres in Rehoboth run by the Boys & Girls Club of Pawtucket, with two-week sessions of sports, crafts, nature, fishing, archery, drama and pool swimming; younger campers rotate by group, older campers can choose activities.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 600,
+      "price_max": 600,
+      "price_per": "session",
+      "extended_care": true,
+      "transportation": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Refund (minus the $75 non-refundable deposit) only if the camp office is notified in writing 14 days before the session starts; balances due two weeks before the session.",
+      "aca_accredited": true,
+      "aca_source_url": "https://bgcpawt.org/wp-content/uploads/2026/02/camp-brochure-2026-6.pdf",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session One",
+          "start_date": "2026-06-22",
+          "end_date": "2026-07-02",
+          "availability": "unknown",
+          "price": 600
+        },
+        {
+          "name": "Session Two",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 600
+        },
+        {
+          "name": "Session Three",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 600
+        },
+        {
+          "name": "Session Four",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 600
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://bgcpawt.org/summer-programs/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email"
+          ]
+        },
+        {
+          "url": "https://bgcpawt.org/wp-content/uploads/2026/02/camp_ramsb_handbook_2026-5.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "zip"
+          ]
+        },
+        {
+          "url": "https://bgcpawt.org/wp-content/uploads/2026/02/camp-brochure-2026-6.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "phone",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "transportation",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "$600 per two-week session plus required club membership ($70/yr for non-Pawtucket residents). Lunch optional for $50/session. Extended care 7:30am-5:30pm, $100 per session. Buses from Pawtucket/RI and Norton, Seekonk and Attleboro stops. Brochure states ACA accredited. Phone is summer number."
+        }
+      ]
+    },
+    {
+      "slug": "camp-riverside-taunton",
+      "name": "Camp Riverside",
+      "operator_name": "Boys & Girls Clubs of Metro South",
+      "website_url": "https://www.bgcmetrosouth.org/campriverside",
+      "registration_url": "https://operations.daxko.com/Online/5285/ProgramsV2/Search.mvc?category_ids=CAT342&location_ids%5B0%5D=B242",
+      "phone": "(508) 824-3311",
+      "street_address": "388 Harvey Street",
+      "city": "Taunton",
+      "state": "MA",
+      "zip": "02780",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "age_min": 5,
+      "age_max": 15,
+      "description_short": "Boys & Girls Clubs of Metro South day camp at Lewis Park, a 100-acre site in Taunton's Myles Standish Industrial Park, for ages 5-15, with a half-day option for 5- and 6-year-olds.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 275,
+      "price_min": 215,
+      "price_max": 275,
+      "price_per": "week",
+      "extended_care": true,
+      "season_year": 2026,
+      "sources": [
+        {
+          "url": "https://www.bgcmetrosouth.org/campriverside",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care"
+          ],
+          "note": "2026: $275/week full day 8:45am-4pm; $215/week half day (ages 5-6). AM & PM extended care available."
+        },
+        {
+          "url": "https://irp.cdn-website.com/6dc7867c/files/uploaded/2026+Camp+Riverside+Brochure+%283%29.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "transportation"
+          ],
+          "note": "2026 bus routes from Brockton, Bridgewater, Easton, Norton, Raynham and Taunton (no buses in Session I)."
+        }
+      ],
+      "transportation": true
+    },
+    {
+      "slug": "dean-summer-arts-institute",
+      "name": "Dean Summer Arts Institute",
+      "operator_name": "Dean College",
+      "website_url": "https://www.dean.edu/academics/summeratdean/dean-summer-arts-institute/",
+      "registration_url": "https://www.dean.edu/academics/summeratdean/dean-summer-arts-institute/register/",
+      "email": "tlane@dean.edu",
+      "phone": "508-541-1606",
+      "street_address": "99 Main Street",
+      "city": "Franklin",
+      "state": "MA",
+      "zip": "02038",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "performing_arts"
+      ],
+      "activities": [
+        "ballet",
+        "modern",
+        "jazz",
+        "tap",
+        "choreography",
+        "acting",
+        "singing",
+        "stage combat",
+        "audition prep"
+      ],
+      "age_min": 14,
+      "age_max": 18,
+      "description_short": "One-week dance and musical theatre intensives at Dean College for high schoolers, with conservatory-style classes, college and audition prep workshops, and a supervised residential or commuter option.",
+      "indoor_outdoor": "indoor",
+      "price_min": 1500,
+      "price_max": 1800,
+      "price_per": "session",
+      "financial_aid": true,
+      "refund_policy_summary": "100% refund before July 6, 50% before July 13, none after July 13.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Dance Intensive",
+          "start_date": "2026-07-26",
+          "end_date": "2026-08-02",
+          "availability": "unknown",
+          "price": 1800
+        },
+        {
+          "name": "Musical Theatre Intensive",
+          "start_date": "2026-07-26",
+          "end_date": "2026-08-02",
+          "availability": "unknown",
+          "price": 1800
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dean.edu/academics/summeratdean/dean-summer-arts-institute/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Residential $1,800, commuter $1,500 per intensive; session price is residential. Staff-guided residential program with 24-hour supervision. Scholarships and payment plans available."
+        }
+      ]
+    }
+  ]
+}
