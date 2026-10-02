@@ -1,0 +1,1449 @@
+{
+  "metro": "Boston, MA",
+  "camps": [
+    {
+      "slug": "community-boating-junior-program",
+      "name": "Summer Junior Program",
+      "operator_name": "Community Boating, Inc.",
+      "website_url": "https://www.community-boating.org/junior/welcome/",
+      "phone": "(617) 523-1038",
+      "street_address": "21 David G Mugar Way",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02114",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "sailing"
+      ],
+      "secondary_categories": [
+        "STEM",
+        "leadership"
+      ],
+      "activities": [
+        "sailing",
+        "paddling",
+        "windsurfing",
+        "racing",
+        "stem classes"
+      ],
+      "age_min": 10,
+      "age_max": 17,
+      "description_short": "Youth sail small boats on the Charles River Basin, starting with a two-week beginner class and moving up through intermediate, racing, windsurfing and STEM classes, with open sailing and paddling outside class time. One summer membership covers all classes and boat use.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 1,
+      "price_max": 445,
+      "price_per": "summer",
+      "transportation": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Memberships are non-refundable and non-transferable.",
+      "swim_waterfront_notes": "Members must be able to swim 50 yards and may be asked for written swim proof; CBI does not run its own swim test.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Summer Junior Program (full season, weekdays 8:30am-3pm, closed July 4)",
+          "start_date": "2026-06-15",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.community-boating.org/junior/welcome/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "activities",
+            "indoor_outdoor",
+            "description_short",
+            "sessions"
+          ],
+          "note": "Season June 15-Aug 21, 2026, weekdays 8:30-3:00. Welcome page shows sliding scale $1-$450; FAQ and Getting Started pages say $1-$445 (FAQ figure used)."
+        },
+        {
+          "url": "https://www.community-boating.org/junior/faq/",
+          "checked": "2026-10-02",
+          "fields": [
+            "price_min",
+            "price_max",
+            "price_per",
+            "transportation",
+            "financial_aid",
+            "refund_policy_summary",
+            "swim_waterfront_notes",
+            "age_min",
+            "age_max"
+          ],
+          "note": "Eligible: turn 10 before Aug 31 and not 18 before first day. No busing; fee is need-based sliding scale."
+        },
+        {
+          "url": "https://www.community-boating.org/junior/getting-started/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "phone",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "courageous-sailing-steps-to-lead-charlestown",
+      "name": "Steps To Lead Summer Youth Sailing (Charlestown)",
+      "operator_name": "Courageous Sailing",
+      "website_url": "https://courageoussailing.org/youth-programming/steps-to-lead/",
+      "registration_url": "https://courageoussailing.org/signup/",
+      "email": "ypfrontdesk@courageoussailing.org",
+      "phone": "(617) 237-0709",
+      "street_address": "Pier 4, Charlestown Navy Yard",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02129",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "sailing"
+      ],
+      "secondary_categories": [
+        "leadership",
+        "STEM"
+      ],
+      "activities": [
+        "sailing",
+        "keelboat sailing",
+        "dinghy sailing",
+        "marine science",
+        "fishing"
+      ],
+      "age_min": 8,
+      "age_max": 18,
+      "description_short": "Kids learn to sail keelboats and later dinghies on Boston Harbor from Pier 4 in the Charlestown Navy Yard, moving up a five-step curriculum over several summers. Spots are assigned by a February lottery and fees are need-based.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 575,
+      "price_max": 1925,
+      "price_per": "session",
+      "extended_care": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Cancellations between March 15 and May 31 get a full refund minus a 3% processing fee; no refunds from June 1 to the start of the program.",
+      "swim_waterfront_notes": "Students must show proof they can swim 75 yards and tread water for 90 seconds; Step 3 and above get an on-site swim check.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Step 1 Session 1: Sailing 101 (5-day)",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 650,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 1 Session 2: Sailing 101 (5-day)",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 650,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 1 Session 3: Sailing 101 (4-day, no program Aug 10)",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-14",
+          "price": 575,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 2 Session 1: Beginner Sailing",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-17",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 2 Session 2: Beginner Sailing (no program July 20)",
+          "start_date": "2026-07-21",
+          "end_date": "2026-08-07",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 3 Session 1: Intermediate Sailing",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-17",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 3 Session 2: Intermediate Sailing (no program July 20)",
+          "start_date": "2026-07-21",
+          "end_date": "2026-08-07",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 4 Session 1: Beginner Dinghy Sailing",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-17",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 4 Session 2: Beginner Dinghy Sailing (no program July 20)",
+          "start_date": "2026-07-21",
+          "end_date": "2026-08-07",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 5 Session 1: Advanced Sailing",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-17",
+          "price": 1925,
+          "availability": "unknown"
+        },
+        {
+          "name": "Step 5 Session 2: Advanced Sailing (no program July 20)",
+          "start_date": "2026-07-21",
+          "end_date": "2026-08-07",
+          "price": 1925,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://courageoussailing.org/youth-programming",
+          "checked": "2026-10-02",
+          "fields": [
+            "age_min",
+            "age_max",
+            "description_short",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "indoor_outdoor"
+          ],
+          "note": "'Programs for kids 8-18'; lottery Feb 1-15, 2026."
+        },
+        {
+          "url": "https://courageoussailing.org/signup/",
+          "checked": "2026-10-02",
+          "fields": [
+            "sessions",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "financial_aid",
+            "registration_url",
+            "swim_waterfront_notes"
+          ],
+          "note": "Full (non-scholarship) class fees; full and ~50% partial scholarships by income. Extended Day $50/week. Jamaica Pond and invitation-only Swim Sail Science sessions excluded."
+        },
+        {
+          "url": "https://courageoussailing.org/youth-programming/steps-to-lead/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "activities"
+          ],
+          "note": "Program hours 8:45am-3:15pm; Step 1 age 8+, Step 2 9+, Step 3 11+, Step 4 12+, Step 5 13+."
+        },
+        {
+          "url": "https://courageoussailing.org/youth-programming/youth-faq/",
+          "checked": "2026-10-02",
+          "fields": [
+            "email",
+            "phone",
+            "meals_included",
+            "refund_policy_summary"
+          ],
+          "note": "Families pack a bagged lunch."
+        },
+        {
+          "url": "https://courageoussailing.org/charlestown/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ],
+          "note": "Site lists Pier 4, Charlestown Navy Yard, Charlestown, MA 02129; Charlestown is a Boston neighborhood, so city set to Boston."
+        }
+      ]
+    },
+    {
+      "slug": "piers-park-sailing-center-summer-youth-programs",
+      "name": "Piers Park Sailing Center Summer Youth Programs",
+      "operator_name": "Piers Park Sailing Center",
+      "website_url": "https://piersparksailing.org/youth-programs",
+      "registration_url": "https://piersparksailing.campmanagement.com/p/request_for_info_m.php?action=enroll",
+      "email": "info@piersparksailing.org",
+      "phone": "617-561-6677",
+      "street_address": "95 Marginal St.",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02128",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "sailing"
+      ],
+      "secondary_categories": [
+        "STEM",
+        "nature"
+      ],
+      "activities": [
+        "sailing",
+        "kayaking",
+        "fishing",
+        "marine science",
+        "crafts",
+        "games"
+      ],
+      "age_min": 6,
+      "age_max": 13,
+      "description_short": "Full-day summer programs on the East Boston waterfront: Harbor Explorers (ages 6-9) mixes sailing, kayaking, fishing off the dock and marine science, and Science of Sailing (ages 10-13) ties sailing to hands-on STEM lessons.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 450,
+      "price_max": 450,
+      "price_per": "week",
+      "extended_care": true,
+      "financial_aid": true,
+      "special_needs_notes": "Students with physical disabilities get free or discounted tuition through the Peabody Foundation; an adaptive worksheet lets guardians request accommodations.",
+      "swim_waterfront_notes": "All participants, including Harbor Explorers, must pass a swim assessment.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 7",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Harbor Explorers (ages 6-9) Session 8",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": 450,
+          "availability": "unknown"
+        },
+        {
+          "name": "Science of Sailing (ages 10-13) Session 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Science of Sailing (ages 10-13) Session 2",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Science of Sailing (ages 10-13) Session 3",
+          "start_date": "2026-07-27",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Science of Sailing (ages 10-13) Session 4",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://piersparksailing.org/youth-programs",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "description_short",
+            "indoor_outdoor",
+            "special_needs_notes",
+            "swim_waterfront_notes"
+          ],
+          "note": "Address listed as East Boston, MA 02128; East Boston is a Boston neighborhood, so city set to Boston."
+        },
+        {
+          "url": "https://piersparksailing.org/wp-content/uploads/2026/02/Summer-Youth-Flyer-Piers-Park.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "sessions",
+            "age_min",
+            "age_max",
+            "price_per_week",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "financial_aid"
+          ],
+          "note": "Mon-Fri 9am-4pm. Sliding scale up to $450/week (full price used for 1-week Harbor Explorers sessions; 2-week Science of Sailing price not stated). Extended day 8:30-5:30 for $50/week."
+        }
+      ]
+    },
+    {
+      "slug": "salvation-army-camp-wonderland",
+      "name": "Camp Wonderland",
+      "operator_name": "The Salvation Army Massachusetts Division",
+      "website_url": "https://www.campwonderland.org/",
+      "registration_url": "https://wonderland.campintouch.com/ui/forms/application/camper/App",
+      "phone": "(781) 784-5934",
+      "street_address": "186 Massapoag Avenue",
+      "city": "Sharon",
+      "state": "MA",
+      "zip": "02067",
+      "camp_type": "sleepaway",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "faith",
+        "outdoor",
+        "swimming"
+      ],
+      "activities": [
+        "swimming",
+        "boating",
+        "low ropes",
+        "archery",
+        "arts and crafts",
+        "creative arts",
+        "stem",
+        "pedal karts",
+        "christian education",
+        "overnight camping"
+      ],
+      "gender_policy": "coed",
+      "age_min": 6,
+      "age_max": 16,
+      "description_short": "Salvation Army overnight camp in Sharon where campers stay five nights in cabins and swim, boat, do low ropes, archery, crafts and Christian education. Separate weeks serve ages 6-12, Salvation Army program kids, and teens 13-16.",
+      "indoor_outdoor": "outdoor",
+      "religious_affiliation": "The Salvation Army (Christian)",
+      "meals_included": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://www.campwonderland.org/2026-camp-schedule/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1 - Community Camp (ages 6-12)",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-27",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 - Program Camp (ages 6-14, Salvation Army program participants)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3 - Program Camp (ages 6-14, Salvation Army program participants)",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-11",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4 - Community Camp (ages 6-12)",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-18",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5 - Teen Camp (ages 13-16)",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-25",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6 - Community Camp (ages 6-12)",
+          "start_date": "2026-07-30",
+          "end_date": "2026-08-04",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7 - Community Camp (ages 6-12)",
+          "start_date": "2026-08-06",
+          "end_date": "2026-08-11",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.campwonderland.org/2026-camp-schedule/",
+          "checked": "2026-10-02",
+          "fields": [
+            "sessions",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Page footer: 'Camp Wonderland is an ACA accredited camp.'"
+        },
+        {
+          "url": "https://www.campwonderland.org/faq-2026/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "phone",
+            "age_min",
+            "age_max",
+            "gender_policy",
+            "meals_included",
+            "camp_type"
+          ],
+          "note": "FAQ prints the ZIP as '20267', an evident typo for Sharon's 02067. Cost is set by each family's local Salvation Army sender unit (no price published). Sessions are 5 nights."
+        },
+        {
+          "url": "https://www.campwonderland.org/life-at-camp-2026/",
+          "checked": "2026-10-02",
+          "fields": [
+            "activities",
+            "primary_categories",
+            "secondary_categories",
+            "indoor_outdoor",
+            "description_short"
+          ]
+        },
+        {
+          "url": "https://www.campwonderland.org/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "religious_affiliation"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "crossroads-camp-wing-overnight",
+      "name": "Camp Wing Overnight",
+      "operator_name": "Crossroads for Kids",
+      "website_url": "https://www.crossroadsma.org/camp-wing",
+      "registration_url": "https://crossroadsma.campintouch.com/ui/forms/application/camper/App",
+      "phone": "617-765-7556",
+      "email": "campwing@crossroadsma.org",
+      "street_address": "119 Myrtle Street",
+      "city": "Duxbury",
+      "state": "MA",
+      "zip": "02332",
+      "camp_type": "sleepaway",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "outdoor",
+        "swimming",
+        "adventure"
+      ],
+      "activities": [
+        "swimming",
+        "fishing",
+        "hiking",
+        "dancing",
+        "sports",
+        "games",
+        "boating",
+        "ropes course"
+      ],
+      "description_short": "Donor-funded 12-day overnight sessions on a 170-acre Duxbury campus with pools, a boating pond, fields and a ropes course, for kids who have completed grades 2-8. Priority goes to Boston and Brockton children with financial need and returning families.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 150,
+      "price_max": 150,
+      "price_per": "session",
+      "transportation": true,
+      "meals_included": true,
+      "financial_aid": true,
+      "refund_policy_summary": "All payments are nonrefundable, including for cancellations, non-attendance, late arrivals or early departures.",
+      "aca_accredited": true,
+      "aca_source_url": "https://www.crossroadsma.org/camp-wing",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session One",
+          "start_date": "2026-06-30",
+          "end_date": "2026-07-11",
+          "price": 150,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session Two",
+          "start_date": "2026-07-14",
+          "end_date": "2026-07-25",
+          "price": 150,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session Three",
+          "start_date": "2026-07-28",
+          "end_date": "2026-08-08",
+          "price": 150,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session Four",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-22",
+          "price": 150,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.crossroadsma.org/camp-wing",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "transportation",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "Only cost is a $150 enrollment fee per camper per session; transportation and food covered. Serves campers who completed grades 2-8 (grade fields left empty since 'completed' grades are not entering grades). Page lists dates without a year; 2026 confirmed by weekdays (Tue-Sat) and the day camp page's 'Summer 2026'. Address is the Camp Office. Page states ACA accreditation."
+        }
+      ]
+    },
+    {
+      "slug": "crossroads-camp-wing-day-camp",
+      "name": "Crossroads' Camp Wing Day Camp",
+      "operator_name": "Crossroads for Kids",
+      "website_url": "https://www.crossroadsma.org/camps/day-camp",
+      "registration_url": "https://crossroadsma.campintouch.com/ui/forms/application/camper/App",
+      "email": "campwingdaycamp@crossroadsma.org",
+      "phone": "617-765-7556",
+      "street_address": "650 Keene Street",
+      "city": "Duxbury",
+      "state": "MA",
+      "zip": "02332",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "adventure",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "swim lessons",
+        "archery",
+        "boating",
+        "kayaking",
+        "canoeing",
+        "fishing",
+        "climbing wall",
+        "ropes course",
+        "creative arts",
+        "sports and games"
+      ],
+      "age_min": 5,
+      "description_short": "Two-week day camp sessions at Camp Wing in Duxbury for kids who have completed kindergarten through grade 9, with daily swim lessons, boating on Keene Pond, archery, climbing, ropes, arts and field sports. Older campers can join Alpine or Leaders in Training groups.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 475,
+      "price_max": 800,
+      "price_per": "session",
+      "extended_care": true,
+      "meals_included": false,
+      "refund_policy_summary": "Deposits and tuition installments are nonrefundable, even if the family cancels.",
+      "special_needs_notes": "Described as an inclusive community; families of children with assistance needs are asked to contact the office before the first day.",
+      "swim_waterfront_notes": "Daily swim lessons and free swim in camp pools; boating on Keene Pond.",
+      "aca_accredited": true,
+      "aca_source_url": "https://www.crossroadsma.org/faq-day-camp",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-10",
+          "price": 800,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-24",
+          "price": 800,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-27",
+          "end_date": "2026-08-07",
+          "price": 800,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-21",
+          "price": 800,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.crossroadsma.org/camps/day-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "9am-4pm; extended morning 7:30-9 and afternoon 4-5:30 at $100/session each. Rates per 2-week session: $800 (Grove, General, Alpine), $475 (LIT). Session prices shown are the $800 camper rate."
+        },
+        {
+          "url": "https://www.crossroadsma.org/faq-day-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "age_min",
+            "meals_included",
+            "special_needs_notes",
+            "swim_waterfront_notes",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Campers must be 5 or older; programs for youth completing K-grade 9. Campers bring their own lunch. Entrance is Gate H at 650 Keene Street; ZIP from the Crossroads Duxbury camp office address. Registration via CampInTouch (linked from FAQ)."
+        }
+      ]
+    },
+    {
+      "slug": "cohen-camps-camp-pembroke",
+      "name": "Camp Pembroke",
+      "operator_name": "Eli and Bessie Cohen Camps",
+      "website_url": "https://www.cohencamps.org/pembroke/",
+      "registration_url": "https://pembroke.campintouch.com/ui/forms/application/camper/App",
+      "email": "info@camppembroke.org",
+      "phone": "781.294.8006",
+      "street_address": "306 Oldham Street",
+      "city": "Pembroke",
+      "state": "MA",
+      "zip": "02359",
+      "camp_type": "sleepaway",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "faith",
+        "swimming",
+        "arts"
+      ],
+      "activities": [
+        "swimming",
+        "paddling",
+        "tennis",
+        "yoga",
+        "arts",
+        "dance"
+      ],
+      "gender_policy": "girls",
+      "age_min": 7,
+      "age_max": 16,
+      "description_short": "Jewish overnight camp for girls on a lake in Pembroke, with swimming, paddling, tennis, yoga, arts and dance plus Shabbat and Jewish traditions. Families choose a 7-week full season, a 3.5-week session, or a 2-week intro for first-timers.",
+      "indoor_outdoor": "outdoor",
+      "religious_affiliation": "Jewish",
+      "price_min": 4650,
+      "price_max": 14490,
+      "price_per": "session",
+      "financial_aid": true,
+      "refund_policy_summary": "Deposits are non-refundable once a spot is reserved; 50% of remaining tuition is due Feb 1, 2027 and the balance by April 1, 2027; cancellations must be in writing by email.",
+      "season_year": 2027,
+      "sessions": [
+        {
+          "name": "Full Season (7 weeks)",
+          "start_date": "2027-06-23",
+          "end_date": "2027-08-11",
+          "price": 14490,
+          "availability": "open"
+        },
+        {
+          "name": "First Session (3.5 weeks)",
+          "start_date": "2027-06-23",
+          "end_date": "2027-07-18",
+          "price": 8825,
+          "availability": "open"
+        },
+        {
+          "name": "Second Session (3.5 weeks)",
+          "start_date": "2027-07-19",
+          "end_date": "2027-08-11",
+          "price": 8525,
+          "availability": "open"
+        },
+        {
+          "name": "2-Week Taste of Pembroke (first-time campers entering grades 2-5)",
+          "start_date": "2027-07-19",
+          "end_date": "2027-08-01",
+          "price": 4650,
+          "availability": "open"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cohencamps.org/pembroke/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "gender_policy",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "religious_affiliation"
+          ],
+          "note": "'girls ages 7-16'; summer address 306 Oldham Street, Pembroke."
+        },
+        {
+          "url": "https://www.cohencamps.org/pembroke/summer/dates-tuition/",
+          "checked": "2026-10-02",
+          "fields": [
+            "sessions",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary"
+          ],
+          "note": "Session prices are returning-camper rates; first-time campers pay $200-$500 less (e.g. $13,990 full season, $8,625 first session, $8,325 second session). Rising grades 8-10 add an overnight trip fee. 2027 enrollment open."
+        }
+      ]
+    },
+    {
+      "slug": "hull-yacht-club-learn-to-sail",
+      "name": "Learn To Sail (LTS) Program",
+      "operator_name": "Hull Yacht Club",
+      "website_url": "https://hullyc.org/pages/junior-lts-program-non-hyc-members",
+      "registration_url": "https://www.regattaman.com/jun_reg.php?pgm_id=10&yr=2026",
+      "email": "junior.sailing@hullyc.org",
+      "phone": "(781) 925-9739",
+      "street_address": "5 Fitzpatrick Way",
+      "city": "Hull",
+      "state": "MA",
+      "zip": "02045",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "sailing"
+      ],
+      "activities": [
+        "sailing"
+      ],
+      "age_min": 7,
+      "description_short": "One-week morning learn-to-sail sessions in Hull for beginners age 7 and up, sailing small plastic Zim Prams in groups of about 12-16 with certified instructors. Open to non-members; boats are provided.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 312,
+      "price_min": 312,
+      "price_max": 312,
+      "price_per": "week",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": 312,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": 312,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 312,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 312,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 312,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 312,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://hullyc.org/pages/junior-lts-program-non-hyc-members",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "age_min",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Mon-Fri 9am-noon, $312 per 1-week session. Families of sailors over 12 are asked to contact the program director about boat choice."
+        }
+      ]
+    },
+    {
+      "slug": "behn-basketball-camp-babson-day",
+      "name": "Behn Basketball Camp at Babson College (Coed Day)",
+      "operator_name": "BEHN Basketball Camps",
+      "website_url": "https://www.behncamp.com/basketball/camps/wellesley-basketball-camp-day-ma/",
+      "registration_url": "https://secure.ussportscamps.com/step1/85863",
+      "phone": "508-549-0997",
+      "street_address": "231 Forest Street",
+      "city": "Wellesley",
+      "state": "MA",
+      "zip": "02457",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "sports"
+      ],
+      "activities": [
+        "basketball"
+      ],
+      "gender_policy": "coed",
+      "age_min": 8,
+      "age_max": 16,
+      "description_short": "Four-day basketball day camp in Babson College's gyms focused on fundamentals, shooting, team play and games, with players grouped by age and gender.",
+      "indoor_outdoor": "indoor",
+      "price_min": 416,
+      "price_max": 416,
+      "price_per": "session",
+      "meals_included": true,
+      "season_year": 2027,
+      "sessions": [
+        {
+          "name": "Coed Day Camp (Tue-Fri, 9am-3pm)",
+          "start_date": "2027-07-06",
+          "end_date": "2027-07-09",
+          "price": 416,
+          "availability": "open"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.behncamp.com/basketball/camps/wellesley-basketball-camp-day-ma/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "city",
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "gender_policy",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "meals_included",
+            "sessions"
+          ],
+          "note": "Lunch provided by Babson Dining and included in tuition. Registration through US Sports Camps."
+        },
+        {
+          "url": "https://www.babson.edu/external-programming/summer-programs/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "state",
+            "zip"
+          ],
+          "note": "Babson College address 231 Forest Street, Babson Park, MA 02457 (camp page places it in Wellesley)."
+        }
+      ]
+    },
+    {
+      "slug": "behn-basketball-camp-babson-girls-overnight",
+      "name": "Behn Basketball Camp at Babson College (Girls Overnight)",
+      "operator_name": "BEHN Basketball Camps",
+      "website_url": "https://www.behncamp.com/basketball/camps/wellesley-babson-college-overnight-behn-basketball-camp-girls-only/",
+      "registration_url": "https://secure.ussportscamps.com/step1/85807",
+      "phone": "508-549-0997",
+      "street_address": "231 Forest Street",
+      "city": "Wellesley",
+      "state": "MA",
+      "zip": "02457",
+      "camp_type": "sleepaway",
+      "primary_categories": [
+        "sports"
+      ],
+      "activities": [
+        "basketball",
+        "movie night",
+        "talent show",
+        "dance party"
+      ],
+      "gender_policy": "girls",
+      "age_min": 8,
+      "age_max": 17,
+      "description_short": "Girls-only overnight basketball camp at Babson College: players stay in air-conditioned dorms, eat in the dining hall, and spend the days on drills, shooting, team play and games, with evening social events.",
+      "indoor_outdoor": "indoor",
+      "price_min": 975,
+      "price_max": 975,
+      "price_per": "session",
+      "meals_included": true,
+      "season_year": 2027,
+      "sessions": [
+        {
+          "name": "Girls Overnight (Sunday check-in, ends Thursday noon)",
+          "start_date": "2027-07-25",
+          "end_date": "2027-07-29",
+          "price": 975,
+          "availability": "open"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.behncamp.com/basketball/camps/wellesley-babson-college-overnight-behn-basketball-camp-girls-only/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "city",
+            "camp_type",
+            "primary_categories",
+            "activities",
+            "gender_policy",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "meals_included",
+            "sessions"
+          ],
+          "note": "Three meals a day from Sunday dinner to Thursday breakfast; dorm housing."
+        },
+        {
+          "url": "https://www.babson.edu/external-programming/summer-programs/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "state",
+            "zip"
+          ],
+          "note": "Babson College address 231 Forest Street, Babson Park, MA 02457."
+        }
+      ]
+    },
+    {
+      "slug": "hull-lifesaving-museum-summer-adventure",
+      "name": "Summer Adventure Program",
+      "operator_name": "Hull Lifesaving Museum",
+      "website_url": "https://hulllifesavingmuseum.org/events-programs/",
+      "email": "Info@hulllifesavingmuseum.org",
+      "phone": "781-925-5433",
+      "street_address": "1117 Nantasket Avenue",
+      "city": "Hull",
+      "state": "MA",
+      "zip": "02045",
+      "camp_type": "day",
+      "primary_categories": [
+        "nature"
+      ],
+      "secondary_categories": [
+        "arts",
+        "outdoor"
+      ],
+      "activities": [
+        "tide pooling",
+        "model boat building",
+        "maritime art",
+        "pirate history",
+        "lifesaving history"
+      ],
+      "age_min": 5,
+      "age_max": 11,
+      "description_short": "Three-morning weekly themes at the Hull Lifesaving Museum, such as tide pool exploring, building a model sailboat, maritime art, pirates, and shipwreck and rescue history. An extended day option runs to 2:30.",
+      "indoor_outdoor": "both",
+      "price_per_week": 130,
+      "price_min": 130,
+      "price_max": 195,
+      "price_per": "week",
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1: Tide Pool Adventures I",
+          "start_date": "2026-07-07",
+          "end_date": "2026-07-09",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2: Pirate Adventures",
+          "start_date": "2026-07-14",
+          "end_date": "2026-07-16",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3: Art Week in the Yard",
+          "start_date": "2026-07-21",
+          "end_date": "2026-07-23",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4: Pond Yachts Model Sailboat",
+          "start_date": "2026-07-28",
+          "end_date": "2026-07-30",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5: Tide Pool Adventures II",
+          "start_date": "2026-08-04",
+          "end_date": "2026-08-06",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6: Shipwrecks and Lifesavers",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-13",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7: Tide Pool Adventures III",
+          "start_date": "2026-08-18",
+          "end_date": "2026-08-20",
+          "price": 130,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://hulllifesavingmuseum.org/events-programs/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "age_min",
+            "age_max"
+          ],
+          "note": "Tue-Thu; morning 9-12:30 $130 non-member ($120 member), extended day 9-2:30 $195 non-member ($180 member). Address is the museum's footer address."
+        },
+        {
+          "url": "https://hulllifesavingmuseum.org/wp-content/uploads/2026/04/Summer-Adventure-2026-Flyer-1.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "sessions",
+            "activities",
+            "description_short",
+            "email",
+            "phone",
+            "financial_aid"
+          ],
+          "note": "Session prices are the non-member morning rate. Register by phone or email. $5 sibling/military discount; scholarships available."
+        }
+      ]
+    },
+    {
+      "slug": "hull-lifesaving-museum-summer-maritime-explorers",
+      "name": "Summer Maritime Explorers Program",
+      "operator_name": "Hull Lifesaving Museum",
+      "website_url": "https://hulllifesavingmuseum.org/wp-content/uploads/2026/04/Summer-Explorers-2026-brief-synopsis-1.pdf",
+      "phone": "781-925-5433",
+      "city": "Hull",
+      "state": "MA",
+      "zip": "02045",
+      "camp_type": "specialty",
+      "primary_categories": [
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "nature",
+        "adventure"
+      ],
+      "activities": [
+        "open water rowing",
+        "powerboat operation",
+        "navigation",
+        "marine ecology",
+        "island exploration",
+        "boat maintenance",
+        "plein air art"
+      ],
+      "age_min": 12,
+      "age_max": 16,
+      "description_short": "Teens row the museum's open-water boats out of its Windmill Point Boathouse, with a different weekly focus such as powerboat handling under a licensed captain, rowing to Peddocks Island, marine ecology and chart navigation.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 130,
+      "price_min": 130,
+      "price_max": 130,
+      "price_per": "week",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1: Rowing Adventures",
+          "start_date": "2026-07-07",
+          "end_date": "2026-07-09",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2: Marine Life and Ecology",
+          "start_date": "2026-07-14",
+          "end_date": "2026-07-16",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3: Basic Powerboat Operation",
+          "start_date": "2026-07-21",
+          "end_date": "2026-07-23",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4: Island Exploration",
+          "start_date": "2026-07-28",
+          "end_date": "2026-07-30",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5: Art on the Harbor",
+          "start_date": "2026-08-04",
+          "end_date": "2026-08-06",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6: Boat Construction and Maintenance",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-13",
+          "price": 130,
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7: Coastal Piloting",
+          "start_date": "2026-08-18",
+          "end_date": "2026-08-20",
+          "price": 130,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://hulllifesavingmuseum.org/wp-content/uploads/2026/04/Summer-Explorers-2026-brief-synopsis-1.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "sessions"
+          ],
+          "note": "Meets Tue-Thu 9:00-12:30 at the boathouse; loaner PFDs and boats provided. Street address of the Windmill Point Boathouse is not published; ZIP is the museum's Hull mailing ZIP."
+        },
+        {
+          "url": "https://hulllifesavingmuseum.org/events-programs/",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "phone",
+            "city",
+            "state",
+            "zip",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per"
+          ],
+          "note": "$130 non-members, $120 members per week (session prices use the non-member rate)."
+        }
+      ]
+    }
+  ]
+}
