@@ -1,8 +1,8 @@
 """
 Reminder emails: each person's upcoming jobs, and a weekly summary for parents.
 
-Run once a day (e.g. a Railway cron at 7am Eastern) with
-    python -m campfinder.household.reminders [--dry-run] [--weekly] [--date YYYY-MM-DD]
+Run twice a day (e.g. Railway crons at 7am and 6pm Eastern) with
+    python -m campfinder.household.reminders --slot morning|evening [--dry-run] [--weekly] [--date YYYY-MM-DD]
 or POST /api/v1/internal/reminders/run with the X-Cron-Secret header.
 
   daily       today's jobs, sent the morning of
@@ -125,14 +125,18 @@ def _active_members() -> list[dict[str, Any]]:
     return get_supabase().table("family_members").select("*").eq("status", "active").execute().data or []
 
 
-def plan_reminders(today: date, weekly: bool | None = None) -> list[Outgoing]:
-    """Everything that should go out for `today`, minus anything already sent."""
+SLOT_PREFS = {"morning": ("daily",), "evening": ("day_before",), None: ("daily", "day_before")}
+
+
+def plan_reminders(today: date, weekly: bool | None = None, slot: str | None = None) -> list[Outgoing]:
+    """Everything that should go out for `today`, minus anything already sent.
+    slot: 'morning' sends same-day digests, 'evening' day-before ones, None both."""
     weekly = today.weekday() == 6 if weekly is None else weekly
     out: list[Outgoing] = []
     members = [m for m in _active_members() if m.get("email")]
     for m in members:
         pref = m.get("reminder_pref") or "day_before"
-        if pref != "off" and m["role"] != "viewer":
+        if pref in SLOT_PREFS[slot] and m["role"] != "viewer":
             day = today if pref == "daily" else today + timedelta(days=1)
             tasks = task_rows(m["family_id"], assignee_id=str(m["id"]), start=day, end=day, status="open")
             if tasks and not _already_sent(m["id"], "digest", today):
@@ -148,9 +152,10 @@ def plan_reminders(today: date, weekly: bool | None = None) -> list[Outgoing]:
     return out
 
 
-async def run_reminders(today: date | None = None, *, weekly: bool | None = None, dry_run: bool = False) -> list[Outgoing]:
+async def run_reminders(today: date | None = None, *, weekly: bool | None = None, dry_run: bool = False,
+                        slot: str | None = None) -> list[Outgoing]:
     today = today or local_today()
-    planned = plan_reminders(today, weekly)
+    planned = plan_reminders(today, weekly, slot)
     if dry_run:
         return planned
     mailer, sent = get_mailer(), []
@@ -176,9 +181,11 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true", help="Print what would go out; send and record nothing")
     parser.add_argument("--weekly", action="store_true", help="Include weekly summaries regardless of the day")
     parser.add_argument("--date", type=date.fromisoformat, default=None)
+    parser.add_argument("--slot", choices=["morning", "evening"], default=None,
+                        help="morning: same-day digests; evening: day-before digests; default both")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
-    result = asyncio.run(run_reminders(args.date, weekly=True if args.weekly else None, dry_run=args.dry_run))
+    result = asyncio.run(run_reminders(args.date, weekly=True if args.weekly else None, dry_run=args.dry_run, slot=args.slot))
     for o in result:
         print(f"--- {o.kind} to {o.email.to}: {o.email.subject}\n{o.email.text}\n")
     print(f"{len(result)} email(s) {'would be sent' if args.dry_run else 'handed to the mailer'}")

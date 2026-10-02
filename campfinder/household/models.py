@@ -22,7 +22,7 @@ ROLE_LABELS = {
 }
 ROLE_HELP = {
     "co_parent": "the full plan: chat, calendar and every task",
-    "caregiver": "the jobs assigned to them, plus the family calendar",
+    "caregiver": "the jobs assigned to you, plus the family calendar",
     "viewer": "the family calendar only",
 }
 

@@ -214,12 +214,12 @@ async def member_calendar(token: str) -> Response:
 @router.post("/internal/reminders/run", summary="Send due reminders (cron)", include_in_schema=False)
 async def run_reminder_job(
     x_cron_secret: str | None = Header(default=None), dry_run: bool = False, weekly: bool | None = None,
-    on: date | None = None,
+    on: date | None = None, slot: str | None = Query(default=None, pattern="^(morning|evening)$"),
 ) -> dict[str, Any]:
     secret = os.environ.get("REMINDER_CRON_SECRET", "")
     if not secret or not x_cron_secret or not hmac.compare_digest(secret, x_cron_secret):
         raise HTTPException(status_code=404, detail="Not found")
-    out = await run_reminders(on, weekly=weekly, dry_run=dry_run)
+    out = await run_reminders(on, weekly=weekly, dry_run=dry_run, slot=slot)
     return {
         "dry_run": dry_run,
         "count": len(out),

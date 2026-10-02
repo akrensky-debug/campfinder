@@ -59,7 +59,8 @@ async def test_reminder_preferences(client, plan, outbox):
     client.patch(f"/api/v1/families/{plan}/me", headers=h(GRANDMA), json={"reminder_pref": "off"})
     assert await run_reminders(date(2027, 7, 5), weekly=False) == []
     client.patch(f"/api/v1/families/{plan}/me", headers=h(GRANDMA), json={"reminder_pref": "daily"})
-    sent = await run_reminders(date(2027, 7, 6), weekly=False)
+    assert await run_reminders(date(2027, 7, 6), weekly=False, slot="evening") == []
+    sent = await run_reminders(date(2027, 7, 6), weekly=False, slot="morning")
     assert [o.email.to for o in sent] == ["grandma@example.com"] and "today" in outbox[0].subject
 
 

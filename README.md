@@ -49,6 +49,7 @@ Then create the family tables:
 psql $DATABASE_URL -f schema_family.sql
 psql $DATABASE_URL -f schema_activity_api.sql
 psql $DATABASE_URL -f schema_accounts_kit.sql
+psql $DATABASE_URL -f schema_household.sql
 ```
 
 ### 5. Start the API server
@@ -61,6 +62,14 @@ The API is now running at `http://localhost:8000`.
 
 - Interactive docs: http://localhost:8000/docs
 - Health check: http://localhost:8000/health
+
+### Household, jobs and reminders
+
+Owners invite a co-parent, grandparent, nanny or carpool parent with a role, and the
+assistant turns the plan into jobs that each go to one person, with email reminders and a
+per-person calendar feed. Roles, setup, reminder scheduling and email settings
+(`HOUSEHOLD_EMAIL_MODE` is `log` by default, so nothing is sent until you choose
+`resend`) are in `docs/household.md`. Tests: `pip install pytest pytest-asyncio && python -m pytest`.
 
 ### Parent sign-in and the info kit
 
@@ -111,6 +120,10 @@ fields for chosen kids) behind expiring, revocable links that log every open. Lo
 | `GET/POST` | `/api/v1/families/{id}/kit/shares` | List or create share packages |
 | `POST` | `/api/v1/families/{id}/kit/shares/{share_id}/revoke` | Withdraw a share |
 | `GET`  | `/api/v1/shares/{token}` | Recipient view of a shared package |
+| `GET/POST` | `/api/v1/families/{id}/household`, `/members/invite` | Household members and invites (see `docs/household.md`) |
+| `GET/POST/PATCH` | `/api/v1/families/{id}/tasks[/assign\|/generate]` | Jobs: rides, forms, payments, packing lists, deadlines |
+| `GET/POST` | `/api/v1/invites/{token}[/accept]` | Preview and accept an invite |
+| `GET`  | `/api/v1/calendar/member/{token}.ics` | One person's feed: the family plan plus their jobs |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
 | `GET`  | `/health` | API + database health check |
