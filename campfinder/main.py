@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from campfinder.config import get_settings
 from campfinder.database import check_connection, close_pool, init_pool
 from campfinder.mcp_server import mcp
-from campfinder.routers import activity, agent, camps, kit, compare, freshness, leads, planner, search, sessions, stripe
+from campfinder.routers import activity, agent, camps, household, kit, compare, freshness, leads, planner, search, sessions, stripe
 
 # Streamable HTTP MCP endpoint, mounted at /mcp. Stateless JSON responses so it
 # works behind Railway's proxy and across restarts. host="0.0.0.0" disables the
@@ -63,6 +63,7 @@ def create_app() -> FastAPI:
     app.include_router(stripe.router, prefix=prefix, tags=["Stripe"])
     app.include_router(agent.router, prefix=prefix, tags=["Agent"])
     app.include_router(kit.router, prefix=prefix, tags=["Info kit"])
+    app.include_router(household.router, prefix=prefix, tags=["Household"])
     app.include_router(activity.router)
 
     app.mount("/mcp", mcp_app)

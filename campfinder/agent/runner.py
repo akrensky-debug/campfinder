@@ -15,6 +15,7 @@ from typing import Any, AsyncIterator
 
 import anthropic
 
+from campfinder.agent.household_tools import HOUSEHOLD_PROMPT, household_context
 from campfinder.agent.tools import (
     ALL_TOOLS,
     ToolError,
@@ -64,7 +65,7 @@ Use plain language and no tables; the UI renders the structured data.
 
 Coverage today is summer camps in the Northeast US (CT, MA, ME, NH, NJ, NY, PA, RI, VT). If \
 asked about something outside that, say what you can't do yet and help with what you can.\
-"""
+""" + HOUSEHOLD_PROMPT
 
 
 def _client() -> anthropic.AsyncAnthropic:
@@ -86,6 +87,7 @@ def _context_block(family_id: str) -> str:
         f"Today is {date.today().isoformat()}.\n"
         f"Family profile: {json.dumps(profile) if profile else 'empty (new family)'}\n"
         f"Family calendar: {json.dumps(calendar) if calendar else 'empty'}\n"
+        f"{household_context(family_id)}\n"
         "</context>"
     )
 
