@@ -28,6 +28,9 @@ class Settings:
     stripe_secret_key: str = os.environ.get("STRIPE_SECRET_KEY", "")
     stripe_webhook_secret: str = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
     stripe_pro_price_id: str = os.environ.get("STRIPE_PRO_PRICE_ID", "")
+    anthropic_api_key: str = os.environ.get("ANTHROPIC_API_KEY", "")
+    # 32 random bytes, base64: python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+    kit_encryption_key: str = os.environ.get("KIT_ENCRYPTION_KEY", "")
     frontend_url: str = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
     cors_origins: list[str] = ["*"]  # Tighten in production

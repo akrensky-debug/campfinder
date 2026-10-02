@@ -44,3 +44,6 @@ CREATE TABLE IF NOT EXISTS camp_submissions (
 
 CREATE INDEX IF NOT EXISTS idx_submissions_status ON camp_submissions (status);
 CREATE INDEX IF NOT EXISTS idx_submissions_created ON camp_submissions (created_at DESC);
+
+ALTER TABLE leads            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE camp_submissions ENABLE ROW LEVEL SECURITY;

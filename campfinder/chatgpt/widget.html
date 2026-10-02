@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff; --card: #ffffff; --line: #e5e7eb; --ink: #111827; --muted: #6b7280;
+    --brand: #2563eb; --brand-soft: #eff6ff; --ok: #166534; --ok-soft: #dcfce7; --warn-soft: #f3f4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0f17; --card: #111827; --line: #1f2937; --ink: #f3f4f6; --muted: #9ca3af;
+      --brand: #60a5fa; --brand-soft: #172554; --ok: #86efac; --ok-soft: #14532d; --warn-soft: #1f2937;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0f17; --card: #111827; --line: #1f2937; --ink: #f3f4f6; --muted: #9ca3af;
+    --brand: #60a5fa; --brand-soft: #172554; --ok: #86efac; --ok-soft: #14532d; --warn-soft: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+  .wrap { padding: 12px; display: grid; gap: 10px; }
+  .card { border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: 12px 14px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .name { font-weight: 650; font-size: 15px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .price { font-weight: 700; white-space: nowrap; }
+  .price small { color: var(--muted); font-weight: 400; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--warn-soft); color: var(--muted); }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); }
+  .why { color: var(--brand); font-size: 12.5px; margin-top: 8px; }
+  .dates { font-size: 13px; margin-top: 6px; }
+  a.btn, button.btn { display: inline-block; margin-top: 10px; font: inherit; font-size: 13px; font-weight: 600; color: var(--brand); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: none; }
+  .cta { background: var(--brand-soft); border-color: transparent; }
+  .cta .name { font-size: 14px; }
+  .empty { color: var(--muted); padding: 8px 2px; }
+  .foot { color: var(--muted); font-size: 11.5px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap" id="root"><div class="empty">Finding camps…</div></div>
+<script>
+  // MCP Apps bridge (protocol 2026-01-26), with the window.openai fallback ChatGPT also offers.
+  let nextId = 1;
+  const pending = new Map();
+  function request(method, params) {
+    const id = nextId++;
+    window.parent.postMessage({ jsonrpc: "2.0", id, method, params }, "*");
+    return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+  }
+  function notify(method, params) {
+    window.parent.postMessage({ jsonrpc: "2.0", method, params }, "*");
+  }
+  function openLink(url) {
+    if (window.openai && window.openai.openExternal) { window.openai.openExternal({ href: url }); return; }
+    request("ui/open-link", { url }).catch(() => window.open(url, "_blank", "noopener"));
+  }
+
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const day = d => new Date(d + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const TRUST = { team_verified: "Verified by CampFinder", camp_verified: "Verified by the camp", claimed: "Claimed by the camp" };
+
+  function campCard(c, session) {
+    const chips = [];
+    if (TRUST[c.verification_status]) chips.push(`<span class="chip ok">✓ ${esc(TRUST[c.verification_status])}</span>`);
+    else chips.push(`<span class="chip">Not yet verified</span>`);
+    if (c.age_min != null && c.age_max != null) chips.push(`<span class="chip">Ages ${c.age_min}–${c.age_max}</span>`);
+    if (c.extended_care) chips.push(`<span class="chip">Extended care</span>`);
+    if (c.transportation) chips.push(`<span class="chip">Transportation</span>`);
+    if (c.financial_aid) chips.push(`<span class="chip">Financial aid</span>`);
+    const where = [c.city && c.state ? `${c.city}, ${c.state}` : "", c.distance_miles != null ? `${c.distance_miles} mi` : ""].filter(Boolean).join(" · ");
+    const price = session && session.price != null ? session.price : c.price_per_week;
+    return `<div class="card">
+      <div class="row">
+        <div><div class="name">${esc(c.name)}</div><div class="meta">${esc(where)}</div></div>
+        ${price != null ? `<div class="price">$${Math.round(price)}<small>${session ? "" : "/wk"}</small></div>` : ""}
+      </div>
+      ${session ? `<div class="dates">${day(session.start_date)} – ${day(session.end_date)}${session.availability === "limited" || session.availability === "waitlist" ? " · " + esc(session.availability) : ""}</div>` : ""}
+      <div class="chips">${chips.join("")}</div>
+      ${c.match_reasons && c.match_reasons.length ? `<div class="why">${esc(c.match_reasons.slice(0, 2).join(" · "))}</div>` : ""}
+      <button class="btn" data-url="${esc(c.url)}">Details and request info →</button>
+    </div>`;
+  }
+
+  function render(data) {
+    const root = document.getElementById("root");
+    if (!data) return;
+    const parts = [];
+    if (data.sessions && data.sessions.length) {
+      data.sessions.forEach(s => parts.push(campCard(s.camp, s)));
+    } else if (data.camps && data.camps.length) {
+      data.camps.forEach(c => parts.push(campCard(c)));
+    } else {
+      parts.push(`<div class="empty">${esc(data.note || "No camps matched. Try a nearby town or fewer filters.")}</div>`);
+    }
+    if (data.plan_url) {
+      parts.push(`<div class="card cta">
+        <div class="name">Plan the whole summer on CampFinder</div>
+        <div class="meta">Save these picks, fill every week, and put it all on one family calendar you can share.</div>
+        <button class="btn" data-url="${esc(data.plan_url)}">Continue on CampFinder →</button>
+      </div>`);
+    }
+    parts.push(`<div class="foot">Camp data from CampFinder</div>`);
+    root.innerHTML = parts.join("");
+    root.querySelectorAll("[data-url]").forEach(el => el.addEventListener("click", () => openLink(el.dataset.url)));
+    notify("ui/notifications/size-changed", { width: document.body.scrollWidth, height: document.body.scrollHeight });
+  }
+
+  window.addEventListener("message", event => {
+    if (event.source !== window.parent) return;
+    const msg = event.data;
+    if (!msg || msg.jsonrpc !== "2.0") return;
+    if (msg.id != null && pending.has(msg.id)) {
+      const p = pending.get(msg.id); pending.delete(msg.id);
+      msg.error ? p.reject(msg.error) : p.resolve(msg.result);
+      return;
+    }
+    if (msg.method === "ui/notifications/tool-result") render(msg.params && msg.params.structuredContent);
+    if (msg.method === "ui/notifications/host-context-changed" && msg.params && msg.params.theme) {
+      document.documentElement.dataset.theme = msg.params.theme;
+    }
+  });
+
+  request("ui/initialize", {
+    appInfo: { name: "CampFinder", version: "1.0.0" },
+    appCapabilities: {},
+    protocolVersion: "2026-01-26",
+  }).then(result => {
+    const theme = result && result.hostContext && result.hostContext.theme;
+    if (theme) document.documentElement.dataset.theme = theme;
+    notify("ui/notifications/initialized", {});
+  }).catch(() => {});
+
+  // Hosts that inject window.openai may already hold the output.
+  if (window.openai && window.openai.toolOutput) render(window.openai.toolOutput);
+  window.addEventListener("openai:set_globals", () => window.openai && render(window.openai.toolOutput));
+</script>
+</body>
+</html>

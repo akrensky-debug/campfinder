@@ -1,0 +1,58 @@
+"""Family info kit: read and update it, share packages from it, and open a shared package."""
+
+from __future__ import annotations
+
+from uuid import UUID
+
+from fastapi import APIRouter, Depends
+
+from campfinder.auth import authorize_family, required_user
+from campfinder.config import get_settings
+from campfinder.kit.models import (
+    CHILD_FIELDS, HOUSEHOLD_FIELDS, InfoKit, ShareCreate, ShareCreated, SharedPackage, ShareSummary,
+)
+from campfinder.kit import service
+
+router = APIRouter()
+
+
+@router.get("/families/{family_id}/kit", response_model=InfoKit, summary="Get the info kit")
+async def get_kit(family_id: UUID, user_id: str = Depends(required_user)) -> InfoKit:
+    authorize_family(family_id, user_id, require_owner=True)
+    return service.load_kit(str(family_id))
+
+
+@router.put("/families/{family_id}/kit", response_model=InfoKit, summary="Replace the info kit")
+async def put_kit(family_id: UUID, kit: InfoKit, user_id: str = Depends(required_user)) -> InfoKit:
+    authorize_family(family_id, user_id, require_owner=True)
+    service.save_kit(str(family_id), kit)
+    return kit
+
+
+@router.get("/kit/fields", summary="Fields that can be shared")
+async def kit_fields() -> dict[str, list[str]]:
+    return {"household": HOUSEHOLD_FIELDS, "child": CHILD_FIELDS}
+
+
+@router.get("/families/{family_id}/kit/shares", response_model=list[ShareSummary], summary="List shares")
+async def list_shares(family_id: UUID, user_id: str = Depends(required_user)) -> list[ShareSummary]:
+    authorize_family(family_id, user_id, require_owner=True)
+    return service.list_shares(str(family_id))
+
+
+@router.post("/families/{family_id}/kit/shares", response_model=ShareCreated, status_code=201, summary="Share a package")
+async def create_share(family_id: UUID, req: ShareCreate, user_id: str = Depends(required_user)) -> ShareCreated:
+    authorize_family(family_id, user_id, require_owner=True)
+    share, token = service.create_share(str(family_id), req)
+    return ShareCreated(share=share, url=f"{get_settings().frontend_url.rstrip('/')}/share/{token}")
+
+
+@router.post("/families/{family_id}/kit/shares/{share_id}/revoke", response_model=ShareSummary, summary="Withdraw a share")
+async def revoke_share(family_id: UUID, share_id: UUID, user_id: str = Depends(required_user)) -> ShareSummary:
+    authorize_family(family_id, user_id, require_owner=True)
+    return service.revoke_share(str(family_id), str(share_id))
+
+
+@router.get("/shares/{token}", response_model=SharedPackage, summary="Open a shared package (recipient view)")
+async def open_share(token: str) -> SharedPackage:
+    return service.open_share(token)
