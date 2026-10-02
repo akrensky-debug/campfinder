@@ -53,6 +53,20 @@ LOCATION_HELP = (
     "the nearest larger city."
 )
 
+COVERED_STATES = {"CT", "MA", "ME", "NH", "NJ", "NY", "PA", "RI", "VT"}
+OUTSIDE_COVERAGE = (
+    "CampFinder covers the Northeast US today (CT, MA, ME, NH, NJ, NY, PA, RI, VT), "
+    "so there is nothing for {location} yet."
+)
+
+
+def _empty_note(location: str, fallback: str) -> str:
+    """Explain an empty result: outside our coverage, or just no match."""
+    state = location.rsplit(",", 1)[-1].strip().upper() if "," in location else ""
+    if len(state) == 2 and state.isalpha() and state not in COVERED_STATES:
+        return OUTSIDE_COVERAGE.format(location=location)
+    return fallback
+
 
 class SearchCampsInput(BaseModel):
     location: str = Field(description=LOCATION_HELP)
@@ -179,7 +193,8 @@ async def search_camps_tool(inp: SearchCampsInput) -> ToolOutput:
         content={
             "total": res.total,
             "camps": [_compact_camp(c) for c in camps],
-            "note": None if camps else "No camps matched. Widen the radius, drop a filter, or try a nearby city.",
+            "note": None if camps else _empty_note(
+                inp.location, "No camps matched. Widen the radius, drop a filter, or try a nearby city."),
         },
         ui={"type": "camps", "camps": camps, "query": inp.model_dump(mode="json", exclude_none=True)},
     )
@@ -234,7 +249,7 @@ async def find_sessions_tool(inp: FindSessionsInput) -> ToolOutput:
         for s, p in matches
     ]
     return ToolOutput(
-        content={"sessions": rows, "note": None if rows else "Nothing open in that window."},
+        content={"sessions": rows, "note": None if rows else _empty_note(inp.location, "Nothing open in that window.")},
         ui={"type": "sessions", "sessions": ui_sessions},
     )
 
