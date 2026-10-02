@@ -32,6 +32,15 @@ class Settings:
     # 32 random bytes, base64: python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
     kit_encryption_key: str = os.environ.get("KIT_ENCRYPTION_KEY", "")
     frontend_url: str = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+    # Public origin of this API, used for server icons in MCP metadata.
+    public_api_url: str = os.environ.get("PUBLIC_API_URL", "http://localhost:8000")
+    # ChatGPT app review: the token from the OpenAI dashboard, served at
+    # /.well-known/openai-apps-challenge, and the widget's origin (unique per app).
+    openai_apps_challenge: str = os.environ.get("OPENAI_APPS_CHALLENGE", "")
+    chatgpt_widget_domain: str = os.environ.get("CHATGPT_WIDGET_DOMAIN", "")
+    # Requests per minute per client IP on the MCP endpoints. ChatGPT and Claude call
+    # from shared IP ranges, so this guards against abuse, not per-parent use.
+    mcp_rate_per_minute: int = int(os.environ.get("MCP_RATE_PER_MINUTE", "600"))
 
     cors_origins: list[str] = ["*"]  # Tighten in production
     api_prefix: str = "/api/v1"

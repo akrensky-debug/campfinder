@@ -112,7 +112,9 @@ fields for chosen kids) behind expiring, revocable links that log every open. Lo
 | `POST` | `/api/v1/families/{id}/kit/shares/{share_id}/revoke` | Withdraw a share |
 | `GET`  | `/api/v1/shares/{token}` | Recipient view of a shared package |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
-| `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
+| `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools to any client |
+| `POST` | `/chatgpt/mcp`, `/claude/mcp` | The same server tuned for the ChatGPT app and the Claude connector |
+| `GET`  | `/.well-known/openai-apps-challenge` | ChatGPT app domain verification (`OPENAI_APPS_CHALLENGE`) |
 | `GET`  | `/health` | API + database health check |
 
 ---
@@ -131,8 +133,12 @@ to from Google, Apple or Outlook Calendar.
   files and anonymous demand reporting. Requires `schema_activity_api.sql`.
 - The same camp tools are served over MCP at `/mcp`, so Claude, ChatGPT and other
   agents can connect CampFinder as a data source. Family tools stay site-only.
-- In ChatGPT, results render as camp cards with a handoff back to CampFinder. See
-  `docs/chatgpt-app.md` for how it works, listing copy and the submission checklist.
+- In ChatGPT and Claude, results render as camp cards with a handoff back to CampFinder.
+  Strategy: `docs/assistant-apps-strategy.md`. Submission kits: `docs/chatgpt-app.md` and
+  `docs/claude-connector.md`. Founder steps: `docs/assistant-apps-launch-checklist.md`.
+- Smoke-test any endpoint: `python -m campfinder.scripts.check_mcp https://<api>/claude/mcp`.
+- Assistant env: `PUBLIC_API_URL` (server icons), `OPENAI_APPS_CHALLENGE`, optional
+  `CHATGPT_WIDGET_DOMAIN` (defaults to `FRONTEND_URL`) and `MCP_RATE_PER_MINUTE` (default 600).
 
 ---
 
@@ -199,7 +205,10 @@ campfinder/
   agent/
     tools.py           # Tools shared by the site agent and the MCP server
     runner.py          # Claude tool-use loop, streamed to the browser
-  mcp_server.py        # MCP server exposing the camp tools
+  mcp_server.py        # MCP server exposing the camp tools, one per assistant host
+  chatgpt/widget.html  # Camp cards (MCP Apps UI) shown in ChatGPT and Claude
+  static/              # Icons for the MCP server metadata and listings
+assistant-apps/        # ChatGPT plugin package (build.sh makes the ZIP)
 schema.sql             # Full Postgres/PostGIS schema
 schema_family.sql      # Families, family calendar, agent conversations
 requirements.txt

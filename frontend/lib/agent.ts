@@ -1,5 +1,6 @@
 import type { CampSearchResult } from '@/lib/api'
 import { authHeaders } from '@/lib/auth'
+import { Events } from '@/lib/analytics'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 const FAMILY_KEY = 'cf_family_id'
@@ -128,6 +129,7 @@ export async function loadFamily(): Promise<Family> {
     if (claimed.ok) {
       const family: Family = await claimed.json()
       writeFamilyId(family.id)
+      Events.familySaved()
       return family
     }
   }
