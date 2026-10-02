@@ -339,6 +339,7 @@ class ToolSpec:
     fn: Callable[..., Awaitable[ToolOutput]]
     family: bool = False  # needs a family_id
     status: str = ""  # shown in the UI while the tool runs
+    family_optional: bool = False  # public, but also gets the family_id when there is one
 
 
 CAMP_TOOLS: list[ToolSpec] = [
@@ -404,6 +405,10 @@ FAMILY_TOOLS: list[ToolSpec] = [
 ALL_TOOLS = {t.name: t for t in CAMP_TOOLS + FAMILY_TOOLS}
 
 
+# Year-round activities (classes, lessons, leagues) add their tools to the lists above.
+import campfinder.agent.activity_tools  # noqa: E402,F401
+
+
 def _inline_refs(schema: dict[str, Any]) -> dict[str, Any]:
     """Inline $defs so each tool's input_schema is a single self-contained object."""
     defs = schema.pop("$defs", {})
@@ -447,7 +452,7 @@ async def run_tool(name: str, raw_input: Any, family_id: str | None = None) -> T
     except ValidationError as e:
         raise ToolError(f"Invalid input: {e.errors(include_url=False)}") from e
     try:
-        if spec.family:
+        if spec.family or spec.family_optional:
             return await spec.fn(inp, family_id)
         return await spec.fn(inp)
     except HTTPException as e:

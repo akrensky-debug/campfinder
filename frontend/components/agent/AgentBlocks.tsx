@@ -1,6 +1,7 @@
 import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
 import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
+import { ActivityDetailCard, ActivityResults, ScheduleFitView, WeekView, weeklyLabel } from '@/components/agent/ActivityBlocks'
 
 const SHOWN_CAMPS = 5
 
@@ -145,7 +146,9 @@ export function CalendarList({ events, compact = false }: { events: FamilyEvent[
     <ul className="space-y-1.5">
       {events.map(e => (
         <li key={e.id} className={`flex gap-3 text-sm ${compact ? '' : 'bg-white border border-gray-200 rounded-lg px-3 py-2'}`}>
-          <span className="text-gray-500 whitespace-nowrap w-28 shrink-0">{fmtRange(e.start_date, e.end_date)}</span>
+          <span className="text-gray-500 w-28 shrink-0">
+            {e.rrule ? weeklyLabel(e.rrule, e.start_time) : fmtRange(e.start_date, e.end_date)}
+          </span>
           <span className="text-gray-800 min-w-0">{e.title}</span>
         </li>
       ))}
@@ -161,5 +164,10 @@ export function AgentBlock({ data }: { data: UIData }) {
     case 'plan':        return <PlanView plan={data} />
     case 'calendar':    return <CalendarList events={data.events} />
     case 'profile':     return null // reflected in the family panel
+    // Year-round activities
+    case 'activities':      return <ActivityResults activities={data.activities} />
+    case 'activity_detail': return <ActivityDetailCard activity={data.activity} />
+    case 'schedule_fit':    return <ScheduleFitView results={data.results} />
+    case 'week':            return <WeekView week={data.week} />
   }
 }

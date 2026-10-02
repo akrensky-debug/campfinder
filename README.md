@@ -49,6 +49,14 @@ Then create the family tables:
 psql $DATABASE_URL -f schema_family.sql
 psql $DATABASE_URL -f schema_activity_api.sql
 psql $DATABASE_URL -f schema_accounts_kit.sql
+psql $DATABASE_URL -f schema_programs.sql   # year-round classes, lessons, leagues
+```
+
+Load a curated dataset of year-round programs (dry run first; it prints a summary):
+
+```bash
+python -m campfinder.activity.importer data/pilots/providence-swim-2026.json
+python -m campfinder.activity.importer data/pilots/providence-swim-2026.json --apply
 ```
 
 ### 5. Start the API server
@@ -111,6 +119,9 @@ fields for chosen kids) behind expiring, revocable links that log every open. Lo
 | `GET/POST` | `/api/v1/families/{id}/kit/shares` | List or create share packages |
 | `POST` | `/api/v1/families/{id}/kit/shares/{share_id}/revoke` | Withdraw a share |
 | `GET`  | `/api/v1/shares/{token}` | Recipient view of a shared package |
+| `GET`  | `/api/v1/activities/{id}` | One class, lesson or league with offerings, prices and enrollment |
+| `GET`  | `/api/v1/activities/{id}/sources` | Source URL and read date for each fact |
+| `GET`  | `/api/v1/families/{id}/week` | The family's week at a glance across kids |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools |
 | `GET`  | `/health` | API + database health check |
@@ -133,6 +144,29 @@ to from Google, Apple or Outlook Calendar.
   agents can connect CampFinder as a data source. Family tools stay site-only.
 - In ChatGPT, results render as camp cards with a handoff back to CampFinder. See
   `docs/chatgpt-app.md` for how it works, listing copy and the submission checklist.
+
+### Year-round activities
+
+Classes, lessons, leagues and after-school programs live in their own tables
+(`schema_programs.sql`): `programs`, `program_offerings` (one term of one class at one
+time, as an iCal RRULE plus no-class dates), `program_prices` (full term, per class,
+drop-in, trial, fees, membership) and `program_field_sources` (source URL and date per
+fact). `campfinder/activity/sources.py` maps them into the Family Activity schema next to
+camps. The agent finds them by age, interest, days and times, distance, price and term
+(`find_activities`), checks a class against the family calendar for clashes and
+other kids' pickups (`check_schedule_fit`), adds it as a repeating event
+(`add_activity_to_calendar`), sets enrollment reminders (`remind_enrollment`) and shows
+the family's week (`show_family_week`). Curated datasets live in `data/pilots/` and load
+with `campfinder.activity.importer`.
+
+### Tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+Tests use an in-memory Supabase fake and a scripted Anthropic stream (`tests/fakes.py`).
 
 ---
 

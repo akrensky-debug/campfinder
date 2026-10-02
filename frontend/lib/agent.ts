@@ -1,4 +1,5 @@
 import type { CampSearchResult } from '@/lib/api'
+import type { ActivityCard, ActivityProgram, FamilyWeek, ScheduleFitResult } from '@/lib/activities'
 import { authHeaders } from '@/lib/auth'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
@@ -29,6 +30,13 @@ export interface FamilyEvent {
   child_name?: string | null
   camp_id?: string | null
   notes?: string | null
+  // Year-round entries: weekly classes, practices, pickups, enrollment reminders.
+  kind?: 'camp' | 'activity' | 'commitment' | 'reminder' | null
+  start_time?: string | null
+  end_time?: string | null
+  rrule?: string | null
+  location?: string | null
+  offering_id?: string | null
 }
 
 export interface Family {
@@ -77,6 +85,10 @@ export type UIData =
   | ({ type: 'plan' } & Plan)
   | { type: 'calendar'; events: FamilyEvent[] }
   | { type: 'profile'; profile: FamilyProfile }
+  | { type: 'activities'; activities: ActivityCard[] }
+  | { type: 'activity_detail'; activity: ActivityProgram }
+  | { type: 'schedule_fit'; checked_against: string; results: ScheduleFitResult[] }
+  | { type: 'week'; week: FamilyWeek; events: FamilyEvent[] }
 
 export type AgentEvent =
   | { type: 'conversation'; id: string }

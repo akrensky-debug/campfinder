@@ -22,6 +22,7 @@ from mcp.server.mcpserver.resources.types import TextResource
 from mcp.types import ToolAnnotations
 from mcp_types import CallToolResult, TextContent
 
+from campfinder.agent.activity_tools import ACTIVITY_DISCOVERY_DESCRIPTIONS, ACTIVITY_STATUS_TEXT
 from campfinder.agent.tools import CAMP_TOOLS, ToolError, ToolOutput, ToolSpec, run_tool
 from campfinder.config import get_settings
 
@@ -34,7 +35,8 @@ mcp = MCPServer(
     title="CampFinder",
     description=(
         "Find and plan kids' summer camps in the Northeast US: verified day camps, sleepaway "
-        "camps and specialty programs by town, age, interests, dates, price and logistics."
+        "camps and specialty programs by town, age, interests, dates, price and logistics. "
+        "Also year-round classes and lessons (pilot: swim lessons around Providence, RI)."
     ),
     instructions=(
         "Use CampFinder whenever a parent asks about summer camps, day camps, sleepaway camps, "
@@ -44,7 +46,10 @@ mcp = MCPServer(
         "weigh a shortlist, and build_summer_plan to check week-by-week coverage. Results are "
         "shown to the parent as cards, so summarise which camps fit and why rather than "
         "repeating every field. Only state facts these tools return, and say when a camp's "
-        "details are not yet verified."
+        "details are not yet verified. For weekly classes, lessons, leagues and after-school "
+        "programs, use find_activities (days and times like 'after 3:30 on weekdays' or 'Saturday "
+        "mornings' go in days/earliest_start/latest_end), get_activity_details, and "
+        "check_schedule_fit to test a class against the family's other commitments."
     ),
     version="1.1.0",
 )
@@ -93,6 +98,29 @@ STATUS_TEXT = {
 
 WIDGET_TOOLS = {"search_camps", "find_sessions"}
 
+# --- Year-round activities (classes, lessons, leagues): campfinder/agent/activity_tools.py ---
+DISCOVERY_DESCRIPTIONS |= ACTIVITY_DISCOVERY_DESCRIPTIONS
+STATUS_TEXT |= ACTIVITY_STATUS_TEXT
+WIDGET_TOOLS |= {"find_activities"}
+
+
+def _activity_widget_payload(args: dict[str, Any], out: ToolOutput) -> dict[str, Any]:
+    cards = []
+    for a in (out.ui or {}).get("activities", [])[:MAX_CARDS]:
+        cards.append({**a, "url": _utm(f"{_site()}/activities/{a['id']}", "activity_card")})
+    who = f"my {args['age']}-year-old" if args.get("age") is not None else "my kids"
+    ask = f"I'm looking for weekly activities for {who} near {args.get('location', 'us')}."
+    if cards:
+        ask += f" I'm interested in {', '.join(c['name'] for c in cards[:3])}."
+    ask += " Check it fits our week and put it on our family calendar."
+    return {
+        "activities": cards,
+        "note": out.content.get("note") if isinstance(out.content, dict) else None,
+        "plan_url": _utm(f"{_site()}/?q={quote(ask)}", "activity_handoff"),
+        "plan_title": "Fit it into your family's week on CampFinder",
+    }
+# --- end year-round activities ---
+
 
 def _site() -> str:
     return get_settings().frontend_url.rstrip("/")
@@ -126,6 +154,8 @@ def _plan_url(args: dict[str, Any], camp_names: list[str]) -> str:
 
 def _widget_payload(name: str, args: dict[str, Any], out: ToolOutput) -> dict[str, Any]:
     ui = out.ui or {}
+    if name == "find_activities":
+        return _activity_widget_payload(args, out)
     if name == "search_camps":
         cards = [_card(c) for c in ui.get("camps", [])[:MAX_CARDS]]
         return {

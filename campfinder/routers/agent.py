@@ -12,6 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
+from campfinder.activity import ics as ics_extended
 from campfinder.agent.runner import run_agent
 from campfinder.agent.tools import list_family_events
 from campfinder.auth import authorize_family, optional_user, required_user
@@ -163,7 +164,11 @@ def build_ics(events: list[dict[str, Any]]) -> str:
         "X-WR-CALNAME:Family plans (CampFinder)",
         "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
     ]
+    lines += ics_extended.vtimezone_lines(events)
     for e in events:
+        if ics_extended.needs_extended_ics(e):  # recurring/timed classes and reminders
+            lines += ics_extended.vevent_lines(e, stamp)
+            continue
         start = date.fromisoformat(str(e["start_date"]))
         end = date.fromisoformat(str(e["end_date"])) + timedelta(days=1)  # DTEND is exclusive
         lines += [

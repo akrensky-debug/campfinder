@@ -7,6 +7,8 @@ import {
   type AgentEvent, type Family, type UIData,
 } from '@/lib/agent'
 import { AgentBlock, AgentText, CalendarList } from '@/components/agent/AgentBlocks'
+import { WeekView } from '@/components/agent/ActivityBlocks'
+import { getFamilyWeek, type FamilyWeek } from '@/lib/activities'
 
 type Part =
   | { kind: 'text'; text: string }
@@ -22,7 +24,7 @@ interface Message {
 const STARTERS = [
   'Find a STEM day camp near Providence for my 8-year-old',
   'I need full-day coverage for two kids for all of July',
-  'Sleepaway camps in New England under $1,200 a week',
+  'Swim lessons after 3:30 on weekdays for my 5-year-old near Providence',
   'Help me plan our whole summer',
 ]
 
@@ -75,7 +77,7 @@ export default function AgentHome() {
         if (e.data.type === 'profile') {
           const profile = e.data.profile
           setFamily(f => (f ? { ...f, profile } : f))
-        } else if (e.data.type === 'calendar') {
+        } else if (e.data.type === 'calendar' || e.data.type === 'week') {
           const events = e.data.events
           setFamily(f => (f ? { ...f, events } : f))
         }
@@ -136,7 +138,8 @@ export default function AgentHome() {
             </h1>
             <p className="text-gray-600 text-lg mb-8 max-w-xl">
               Tell me about your kids and your summer. I'll find verified camps, work out the weeks,
-              and put it all on one calendar you can share.
+              and put it all on one calendar you can share. Weekly classes and lessons too, checked
+              against everyone's schedule.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 max-w-2xl">
               {STARTERS.map(s => (
@@ -262,6 +265,8 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
         )}
       </div>
 
+      <ThisWeek familyId={family.id} events={events} />
+
       <div className="bg-gray-50 rounded-2xl p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Family calendar</p>
         <CalendarList events={events} compact />
@@ -300,6 +305,38 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
           </>
         )}
       </div>
+    </div>
+  )
+}
+
+/** Everyone's week at a glance. Shown once something with a weekly time is on the calendar. */
+function ThisWeek({ familyId, events }: { familyId: string; events: Family['events'] }) {
+  const [week, setWeek] = useState<FamilyWeek | null>(null)
+  const [offset, setOffset] = useState(0)
+  const hasWeekly = events.some(e => e.start_time || e.rrule)
+
+  useEffect(() => {
+    if (!hasWeekly) return
+    const d = new Date()
+    d.setDate(d.getDate() + offset * 7)
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    getFamilyWeek(familyId, iso).then(setWeek).catch(() => setWeek(null))
+  }, [familyId, events, offset, hasWeekly])
+
+  if (!hasWeekly || !week) return null
+  return (
+    <div className="bg-gray-50 rounded-2xl p-4">
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          {offset === 0 ? 'This week' : `Week of ${new Date(week.week_of + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
+        </p>
+        <div className="flex gap-2 text-sm text-gray-500">
+          <button onClick={() => setOffset(o => o - 1)} aria-label="Previous week" className="hover:text-gray-800">‹</button>
+          {offset !== 0 && <button onClick={() => setOffset(0)} className="text-xs hover:text-gray-800">Today</button>}
+          <button onClick={() => setOffset(o => o + 1)} aria-label="Next week" className="hover:text-gray-800">›</button>
+        </div>
+      </div>
+      <WeekView week={week} compact />
     </div>
   )
 }
