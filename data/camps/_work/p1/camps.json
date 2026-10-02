@@ -1,0 +1,1519 @@
+{
+  "metro": "Providence, RI",
+  "camps": [
+    {
+      "slug": "ymca-greater-providence-bayside-camp-manitoo",
+      "name": "Bayside Family YMCA Summer Day Camp (Camp Manitoo)",
+      "operator_name": "YMCA of Greater Providence",
+      "website_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "registration_url": "https://operations.daxko.com/Online/3038/ProgramsV2/Search.mvc?keywords=&program_id=&expanded=categories%2Clocations&coming_soon=False&category_ids=CAT2574958&all_categories=true&all_locations=false&date_ranges%5B0%5D.start=&date_ranges%5B0%5D.end=&birth_dates=",
+      "street_address": "70 West Street",
+      "city": "barrington",
+      "state": "RI",
+      "zip": "02806",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts",
+        "STEM"
+      ],
+      "activities": [
+        "swimming",
+        "kayaking",
+        "basketball",
+        "soccer",
+        "volleyball",
+        "martial arts",
+        "fencing",
+        "arts & crafts",
+        "lego",
+        "dance",
+        "3d printing",
+        "archery",
+        "sailing",
+        "surfing"
+      ],
+      "gender_policy": "coed",
+      "grade_min": 0,
+      "grade_max": 8,
+      "age_min": 5,
+      "age_max": 14,
+      "description_short": "Day camp at the Bayside YMCA in Barrington with age groups from kindergarten to grade 8; campers swim in the outdoor pool, do archery, arts and sports, and older kids can pick themed or specialty weeks like kayaking, fencing, sailing or surfing.",
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Registration fees and deposits are non-refundable. Withdrawals before June 1 get a refund or Y credit; after June 1 with 14 days' written notice, a Y credit only; with less notice, no refund or credit plus a $25/week cancellation fee. No refunds once a session starts except for a verified medical reason.",
+      "special_needs_notes": "The Y states it welcomes campers of all abilities and makes reasonable modifications; families should contact the branch before camp to plan accommodations.",
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "season_year": 2026,
+      "phone": "(401) 245-2444",
+      "price_per_week": 420,
+      "price_min": 405,
+      "price_max": 450,
+      "price_per": "week",
+      "extended_care": true,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcagreaterprovidence.org/program/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "gender_policy",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Ages derived from grades (entering K through grade 8 in fall 2026); site says K campers must be 5 by June 22, 2026. Lunch is packed from home per FAQ. Page states GPYMCA camps are ACA accredited."
+        },
+        {
+          "url": "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Bayside%20Camp%20Info%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "phone",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Summer 2026 at-a-glance PDF. price_per_week = non-member traditional camp rate ($420; member $340); price range is non-member rates across traditional/themed/specialty groups. Extended day 7:00-8:30am and 4:30-5:30pm for an extra fee. PDF lists Week 4 as 7/13-7/19, recorded as 7/13-7/17 (Mon-Fri). Camp closed 7/3."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-greater-providence-cranston-day-camp",
+      "name": "Cranston YMCA Summer Day Camp",
+      "operator_name": "YMCA of Greater Providence",
+      "website_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "registration_url": "https://operations.daxko.com/Online/3038/ProgramsV2/Search.mvc?keywords=&program_id=&expanded=categories%2Clocations&coming_soon=False&category_ids=CAT2574958&all_categories=true&all_locations=false&date_ranges%5B0%5D.start=&date_ranges%5B0%5D.end=&birth_dates=",
+      "street_address": "1225 Park Ave",
+      "city": "cranston",
+      "state": "RI",
+      "zip": "02910",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "swimming",
+        "sports",
+        "team games",
+        "arts & crafts"
+      ],
+      "gender_policy": "coed",
+      "grade_min": 0,
+      "grade_max": 8,
+      "age_min": 5,
+      "age_max": 14,
+      "description_short": "Summer day camp run out of the Cranston YMCA for kids entering kindergarten through grade 8, with swimming, sports, team games, arts and crafts and weekly themed activities.",
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Registration fees and deposits are non-refundable. Withdrawals before June 1 get a refund or Y credit; after June 1 with 14 days' written notice, a Y credit only; with less notice, no refund or credit plus a $25/week cancellation fee. No refunds once a session starts except for a verified medical reason.",
+      "special_needs_notes": "The Y states it welcomes campers of all abilities and makes reasonable modifications; families should contact the branch before camp to plan accommodations.",
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Summer 2026",
+          "start_date": "2026-06-22",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcagreaterprovidence.org/program/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "gender_policy",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "aca_accredited",
+            "aca_source_url",
+            "name",
+            "sessions"
+          ],
+          "note": "Ages derived from grades (entering K through grade 8 in fall 2026). Lunch packed from home per FAQ. Page states GPYMCA camps are ACA accredited. No Cranston rate sheet published (link placeholder on page), so price omitted; season given only as June 22 - August 21."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-greater-providence-kent-county-day-camp",
+      "name": "Kent County YMCA Summer Day Camp",
+      "operator_name": "YMCA of Greater Providence",
+      "website_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "registration_url": "https://operations.daxko.com/Online/3038/ProgramsV2/Search.mvc?keywords=&program_id=&expanded=categories%2Clocations&coming_soon=False&category_ids=CAT2574958&all_categories=true&all_locations=false&date_ranges%5B0%5D.start=&date_ranges%5B0%5D.end=&birth_dates=",
+      "street_address": "900 Centerville Road",
+      "city": "warwick",
+      "state": "RI",
+      "zip": "02886",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts",
+        "STEM",
+        "nature"
+      ],
+      "activities": [
+        "swimming",
+        "basketball",
+        "soccer",
+        "archery",
+        "arts",
+        "dance",
+        "theater",
+        "lego",
+        "coding",
+        "nature",
+        "woodworking"
+      ],
+      "gender_policy": "coed",
+      "grade_min": 0,
+      "grade_max": 8,
+      "age_min": 5,
+      "age_max": 14,
+      "description_short": "Day camp at the Kent County YMCA in Warwick for kids entering kindergarten through grade 8; groups swim, play sports, do archery and arts, and can choose themed weeks such as theater, LEGO robotics, woodworking or Dungeons & Dragons.",
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Registration fees and deposits are non-refundable. Withdrawals before June 1 get a refund or Y credit; after June 1 with 14 days' written notice, a Y credit only; with less notice, no refund or credit plus a $25/week cancellation fee. No refunds once a session starts except for a verified medical reason.",
+      "special_needs_notes": "The Y states it welcomes campers of all abilities and makes reasonable modifications; families should contact the branch before camp to plan accommodations.",
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "season_year": 2026,
+      "phone": "(401) 828-0130",
+      "price_per_week": 420,
+      "price_min": 405,
+      "price_max": 450,
+      "price_per": "week",
+      "extended_care": true,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcagreaterprovidence.org/program/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "gender_policy",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Ages derived from grades (entering K through grade 8 in fall 2026); site says K campers must be 5 by June 22, 2026. Lunch is packed from home per FAQ. Page states GPYMCA camps are ACA accredited."
+        },
+        {
+          "url": "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/Kent%20Camp%20Info%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "phone",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Summer 2026 at-a-glance PDF. price_per_week = non-member traditional camp rate ($420; member $340); price range is non-member rates across traditional/themed/specialty groups. Extended day 7:00-8:30am and 4:30-5:30pm for an extra fee. PDF lists Week 4 as 7/13-7/19, recorded as 7/13-7/17 (Mon-Fri). Camp closed 7/3."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-greater-providence-south-county-day-camp",
+      "name": "South County YMCA Summer Day Camp",
+      "operator_name": "YMCA of Greater Providence",
+      "website_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "registration_url": "https://operations.daxko.com/Online/3038/ProgramsV2/Search.mvc?keywords=&program_id=&expanded=categories%2Clocations&coming_soon=False&category_ids=CAT2574958&all_categories=true&all_locations=false&date_ranges%5B0%5D.start=&date_ranges%5B0%5D.end=&birth_dates=",
+      "street_address": "165 Broad Rock Road",
+      "city": "south kingstown",
+      "state": "RI",
+      "zip": "02883",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "sports",
+        "arts",
+        "nature",
+        "STEM"
+      ],
+      "activities": [
+        "surfing",
+        "swimming",
+        "soccer",
+        "basketball",
+        "volleyball",
+        "dodgeball",
+        "wilderness skills",
+        "arts & crafts",
+        "cooking",
+        "lego robotics",
+        "oceanography",
+        "farm"
+      ],
+      "gender_policy": "coed",
+      "grade_min": 0,
+      "grade_max": 7,
+      "age_min": 5,
+      "age_max": 13,
+      "description_short": "Day camp at the South County YMCA in Peace Dale for kids entering kindergarten through grade 7, mixing swimming, sports and wilderness skills with themed weeks like surfing, cooking, LEGO robotics, oceanography and farm camp.",
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Registration fees and deposits are non-refundable. Withdrawals before June 1 get a refund or Y credit; after June 1 with 14 days' written notice, a Y credit only; with less notice, no refund or credit plus a $25/week cancellation fee. No refunds once a session starts except for a verified medical reason.",
+      "special_needs_notes": "The Y states it welcomes campers of all abilities and makes reasonable modifications; families should contact the branch before camp to plan accommodations.",
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcagreaterprovidence.org/program/summer-camp",
+      "season_year": 2026,
+      "phone": "(401) 783-3900",
+      "price_per_week": 420,
+      "price_min": 420,
+      "price_max": 450,
+      "price_per": "week",
+      "extended_care": true,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcagreaterprovidence.org/program/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "gender_policy",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "meals_included",
+            "financial_aid",
+            "refund_policy_summary",
+            "special_needs_notes",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Ages derived from grades (entering K through grade 7 in fall 2026); site says K campers must be 5 by June 22, 2026. Lunch is packed from home per FAQ. Page states GPYMCA camps are ACA accredited."
+        },
+        {
+          "url": "https://ymcagreaterprovidence-org.storage.googleapis.com/files/s3fs-public/2026-02/South%20Camp%20Info%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "phone",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "sessions"
+          ],
+          "note": "Summer 2026 at-a-glance PDF. price_per_week = non-member traditional camp rate ($420; member $340); price range is non-member rates across traditional/themed/specialty groups. Extended day 7:00-8:30am and 4:30-5:30pm for an extra fee. PDF lists Week 4 as 7/13-7/19, recorded as 7/13-7/17 (Mon-Fri). Camp closed 7/3."
+        }
+      ]
+    },
+    {
+      "slug": "dwares-jcc-summer-j-camp",
+      "name": "Summer J-Camp",
+      "operator_name": "Jewish Alliance of Greater Rhode Island (Dwares JCC)",
+      "website_url": "https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp",
+      "registration_url": "https://app.amilia.com/store/en/jewishallianceofgreaterrhodeisland/shop/programs/128937",
+      "phone": "401-421-4111",
+      "street_address": "401 Elmgrove Avenue",
+      "city": "providence",
+      "state": "RI",
+      "zip": "02906",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "faith",
+        "arts",
+        "sports",
+        "STEM",
+        "swimming"
+      ],
+      "activities": [
+        "swim lessons",
+        "sports",
+        "stem",
+        "art",
+        "jewish culture",
+        "water games",
+        "cooking",
+        "music",
+        "dance",
+        "yoga",
+        "gaga",
+        "field trips"
+      ],
+      "grade_min": 0,
+      "grade_max": 6,
+      "age_min": 5,
+      "age_max": 12,
+      "description_short": "Weekly themed day camp at the Dwares JCC on Providence's East Side for kids entering K-6, built around Judaism, arts, athletics and STEM, with daily swim lessons and weekly field trips.",
+      "religious_affiliation": "Jewish",
+      "price_per_week": 447,
+      "price_min": 357,
+      "price_max": 447,
+      "price_per": "week",
+      "extended_care": true,
+      "meals_included": true,
+      "refund_policy_summary": "Before April 1 weeks can be dropped for a full refund (registration fees and add-ons non-refundable); from April 1 on, cancellations are not refunded and week changes cost $50.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown",
+          "price": 357
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "availability": "unknown",
+          "price": 447
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown",
+          "price": 447
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.jewishallianceri.org/explore-programs/for-children/summer-j-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "religious_affiliation",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "meals_included",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Ages derived from grades K-6. Prices are non-member weekly rates (members $356; $286 for 4-day Week 2); registration fee $75 non-member. Early care 8:00-8:45 ($12.50/day), extended care 4:00-5:30 ($25/day). Lunch provided. Address is the Dwares JCC address in the page's structured data; camp arrival is at the Session St. playground. Week 2 has no camp July 3."
+        }
+      ]
+    },
+    {
+      "slug": "boys-girls-club-east-providence-camp-crosby",
+      "name": "Camp Crosby",
+      "operator_name": "Boys & Girls Club of East Providence",
+      "website_url": "https://epbgc.org/our-programs/summer-camp/",
+      "registration_url": "https://operations.daxko.com/Programs/Redirector.aspx?cc_category_id=729&cid=5339",
+      "phone": "401-895-6511",
+      "street_address": "152 Annawamscutt Drive",
+      "city": "bristol",
+      "state": "RI",
+      "zip": "02809",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "outdoor",
+        "swimming",
+        "nature"
+      ],
+      "activities": [
+        "swimming",
+        "field games",
+        "nature walks",
+        "trips to the shore"
+      ],
+      "grade_min": 0,
+      "grade_max": 8,
+      "age_min": 5,
+      "age_max": 14,
+      "description_short": "Outdoor day camp on Mount Hope Bay in Bristol for kids entering K-8, with daily swims in the camp pool, field games and nature walks; campers ride a bus from the club's East Providence clubhouse.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 235,
+      "price_min": 175,
+      "price_max": 235,
+      "price_per": "week",
+      "extended_care": true,
+      "transportation": true,
+      "financial_aid": true,
+      "refund_policy_summary": "Cancel in writing by 5pm the Tuesday before a session for a refund; otherwise refunds only for a doctor-documented medical absence covering the whole session.",
+      "meals_included": true,
+      "swim_waterfront_notes": "Daily swim in the camp's outdoor pool.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://epbgc.org/our-programs/summer-camp/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "extended_care",
+            "transportation",
+            "refund_policy_summary",
+            "swim_waterfront_notes",
+            "sessions"
+          ],
+          "note": "Ages derived from grades K-8. Buses leave the Williams Ave. clubhouse (115 Williams Ave, East Providence) at 8:30am. Before/after care ($50/$25 per week) extends hours to 6:30am-6pm. Club membership and $30 registration fee required. No camp July 3 and Aug 10."
+        },
+        {
+          "url": "https://epbgc.org/wp-content/uploads/2026/02/Camp-2026-rate-chart.jpg",
+          "checked": "2026-10-02",
+          "fields": [
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid"
+          ],
+          "note": "Weekly rate is income/family-size tiered: $175, $205, $235; price_per_week is the top tier. Tiered sliding scale counted as financial aid (page also says RI DHS child care assistance accepted)."
+        },
+        {
+          "url": "https://epbgc.org/wp-content/uploads/2026/02/Camp-parent-handbook-2026.docx.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included"
+          ],
+          "note": "Parent handbook: lunch provided to all campers free of charge."
+        }
+      ]
+    },
+    {
+      "slug": "boys-girls-clubs-warwick-oakland-beach-day-camp",
+      "name": "Boys & Girls Clubs of Warwick Traditional Summer Day Camp (Oakland Beach Branch)",
+      "operator_name": "Boys & Girls Clubs of Warwick",
+      "website_url": "https://www.wbgclubs.org/summer-camp",
+      "registration_url": "http://www.tinyurl.com/bgcwparentportal",
+      "phone": "(401) 467-4385",
+      "street_address": "340 Oakland Beach Ave",
+      "city": "warwick",
+      "state": "RI",
+      "zip": "02889",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "sports",
+        "arts",
+        "STEM",
+        "swimming"
+      ],
+      "activities": [
+        "stem",
+        "sports",
+        "water play",
+        "arts & crafts",
+        "games",
+        "swimming",
+        "field trips"
+      ],
+      "grade_min": 1,
+      "grade_max": 7,
+      "age_min": 6,
+      "age_max": 13,
+      "description_short": "Eight-week traditional day camp at the club's Oakland Beach branch for kids entering grades 1-7, with weekly themes, STEM, sports, water play and crafts, plus weekly swim and field-game trips to the Masonic Youth Grounds in Buttonwoods.",
+      "price_per_week": 235,
+      "price_per": "week",
+      "extended_care": true,
+      "financial_aid": true,
+      "meals_included": false,
+      "aca_accredited": true,
+      "aca_source_url": "https://www.wbgclubs.org/summer-camp",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.wbgclubs.org/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Page states the club's summer camp program is accredited by the American Camp Association."
+        },
+        {
+          "url": "https://irp.cdn-website.com/aeeb5dca/files/uploaded/2026+Great+Summers+Start+Here+-+Brochure..pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "price_per_week",
+            "price_per",
+            "extended_care",
+            "financial_aid",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 1-7. $235/week; $50/week non-refundable deposit applied to fee. Hours 8:30-4:30; extended care 7-8:30am and 4:30-6pm for $24/week. Optional field trips cost extra. Club membership $30. Closed July 3 and Aug 10. CCAP accepted / limited financial aid."
+        },
+        {
+          "url": "https://www.wbgclubs.org/newpage2",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ]
+        },
+        {
+          "url": "https://irp.cdn-website.com/aeeb5dca/files/uploaded/2026+Camp+Handbook.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included"
+          ],
+          "note": "Handbook: campers bring a bagged lunch."
+        }
+      ]
+    },
+    {
+      "slug": "boys-girls-clubs-warwick-norwood-steam-camp",
+      "name": "Boys & Girls Clubs of Warwick STEAM Specialty Camp (Norwood Branch)",
+      "operator_name": "Boys & Girls Clubs of Warwick",
+      "website_url": "https://www.wbgclubs.org/summer-camp",
+      "registration_url": "http://www.tinyurl.com/bgcwparentportal",
+      "phone": "(401) 467-4385",
+      "street_address": "42 Frederick St",
+      "city": "warwick",
+      "state": "RI",
+      "zip": "02888",
+      "camp_type": "day",
+      "primary_categories": [
+        "STEM"
+      ],
+      "secondary_categories": [
+        "STEM",
+        "arts",
+        "swimming"
+      ],
+      "activities": [
+        "science",
+        "engineering",
+        "art",
+        "math",
+        "field trips",
+        "swimming"
+      ],
+      "grade_min": 1,
+      "grade_max": 7,
+      "age_min": 6,
+      "age_max": 13,
+      "description_short": "Week-long STEAM sessions at the club's Norwood branch for kids entering grades 1-7, with hands-on science and engineering projects in the morning (with Warwick public school teachers) and traditional camp activities, pool and field trips in the afternoon.",
+      "price_per_week": 245,
+      "price_per": "week",
+      "extended_care": true,
+      "financial_aid": true,
+      "meals_included": false,
+      "aca_accredited": true,
+      "aca_source_url": "https://www.wbgclubs.org/summer-camp",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 7",
+          "start_date": "2026-08-11",
+          "end_date": "2026-08-14",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 8",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.wbgclubs.org/summer-camp",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "aca_accredited",
+            "aca_source_url"
+          ],
+          "note": "Page states the club's summer camp program is accredited by the American Camp Association."
+        },
+        {
+          "url": "https://irp.cdn-website.com/aeeb5dca/files/uploaded/2026+Great+Summers+Start+Here+-+Brochure..pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "price_per_week",
+            "price_per",
+            "extended_care",
+            "financial_aid",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 1-7. $245/week; $50 non-refundable deposit applied to fee. Hours 9-4; extended care 7-9am and 4-6pm for $24/week. Trips to McDermott Pool included. Club membership $30. Closed July 3 and Aug 10. CCAP accepted / limited financial aid."
+        },
+        {
+          "url": "https://www.wbgclubs.org/newpage2",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ]
+        },
+        {
+          "url": "https://irp.cdn-website.com/aeeb5dca/files/uploaded/2026+Camp+Handbook.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included"
+          ],
+          "note": "Handbook: campers bring a bagged lunch."
+        }
+      ]
+    },
+    {
+      "slug": "barrington-recreation-cool-kids-camp-endeavor",
+      "name": "Barrington Recreation Summer Camps: Cool Kids Camp & Camp Endeavor",
+      "operator_name": "Town of Barrington Recreation Department",
+      "website_url": "https://www.barrington.ri.gov/414/Camps",
+      "registration_url": "https://secure.rec1.com/RI/barrington-ri/catalog",
+      "phone": "401-247-1900",
+      "street_address": "261 Middle Highway",
+      "city": "barrington",
+      "state": "RI",
+      "zip": "02806",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "arts"
+      ],
+      "activities": [
+        "themed crafts",
+        "indoor and outdoor activities",
+        "special guests",
+        "beach day"
+      ],
+      "age_min": 5,
+      "age_max": 11,
+      "description_short": "Town-run weekly themed day camp at Barrington Middle School, split into Cool Kids Camp for ages 5-7 and Camp Endeavor for ages 8-11, with crafts, projects, guest visits and a Thursday beach day for Camp Endeavor.",
+      "indoor_outdoor": "both",
+      "price_per_week": 200,
+      "price_min": 175,
+      "price_max": 200,
+      "price_per": "week",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown",
+          "price": 175
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown",
+          "price": 200
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown",
+          "price": 200
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown",
+          "price": 200
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown",
+          "price": 200
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown",
+          "price": 200
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.barrington.ri.gov/414/Camps",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Hours 9am-3pm. Week 1 is a short week ($175), no camp July 3. Camp Endeavor meets at Barrington Beach on Thursdays. Registration closes the Friday before each week at noon."
+        },
+        {
+          "url": "https://datacenter.ride.ri.gov/Directory/SchoolDetail?orgid=118",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "zip"
+          ],
+          "note": "Camp page names Barrington Middle School as the location; street address and zip from the RI Dept. of Education school directory."
+        }
+      ]
+    },
+    {
+      "slug": "east-greenwich-rec-playground-camp-eldredge",
+      "name": "East Greenwich Recreation Playground Camp at Eldredge",
+      "operator_name": "East Greenwich Recreation Department",
+      "website_url": "https://egrecreation.recdesk.com/RecDeskPortal/Portals/917/Summer%20Camp%20brochure%202026.pdf",
+      "registration_url": "https://egrecreation.recdesk.com",
+      "phone": "(401) 886-8626",
+      "street_address": "101 First Avenue",
+      "city": "east greenwich",
+      "state": "RI",
+      "zip": "02818",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "arts",
+        "sports",
+        "outdoor"
+      ],
+      "activities": [
+        "arts & crafts",
+        "sports",
+        "outdoor games",
+        "field trips"
+      ],
+      "grade_min": 1,
+      "grade_max": 6,
+      "age_min": 6,
+      "age_max": 12,
+      "description_short": "Town-run playground day camp at Eldredge School for kids entering grades 1-6, with arts and crafts, sports, outdoor games, Wednesday visitors and Friday field trips; full- and half-day options.",
+      "price_per_week": 235,
+      "price_min": 170,
+      "price_max": 235,
+      "price_per": "week",
+      "financial_aid": true,
+      "refund_policy_summary": "Playground camps: cancel by June 1 for a refund; after that, refunds only if the spot can be filled from the waitlist.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://egrecreation.recdesk.com/RecDeskPortal/Portals/917/Summer%20Camp%20brochure%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 1-6. Full day 9:00-4:30 ($225 resident / $235 non-resident), half day 11:30-4:30 ($170 / $180). No camp July 3. Scholarships (max $350/child/year) for families in the school free/reduced lunch program."
+        },
+        {
+          "url": "https://eldredge.egsd.net/",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ],
+          "note": "Brochure names Eldredge as the camp site; address from the school's website."
+        }
+      ]
+    },
+    {
+      "slug": "east-greenwich-rec-playground-camp-cole",
+      "name": "East Greenwich Recreation Playground Camp at Cole Middle School",
+      "operator_name": "East Greenwich Recreation Department",
+      "website_url": "https://egrecreation.recdesk.com/RecDeskPortal/Portals/917/Summer%20Camp%20brochure%202026.pdf",
+      "registration_url": "https://egrecreation.recdesk.com",
+      "phone": "(401) 886-8626",
+      "street_address": "100 Cedar Avenue",
+      "city": "east greenwich",
+      "state": "RI",
+      "zip": "02818",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "arts",
+        "sports",
+        "outdoor"
+      ],
+      "activities": [
+        "arts & crafts",
+        "sports",
+        "outdoor games",
+        "field trips"
+      ],
+      "grade_min": 1,
+      "grade_max": 6,
+      "age_min": 6,
+      "age_max": 12,
+      "description_short": "Town-run half-day playground camp at Cole Middle School for kids entering grades 1-6 (full day on Fridays for field trips); can be paired with a morning specialty camp held at the same school.",
+      "price_per_week": 180,
+      "price_min": 170,
+      "price_max": 180,
+      "price_per": "week",
+      "financial_aid": true,
+      "refund_policy_summary": "Playground camps: cancel by June 1 for a refund; after that, refunds only if the spot can be filled from the waitlist.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Week 1",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 2",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 3",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 4",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 5",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "availability": "unknown"
+        },
+        {
+          "name": "Week 6",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://egrecreation.recdesk.com/RecDeskPortal/Portals/917/Summer%20Camp%20brochure%202026.pdf",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "phone",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 1-6. Cole offers half-day only, 11:30-4:30 ($170 resident / $180 non-resident); half-day campers attend the full day on Fridays. No camp July 3. Scholarships (max $350/child/year) for families in the school free/reduced lunch program."
+        },
+        {
+          "url": "https://www.eastgreenwichri.com/Facilities/Facility/Details/Cole-Middle-School-37",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "city",
+            "state",
+            "zip"
+          ],
+          "note": "Brochure names Cole Middle School as the camp site; address from the town's facility page."
+        }
+      ]
+    }
+  ]
+}
