@@ -1,4 +1,6 @@
-# Research brief: real summer camp listings (shared by all research batches)
+# Camp data research brief
+
+How the real listings in `data/camps/` were researched (and how to refresh them each season). Research batches were written to a scratch directory, reviewed, merged into `data/camps/<metro>.json`, and validated with `python -m campfinder.seed.import_real --check`.
 
 Today is 2026-10-02. You are building part of CampFinder's curated dataset of REAL summer camps.
 Accuracy beats volume: one wrong fact gets the product ignored. Never invent or guess a fact.
