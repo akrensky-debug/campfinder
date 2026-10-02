@@ -168,3 +168,9 @@ DROP TRIGGER IF EXISTS trg_sessions_updated_at ON sessions;
 CREATE TRIGGER trg_sessions_updated_at
     BEFORE UPDATE ON sessions
     FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- Only the backend (service key) reads and writes these tables.
+ALTER TABLE camps          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sessions       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE field_sources  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE claim_requests ENABLE ROW LEVEL SECURITY;

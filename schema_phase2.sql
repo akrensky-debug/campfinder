@@ -67,3 +67,8 @@ CREATE TABLE IF NOT EXISTS camp_ownership (
 
 CREATE INDEX idx_ownership_email ON camp_ownership (email);
 CREATE INDEX idx_ownership_camp  ON camp_ownership (camp_id);
+
+-- Only the backend (service key) reads and writes these tables.
+ALTER TABLE leads            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE camp_ownership   ENABLE ROW LEVEL SECURITY;
