@@ -1,0 +1,1790 @@
+{
+  "metro": "Boston, MA",
+  "camps": [
+    {
+      "slug": "ymca-dorchester-day-camp",
+      "name": "Dorchester YMCA Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/dorchester-camp-guide/",
+      "email": "dorchestercamps@ymcaboston.org",
+      "street_address": "776 Washington Street",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02124",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "arts",
+        "STEM"
+      ],
+      "activities": [
+        "swimming",
+        "art",
+        "dance",
+        "science",
+        "literacy",
+        "teambuilding"
+      ],
+      "age_min": 5,
+      "age_max": 13,
+      "description_short": "Weekly day camp at the Dorchester YMCA for ages 5-13 with swimming, art, dance, science, literacy and team-building activities; runs 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": 350,
+      "price_min": 350,
+      "price_max": 350,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/dorchester-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": 350,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": 350,
+          "availability": "unknown"
+        }
+      ],
+      "registration_url": "https://community.ymcaboston.org/s/registration?program=Dorchester%20Camps",
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/dorchester-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions",
+            "registration_url"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-waltham-cabot-day-camp",
+      "name": "Waltham YMCA Cabot Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/waltham-camp-guide/",
+      "email": "walthamcamps@ymcaboston.org",
+      "street_address": "725 Lexington Street",
+      "city": "Waltham",
+      "state": "MA",
+      "zip": "02452",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "arts",
+        "sports"
+      ],
+      "activities": [
+        "arts and crafts",
+        "nature",
+        "swimming",
+        "archery",
+        "drama",
+        "sports",
+        "stem"
+      ],
+      "age_min": 3,
+      "age_max": 12,
+      "description_short": "Day camp at the Waltham YMCA with groups for ages 3-4, 5-6 and 7-12; younger campers get daily swim lessons, older campers choose among activities. Hours 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": null,
+      "price_min": 400,
+      "price_max": 475,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/waltham-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "registration_url": "https://community.ymcaboston.org/s/registration?program=Waltham%20Camps",
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/waltham-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions",
+            "registration_url"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation. $475 for ages 3-6, $400 for ages 7-12; Caboteers (3-4) run Sessions 1-9 only, Session 10 is for ages 5-12."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-parkway-day-camp",
+      "name": "Parkway Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/parkway-camp-guide/",
+      "email": "parkwaycamps@ymcaboston.org",
+      "street_address": "1972 Centre Street",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02132",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "arts"
+      ],
+      "activities": [
+        "swimming",
+        "arts and crafts",
+        "steam projects",
+        "organized games"
+      ],
+      "age_min": 4,
+      "age_max": 6,
+      "description_short": "Day camp for ages 4-6 at the Parkway Community YMCA in West Roxbury with swimming, crafts, STEAM projects and games around weekly themes. Hours 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": 500,
+      "price_min": 500,
+      "price_max": 500,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/parkway-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": 500,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": 500,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/parkway-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation. Page said the camp was full with a waitlist (2026)."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-oak-square-camp-walsh",
+      "name": "Oak Square YMCA Camp Walsh Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/oaksquare-camp-guide/",
+      "email": "oaksquarecamps@ymcaboston.org",
+      "street_address": "615 Washington Street",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02135",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "STEM"
+      ],
+      "activities": [
+        "group games",
+        "swimming",
+        "stem",
+        "creative exploration"
+      ],
+      "age_min": 3,
+      "age_max": 13,
+      "description_short": "Day camp at the Oak Square YMCA in Brighton for ages 3-13 with group games, swimming, STEM and creative activities. Hours 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": null,
+      "price_min": 400,
+      "price_max": 475,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/oaksquare-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/oaksquare-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation. $475 for ages 3-6, $400 for ages 7-13."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-north-suburban-camp-nansema",
+      "name": "Camp Nansema",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/ns-camp-guide/",
+      "email": "northsuburbancamps@ymcaboston.org",
+      "street_address": "137 Lexington Street",
+      "city": "Woburn",
+      "state": "MA",
+      "zip": "01801",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "arts",
+        "sports",
+        "swimming",
+        "STEM"
+      ],
+      "activities": [
+        "arts and crafts",
+        "stem",
+        "performance",
+        "archery",
+        "sports",
+        "swimming"
+      ],
+      "age_min": 5,
+      "age_max": 13,
+      "description_short": "North Suburban YMCA day camp in Woburn for ages 5-13; campers rotate weekly through arts and crafts, STEM, performance, archery, sports and swimming. Hours 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": null,
+      "price_min": 400,
+      "price_max": 475,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/ns-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/ns-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation. $475 for ages 5-6 (Mini), $400 for ages 7-13 (Mighty)."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-burbank-day-camp",
+      "name": "Burbank YMCA Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/burbank-camp-guide/",
+      "email": "burbankcamps@ymcaboston.org",
+      "street_address": "36 Arthur B. Lord Drive",
+      "city": "Reading",
+      "state": "MA",
+      "zip": "01867",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "arts",
+        "sports",
+        "STEM",
+        "swimming"
+      ],
+      "activities": [
+        "painting",
+        "clay",
+        "drama",
+        "sports",
+        "stem",
+        "swimming"
+      ],
+      "age_min": 5,
+      "age_max": 13,
+      "description_short": "Day camp at the Burbank YMCA in Reading for ages 5-13 with three tracks (creative arts, sports and healthy living, STEM) plus daily swimming and outdoor play. Hours 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": null,
+      "price_min": 500,
+      "price_max": 575,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": true,
+      "aca_source_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/burbank-camp-guide/",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/burbank-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "email",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "financial_aid",
+            "aca_accredited",
+            "aca_source_url",
+            "sessions"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower. Financial assistance, EEC vouchers and contract slots handled via the camp's billing email. Page states ACA accreditation. $575 for ages 5-6, $500 for ages 7-13 (as listed)."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        }
+      ]
+    },
+    {
+      "slug": "ymca-menino-day-camp",
+      "name": "Thomas M. Menino YMCA Day Camp",
+      "operator_name": "YMCA of Greater Boston",
+      "website_url": "https://ymcaboston.org/youth-and-family/camps/day-camps/menino-camp-guide/",
+      "street_address": "1137 River Street",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02136",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "age_min": 3,
+      "age_max": 6,
+      "description_short": "Day camp for ages 3-6 at the Thomas M. Menino YMCA in Hyde Park, running weekly sessions 7:30am-5:30pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": null,
+      "price_min": 350,
+      "price_max": 400,
+      "price_per": "week",
+      "financial_aid": true,
+      "aca_accredited": null,
+      "aca_source_url": null,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-03",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 9",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 10",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/menino-camp-guide/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "street_address",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_min",
+            "price_max",
+            "price_per",
+            "sessions"
+          ],
+          "note": "Prices are non-member weekly rates; member rates are lower."
+        },
+        {
+          "url": "https://ymcaboston.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "zip"
+          ],
+          "note": "ZIP from the YMCA branch address where camp is held."
+        },
+        {
+          "url": "https://ymcaboston.org/youth-and-family/camps/day-camps/",
+          "checked": "2026-10-02",
+          "fields": [
+            "financial_aid"
+          ],
+          "note": "Day camps page: families needing financial assistance contact the billing contact in their camp guide."
+        }
+      ]
+    },
+    {
+      "slug": "wsymca-camp-pikati",
+      "name": "Camp Pikati",
+      "operator_name": "West Suburban YMCA",
+      "website_url": "https://wsymca.org/camp-pikati",
+      "registration_url": "https://ymcawestsuburban.sgasoftware.com/Sales/Product?ProductTypeID=100-999&ItemID=528&DT=GroupedList&SearchText=pikati",
+      "email": "CampingServices@wsymca.org",
+      "phone": "617-244-6050 x3008",
+      "street_address": "276 Church St.",
+      "city": "Newton",
+      "state": "MA",
+      "zip": "02458",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "sports",
+        "arts",
+        "swimming"
+      ],
+      "activities": [
+        "camp games",
+        "sports",
+        "arts and crafts",
+        "swimming",
+        "relay races",
+        "archery",
+        "field trips"
+      ],
+      "age_min": 3,
+      "age_max": 14,
+      "description_short": "West Suburban YMCA day camp in Newton for ages 3-14 with games, sports, crafts, swimming and archery around weekly themes; field trips for grade 2 and up. Hours 9am-4pm.",
+      "indoor_outdoor": "both",
+      "price_per_week": 505,
+      "price_min": 505,
+      "price_max": 505,
+      "price_per": "week",
+      "extended_care": true,
+      "financial_aid": true,
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Pre Camp A",
+          "start_date": "2026-06-22",
+          "end_date": "2026-06-26",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Pre Camp B",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 1",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": 505,
+          "availability": "unknown"
+        },
+        {
+          "name": "Closing Week",
+          "start_date": "2026-08-31",
+          "end_date": "2026-09-04",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://wsymca.org/camp-pikati",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "financial_aid",
+            "sessions"
+          ],
+          "note": "$505 is the non-member weekly rate (household member $380, youth member $440). AM care $45 and PM care $65 per session. Pre camp/closing week prices not confirmed, left null."
+        }
+      ]
+    },
+    {
+      "slug": "wsymca-camp-chickami",
+      "name": "Camp Chickami",
+      "operator_name": "West Suburban YMCA",
+      "website_url": "https://wsymca.org/camp-chickami",
+      "registration_url": "https://ymcawestsuburban.sgasoftware.com/Sales/Product?ProductTypeID=100-999&ItemID=528&DT=GroupedList&SearchText=chickami",
+      "email": "campings@wsymca.org",
+      "phone": "617-244-6050 x3008",
+      "street_address": "139 Boston Post Rd",
+      "city": "Wayland",
+      "state": "MA",
+      "zip": "01778",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "sports",
+        "arts",
+        "nature",
+        "swimming"
+      ],
+      "activities": [
+        "archery",
+        "arts and crafts",
+        "challenge course",
+        "leagues",
+        "nature",
+        "swimming",
+        "special events"
+      ],
+      "age_min": 6,
+      "age_max": 14,
+      "grade_min": 1,
+      "grade_max": 9,
+      "description_short": "West Suburban YMCA day camp in Wayland for youth entering grades 1-9, with archery, crafts, a challenge course, sports leagues, nature and swim lessons. Hours 9am-4pm with bus service from Newton.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 510,
+      "price_min": 510,
+      "price_max": 510,
+      "price_per": "week",
+      "extended_care": true,
+      "transportation": true,
+      "financial_aid": true,
+      "swim_waterfront_notes": "Campers receive swim lessons during the week at camp.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Pre Camp",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-02",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 1",
+          "start_date": "2026-07-06",
+          "end_date": "2026-07-10",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-17",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-07-20",
+          "end_date": "2026-07-24",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4",
+          "start_date": "2026-07-27",
+          "end_date": "2026-07-31",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 5",
+          "start_date": "2026-08-03",
+          "end_date": "2026-08-07",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-14",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 7",
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-21",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 8",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": 510,
+          "availability": "unknown"
+        },
+        {
+          "name": "Closing Week",
+          "start_date": "2026-08-31",
+          "end_date": "2026-09-04",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://wsymca.org/camp-chickami",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "grade_min",
+            "grade_max",
+            "description_short",
+            "indoor_outdoor",
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per",
+            "extended_care",
+            "transportation",
+            "financial_aid",
+            "swim_waterfront_notes",
+            "sessions"
+          ],
+          "note": "$510 non-member weekly rate (household member $450, youth member $490); bus fee $100/session; AM care $55, PM care $85. Pre camp/closing week prices not confirmed. LIT sessions omitted."
+        },
+        {
+          "url": "https://find.acacamps.org/camp_profile.php?camp_id=3739",
+          "checked": "2026-10-02",
+          "fields": [
+            "street_address",
+            "zip"
+          ],
+          "note": "Street address/ZIP as listed on ACA Find a Camp; camp site only says 'Wayland off Route 20'. Town of Wayland page also lists 139 Boston Post Road. ACA accreditation not confirmed, left null."
+        }
+      ]
+    },
+    {
+      "slug": "camp-sewataro",
+      "name": "Camp Sewataro",
+      "website_url": "https://www.sewataro.com/",
+      "registration_url": "https://sewataro.campintouch.com/ui/forms/application/camper/App",
+      "phone": "978-443-3100",
+      "street_address": "One Liberty Ledge",
+      "city": "Sudbury",
+      "state": "MA",
+      "zip": "01776",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "adventure",
+        "swimming",
+        "sports",
+        "arts"
+      ],
+      "activities": [
+        "fishing",
+        "boating",
+        "swimming",
+        "archery",
+        "ropes course",
+        "climbing wall",
+        "zip line",
+        "arts and crafts",
+        "music",
+        "gardening",
+        "drama",
+        "team sports",
+        "individual sports"
+      ],
+      "age_min": 3,
+      "age_max": 15,
+      "description_short": "Day camp on 44 wooded acres in Sudbury for ages 3-15 with fishing, boating, swimming, archery, a ropes course and zip line, arts, music, gardening and sports.",
+      "indoor_outdoor": "outdoor",
+      "price_min": 2005,
+      "price_max": 7380,
+      "price_per": "session",
+      "extended_care": true,
+      "transportation": true,
+      "meals_included": false,
+      "financial_aid": true,
+      "refund_policy_summary": "Deposits ($400-$800 by session length) are deducted from tuition; half the balance is due Feb 1, 2027 and the rest Apr 1, 2027. After Feb 1 no refunds for absence, withdrawal or shortened sessions.",
+      "aca_accredited": true,
+      "aca_source_url": "https://www.sewataro.com/enrolled-families/aca-accreditation",
+      "season_year": 2027,
+      "sessions": [
+        {
+          "name": "Session 8 (8 weeks)",
+          "start_date": "2027-06-28",
+          "end_date": "2027-08-20",
+          "price": 7380,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6.1 (6 weeks)",
+          "start_date": "2027-06-28",
+          "end_date": "2027-08-06",
+          "price": 6170,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 6.2 (6 weeks)",
+          "start_date": "2027-07-12",
+          "end_date": "2027-08-20",
+          "price": 6170,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4.1 (4 weeks)",
+          "start_date": "2027-06-28",
+          "end_date": "2027-07-23",
+          "price": 4185,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4.2 (4 weeks)",
+          "start_date": "2027-07-12",
+          "end_date": "2027-08-06",
+          "price": 4185,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 4.3 (4 weeks)",
+          "start_date": "2027-07-26",
+          "end_date": "2027-08-20",
+          "price": 4185,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2.1 (2 weeks)",
+          "start_date": "2027-06-28",
+          "end_date": "2027-07-09",
+          "price": 2005,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2.2 (2 weeks)",
+          "start_date": "2027-07-12",
+          "end_date": "2027-07-23",
+          "price": 2225,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2.3 (2 weeks)",
+          "start_date": "2027-07-26",
+          "end_date": "2027-08-06",
+          "price": 2225,
+          "availability": "unknown"
+        },
+        {
+          "name": "Session 2.4 (2 weeks)",
+          "start_date": "2027-08-09",
+          "end_date": "2027-08-20",
+          "price": 2225,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sewataro.com/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "registration_url",
+            "city",
+            "state",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "extended_care"
+          ],
+          "note": "Home page: ages 3-15, Extended Day program offered."
+        },
+        {
+          "url": "https://www.sewataro.com/contact-us",
+          "checked": "2026-10-02",
+          "fields": [
+            "phone",
+            "street_address",
+            "zip"
+          ]
+        },
+        {
+          "url": "https://www.sewataro.com/about-us/dates-tuition/dates-tuition",
+          "checked": "2026-10-02",
+          "fields": [
+            "price_min",
+            "price_max",
+            "price_per",
+            "refund_policy_summary",
+            "sessions"
+          ],
+          "note": "Sessions are for the Fox/Bear/Eagle/Owl groups (K-8th grade). Chipmunk (ages 3-4) runs weekly June 28-Aug 20 at $545 half day / $1,085 full day; CIT (grades 9-10) 4-week sessions $2,090."
+        },
+        {
+          "url": "https://www.sewataro.com/about-us/transportation/bus",
+          "checked": "2026-10-02",
+          "fields": [
+            "transportation"
+          ],
+          "note": "Bus $125/week Sudbury families, $135/week others (2026 rates)."
+        },
+        {
+          "url": "https://www.sewataro.com/enrolled-families/lunch",
+          "checked": "2026-10-02",
+          "fields": [
+            "meals_included"
+          ],
+          "note": "Each child brings a lunch and beverage."
+        },
+        {
+          "url": "https://www.sewataro.com/sudbury-residents",
+          "checked": "2026-10-02",
+          "fields": [
+            "financial_aid"
+          ],
+          "note": "Need-based scholarships limited to children of Sudbury residents."
+        },
+        {
+          "url": "https://www.sewataro.com/enrolled-families/aca-accreditation",
+          "checked": "2026-10-02",
+          "fields": [
+            "aca_accredited",
+            "aca_source_url"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "jcc-camp-grossman",
+      "name": "Camp Grossman",
+      "operator_name": "JCC Greater Boston",
+      "website_url": "https://www.bostonjcc.org/program/camp-grossman/",
+      "registration_url": "https://bostonjcc.campintouch.com/ui/forms/application/camper/App",
+      "email": "grossman@jccgb.org",
+      "phone": "781-329-9300",
+      "street_address": "294 Powissett Street",
+      "city": "Dover",
+      "state": "MA",
+      "zip": "02030",
+      "camp_type": "day",
+      "primary_categories": [
+        "general",
+        "outdoor"
+      ],
+      "secondary_categories": [
+        "swimming",
+        "adventure",
+        "sports",
+        "arts",
+        "faith"
+      ],
+      "activities": [
+        "swimming",
+        "boating",
+        "kayaking",
+        "rock climbing",
+        "zip line",
+        "mountain biking",
+        "archery",
+        "gymnastics",
+        "baseball",
+        "basketball",
+        "soccer",
+        "music",
+        "drama",
+        "photography",
+        "video production",
+        "ceramics",
+        "overnights"
+      ],
+      "grade_min": 0,
+      "grade_max": 10,
+      "age_min": 5,
+      "age_max": 16,
+      "religious_affiliation": "Jewish",
+      "description_short": "JCC day camp on 75 acres in Dover for grades K-10 with daily lakefront swimming and boating, climbing, a zip line, sports, arts and Jewish cultural programming; buses from 30+ Greater Boston towns.",
+      "indoor_outdoor": "outdoor",
+      "extended_care": true,
+      "transportation": true,
+      "financial_aid": true,
+      "swim_waterfront_notes": "Instructional and free swim daily; Red Cross-certified lifeguards teach a modified Red Cross swim curriculum.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Regular season (four two-week sessions)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-08-21",
+          "price": null,
+          "availability": "unknown"
+        },
+        {
+          "name": "Optional ninth week",
+          "start_date": "2026-08-24",
+          "end_date": "2026-08-28",
+          "price": null,
+          "availability": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.bostonjcc.org/program/camp-grossman/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "operator_name",
+            "website_url",
+            "registration_url",
+            "email",
+            "phone",
+            "street_address",
+            "city",
+            "state",
+            "zip",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "religious_affiliation",
+            "description_short",
+            "indoor_outdoor",
+            "extended_care",
+            "transportation",
+            "financial_aid",
+            "swim_waterfront_notes",
+            "sessions"
+          ],
+          "note": "Ages derived from grades K-10. Phone is the summer number. After care until 6pm at the Leventhal-Sidman JCC in Newton; bus $90/camper/week. Season runs as four two-week sessions (min. one) plus add-on weeks; individual session dates and 2026 tuition not listed, 2027 rates 'coming soon'. Campers bring dairy/pareve/fish/vegetarian lunch."
+        }
+      ]
+    },
+    {
+      "slug": "camp-harbor-view",
+      "name": "Camp Harbor View",
+      "operator_name": "Camp Harbor View",
+      "website_url": "https://campharborview.org/summer-camp/summer-program-details/",
+      "email": "info@campharborview.org",
+      "phone": "617-379-5500",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02125",
+      "camp_type": "day",
+      "primary_categories": [
+        "general"
+      ],
+      "secondary_categories": [
+        "leadership"
+      ],
+      "activities": [
+        "talent shows",
+        "leadership challenges",
+        "theme days",
+        "relay race"
+      ],
+      "grade_min": 6,
+      "grade_max": 9,
+      "age_min": 11,
+      "age_max": 15,
+      "description_short": "Free day camp for Boston residents entering grades 6-9, held on Long Island in Boston Harbor; campers ride a bus from the Seaport and a ferry, and get breakfast, lunch and dinner.",
+      "indoor_outdoor": "outdoor",
+      "price_per_week": 0,
+      "price_min": 0,
+      "price_max": 0,
+      "price_per": "session",
+      "transportation": true,
+      "meals_included": true,
+      "special_needs_notes": "Camper support team with social workers offers emotional support, sensory tools and a break room.",
+      "season_year": 2026,
+      "sessions": [
+        {
+          "name": "Session 1 (closed July 3)",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-16",
+          "price": 0,
+          "availability": "full"
+        },
+        {
+          "name": "Session 2",
+          "start_date": "2026-07-20",
+          "end_date": "2026-08-06",
+          "price": 0,
+          "availability": "full"
+        },
+        {
+          "name": "Session 3",
+          "start_date": "2026-08-10",
+          "end_date": "2026-08-21",
+          "price": 0,
+          "availability": "full"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://campharborview.org/summer-camp/summer-program-details/",
+          "checked": "2026-10-02",
+          "fields": [
+            "name",
+            "website_url",
+            "camp_type",
+            "primary_categories",
+            "secondary_categories",
+            "activities",
+            "grade_min",
+            "grade_max",
+            "age_min",
+            "age_max",
+            "description_short",
+            "indoor_outdoor",
+            "transportation",
+            "meals_included",
+            "special_needs_notes",
+            "sessions"
+          ],
+          "note": "Ages derived from grades 6-9 (entering). Eligibility: City of Boston residents. Hours ~7:30am-5pm. Page says 2026 camp is fully enrolled."
+        },
+        {
+          "url": "https://campharborview.org/summer-camp/how-to-apply/",
+          "checked": "2026-10-02",
+          "fields": [
+            "price_per_week",
+            "price_min",
+            "price_max",
+            "price_per"
+          ],
+          "note": "'free to attend'."
+        },
+        {
+          "url": "https://campharborview.org/contact/",
+          "checked": "2026-10-02",
+          "fields": [
+            "operator_name",
+            "email",
+            "phone",
+            "city",
+            "state",
+            "zip"
+          ],
+          "note": "Camp is on Long Island in Boston Harbor (no street address); ZIP is the Camp & Leadership Academy mailing address, 135 Morrissey Blvd., Boston 02125."
+        }
+      ]
+    }
+  ]
+}
