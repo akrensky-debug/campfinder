@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { track } from '@/lib/analytics'
+import { Events, captureAssistantArrival, track } from '@/lib/analytics'
 import {
   loadFamily, resetCalendarLink, streamChat,
   type AgentEvent, type Family, type UIData,
@@ -42,8 +42,7 @@ export default function AgentHome() {
     const params = new URLSearchParams(window.location.search)
     const q = params.get('q')
     if (q) setInput(q.slice(0, 1000))
-    const source = params.get('utm_source')
-    if (source) track('assistant_handoff', { source, campaign: params.get('utm_campaign'), prefilled: !!q })
+    captureAssistantArrival(params, !!q)
   }, [])
 
   useEffect(() => {
@@ -267,12 +266,12 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
         <CalendarList events={events} compact />
         {events.length > 0 && feed && webcal && (
           <div className="mt-3 pt-3 border-t border-gray-200 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
-            <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline">
+            <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" onClick={() => Events.calendarSubscribed('google')} className="text-brand-700 hover:underline">
               Add to Google Calendar
             </a>
-            <a href={webcal} className="text-brand-700 hover:underline">Apple / Outlook</a>
+            <a href={webcal} onClick={() => Events.calendarSubscribed('webcal')} className="text-brand-700 hover:underline">Apple / Outlook</a>
             <button
-              onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true) }}
+              onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true); Events.calendarSubscribed('copy') }}
               className="text-gray-500 hover:text-gray-800"
             >
               {copied ? 'Link copied' : 'Copy private link'}
