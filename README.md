@@ -131,6 +131,8 @@ to from Google, Apple or Outlook Calendar.
   files and anonymous demand reporting. Requires `schema_activity_api.sql`.
 - The same camp tools are served over MCP at `/mcp`, so Claude, ChatGPT and other
   agents can connect CampFinder as a data source. Family tools stay site-only.
+- In ChatGPT, results render as camp cards with a handoff back to CampFinder. See
+  `docs/chatgpt-app.md` for how it works, listing copy and the submission checklist.
 
 ---
 

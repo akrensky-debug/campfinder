@@ -218,7 +218,25 @@ async def find_sessions_tool(inp: FindSessionsInput) -> ToolOutput:
          "price": s.price, "availability": s.availability, "distance_miles": p.distance_miles}
         for s, p in matches
     ]
-    return ToolOutput(content={"sessions": rows, "note": None if rows else "Nothing open in that window."})
+    ui_sessions = [
+        {
+            "session_id": str(s.id), "name": s.name, "start_date": s.start_date.isoformat(),
+            "end_date": s.end_date.isoformat(), "price": s.price, "availability": s.availability,
+            "camp": {
+                "id": str(p.id), "name": p.name, "city": p.location.city, "state": p.location.state,
+                "distance_miles": p.distance_miles, "price_per_week": p.price.per_week,
+                "age_min": p.ages.min, "age_max": p.ages.max,
+                "verification_status": p.verification.status,
+                "extended_care": p.logistics.extended_care, "transportation": p.logistics.transportation,
+                "financial_aid": p.price.financial_aid, "match_reasons": p.match_reasons,
+            },
+        }
+        for s, p in matches
+    ]
+    return ToolOutput(
+        content={"sessions": rows, "note": None if rows else "Nothing open in that window."},
+        ui={"type": "sessions", "sessions": ui_sessions},
+    )
 
 
 async def get_camp_details_tool(inp: GetCampDetailsInput) -> ToolOutput:

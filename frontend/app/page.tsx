@@ -38,6 +38,12 @@ export default function AgentHome() {
 
   useEffect(() => {
     loadFamily().then(setFamily).catch(() => setFamilyError(true))
+    // Arriving from ChatGPT or another assistant: pre-fill what the parent was asking for.
+    const params = new URLSearchParams(window.location.search)
+    const q = params.get('q')
+    if (q) setInput(q.slice(0, 1000))
+    const source = params.get('utm_source')
+    if (source) track('assistant_handoff', { source, campaign: params.get('utm_campaign'), prefilled: !!q })
   }, [])
 
   useEffect(() => {
