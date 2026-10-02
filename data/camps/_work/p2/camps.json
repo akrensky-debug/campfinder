@@ -1,0 +1,1604 @@
+{
+ "metro": "Providence, RI",
+ "camps": [
+  {
+   "slug": "wheeler-summer-camp-seekonk",
+   "name": "Wheeler Summer Camp",
+   "operator_name": "The Wheeler School",
+   "website_url": "https://wheelersummercamp.com/",
+   "registration_url": "https://wssc.campintouch.com/ui/forms/application/camper/App",
+   "email": "summercamp@wheelerschool.org",
+   "phone": "508-336-8377",
+   "street_address": "357 Walker Street",
+   "city": "Seekonk",
+   "state": "MA",
+   "zip": "02771",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "outdoor",
+    "adventure",
+    "sports",
+    "arts"
+   ],
+   "activities": [
+    "swim lessons",
+    "free swim",
+    "high ropes",
+    "field trips",
+    "specialty camps"
+   ],
+   "gender_policy": "coed",
+   "age_min": 3,
+   "age_max": 15,
+   "description_short": "Traditional day camp on The Wheeler School's 120-acre farm campus in Seekonk, with campers grouped by age, a daily swim lesson, ropes course and two-week specialty camps in athletics, arts and sciences. Buses run from Providence and nearby towns.",
+   "indoor_outdoor": "both",
+   "price_min": 1237,
+   "price_max": 1375,
+   "price_per": "session",
+   "extended_care": true,
+   "transportation": true,
+   "meals_included": true,
+   "financial_aid": true,
+   "refund_policy_summary": "Non-refundable $150/session deposit. Full tuition refund through April 1, 2027; no refunds after that date. Balance due June 1, 2027; 3-installment payment plan available.",
+   "swim_waterfront_notes": "Daily swim lesson and free swim for all campers in a heated 25-meter outdoor pool.",
+   "aca_accredited": true,
+   "aca_source_url": "https://find.acacamps.org/program_profile.php?program_id=16422",
+   "season_year": 2027,
+   "sessions": [
+    {
+     "name": "Session 1",
+     "start_date": "2027-06-21",
+     "end_date": "2027-07-02",
+     "price": 1375,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 2 (prorated for July 5)",
+     "start_date": "2027-07-06",
+     "end_date": "2027-07-16",
+     "price": 1237,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 3",
+     "start_date": "2027-07-19",
+     "end_date": "2027-07-30",
+     "price": 1375,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 4",
+     "start_date": "2027-08-02",
+     "end_date": "2027-08-13",
+     "price": 1375,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://wheelersummercamp.com/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "registration_url",
+      "age_min",
+      "age_max",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "gender_policy",
+      "description_short"
+     ],
+     "note": "Home page: Traditional Camps for ages 3 to 15, daily swim lesson, two-week Specialty Camps."
+    },
+    {
+     "url": "https://wheelersummercamp.com/about/",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "indoor_outdoor",
+      "swim_waterfront_notes"
+     ],
+     "note": "120-acre Seekonk farm campus with heated 25-meter outdoor pool, ropes course, field house; daily swim lesson per home page."
+    },
+    {
+     "url": "https://wheelersummercamp.com/camps/traditional-camp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "activities"
+     ]
+    },
+    {
+     "url": "https://wheelersummercamp.com/contact/",
+     "checked": "2026-10-02",
+     "fields": [
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ]
+    },
+    {
+     "url": "https://wheelersummercamp.com/familyinfo/tuition/",
+     "checked": "2026-10-02",
+     "fields": [
+      "price_min",
+      "price_max",
+      "price_per",
+      "financial_aid",
+      "refund_policy_summary",
+      "sessions"
+     ],
+     "note": "2-week sessions; prices are the Tier 1 (Full) rate. Community rate $990-$1100/session on the honor system; financial aid rates $594-$990 for households under $150k. Upper Camp adds $100/session field-trip fee. Specialty camps $1500-$1687 (Tier 1)."
+    },
+    {
+     "url": "https://wheelersummercamp.com/familyinfo/extended-day-program/",
+     "checked": "2026-10-02",
+     "fields": [
+      "extended_care"
+     ],
+     "note": "PM care 4-5:30 PM, $200 per 2-week session (Seekonk campus only)."
+    },
+    {
+     "url": "https://wheelersummercamp.com/familyinfo/transportation/",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Buses from Providence (Wheeler School, 216 Hope St), North Attleboro/Pawtucket, Barrington and Warwick/Cranston; $150 per session."
+    },
+    {
+     "url": "https://wheelersummercamp.com/familyinfo/faqs/",
+     "checked": "2026-10-02",
+     "fields": [
+      "meals_included"
+     ],
+     "note": "Lunch included in tuition (CulinArt); morning snack provided."
+    },
+    {
+     "url": "https://find.acacamps.org/program_profile.php?program_id=16422",
+     "checked": "2026-10-02",
+     "fields": [
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "ACA Find a Camp lists Wheeler Summer as ACA accredited."
+    }
+   ]
+  },
+  {
+   "slug": "moses-brown-rise-camp",
+   "name": "Moses Brown RISE Camp",
+   "operator_name": "Moses Brown School",
+   "website_url": "https://www.camps.mosesbrown.org/rise",
+   "registration_url": "https://www.ultracamp.com/clientlogin.aspx?idCamp=222&campCode=MBS",
+   "email": "mbplus@mosesbrown.org",
+   "phone": "401-831-7350",
+   "street_address": "250 Lloyd Avenue",
+   "city": "Providence",
+   "state": "RI",
+   "zip": "02906",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "arts",
+    "STEM",
+    "sports",
+    "academic"
+   ],
+   "activities": [
+    "arts",
+    "academics",
+    "science",
+    "sports",
+    "adventure"
+   ],
+   "age_min": 3,
+   "age_max": 14,
+   "description_short": "Choose-your-own-day camp on Moses Brown's 33-acre East Side campus, with Early RISE for nursery-K, Lower RISE for grades 1-3 and Upper RISE for grades 4-8 mixing arts, science, sports and course choices.",
+   "price_min": 245,
+   "price_max": 465,
+   "price_per": "week",
+   "extended_care": true,
+   "meals_included": true,
+   "financial_aid": true,
+   "aca_accredited": true,
+   "aca_source_url": "https://www.camps.mosesbrown.org/summer-camp",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-03",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.camps.mosesbrown.org/rise",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "registration_url",
+      "price_min",
+      "price_max",
+      "price_per",
+      "sessions",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "description_short"
+     ],
+     "note": "RISE weeks June 22-August 7 (2026 season; site now says 2027 registration opens mid-January). Full day $425 (Early RISE) / $465 (Lower & Upper RISE); half days $245-$280. Prices vary by division so session prices left blank. Optional Summer Start/Summer End weeks for ages 3-5 not included."
+    },
+    {
+     "url": "https://www.camps.mosesbrown.org/summer-camp",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "activities",
+      "age_min",
+      "age_max",
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "Page states MB Camps is accredited by the American Camp Association; RISE serves ages 3-14."
+    },
+    {
+     "url": "https://www.camps.mosesbrown.org/",
+     "checked": "2026-10-02",
+     "fields": [
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state"
+     ]
+    },
+    {
+     "url": "https://www.mosesbrown.org/",
+     "checked": "2026-10-02",
+     "fields": [
+      "zip"
+     ],
+     "note": "School footer: 250 Lloyd Avenue, Providence RI 02906."
+    },
+    {
+     "url": "https://www.camps.mosesbrown.org/summerextendedaay",
+     "checked": "2026-10-02",
+     "fields": [
+      "extended_care"
+     ],
+     "note": "Early arrival from 7:30 a.m. ($50/wk) and extended day to 5:30 p.m. ($100/wk)."
+    },
+    {
+     "url": "https://www.camps.mosesbrown.org/lunch",
+     "checked": "2026-10-02",
+     "fields": [
+      "meals_included"
+     ],
+     "note": "Lunch included for Lower and Upper RISE (full day and half-day afternoon) starting 2026; not for Early RISE."
+    },
+    {
+     "url": "https://www.camps.mosesbrown.org/faanddiscounts",
+     "checked": "2026-10-02",
+     "fields": [
+      "financial_aid"
+     ],
+     "note": "Limited need-based aid for RISE camps."
+    }
+   ]
+  },
+  {
+   "slug": "gordon-school-summer-at-gordon",
+   "name": "Summer at Gordon",
+   "operator_name": "The Gordon School",
+   "website_url": "https://www.gordonschool.org/about/summer-at-gordon",
+   "registration_url": "https://gordonschool.campbrainregistration.com/",
+   "email": "tmotta@gordonschool.org",
+   "phone": "401-434-3833",
+   "street_address": "45 Maxfield Avenue",
+   "city": "East Providence",
+   "state": "RI",
+   "zip": "02914",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "arts",
+    "STEM",
+    "sports"
+   ],
+   "activities": [
+    "water play",
+    "specialty camps",
+    "art",
+    "science",
+    "spanish",
+    "sports",
+    "nature",
+    "games"
+   ],
+   "age_min": 3,
+   "age_max": 14,
+   "grade_max": 8,
+   "description_short": "Weekly day camps on Gordon's 12-acre East Providence campus: a classic day camp for nursery to first grade plus 60-plus half- and full-day specialty camps (art, engineering, athletics and more) for older campers, with daily outdoor time and weekly water play.",
+   "indoor_outdoor": "both",
+   "price_min": 230,
+   "price_per": "week",
+   "extended_care": true,
+   "meals_included": false,
+   "refund_policy_summary": "Deposits are non-refundable. Camp fees refunded for cancellations before June 1; after that only if Gordon cancels a program. No proration for missed days.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-03",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3 (Quest for the Cup, no camp July 6)",
+     "start_date": "2026-07-07",
+     "end_date": "2026-07-10",
+     "price": 335,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.gordonschool.org/about/summer-at-gordon",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "description_short"
+     ]
+    },
+    {
+     "url": "https://www.gordonschool.org/about/summer-at-gordon/summer-at-gordon-about",
+     "checked": "2026-10-02",
+     "fields": [
+      "age_min",
+      "grade_max",
+      "age_max",
+      "indoor_outdoor",
+      "extended_care",
+      "meals_included",
+      "refund_policy_summary",
+      "sessions"
+     ],
+     "note": "Open to campers entering nursery (age 3) through grade 8 in fall 2026; age_max 14 derived from grade 8. After care to 4:30 pm, $45/week. Campers pack their own lunch. Eight one-week sessions June 22-August 14, 2026; no camp July 6."
+    },
+    {
+     "url": "https://www.gordonschool.org/fs/pages/6953",
+     "checked": "2026-10-02",
+     "fields": [
+      "registration_url",
+      "price_min",
+      "price_per"
+     ],
+     "note": "Classic day camp $230 half day / $415 full day (with discount); Quest for the Cup week $335. Specialty camps range about $230-$330 per half day."
+    }
+   ]
+  },
+  {
+   "slug": "rocky-hill-camp-east-greenwich",
+   "name": "Rocky Hill Camp",
+   "operator_name": "Rocky Hill Country Day School",
+   "website_url": "https://www.rockyhill.org/summer/",
+   "registration_url": "https://programregistration.veracross.com/App/rockyhill/ProgramRegistration/SEA/Landing/Public",
+   "email": "summer@rockyhill.org",
+   "phone": "401-884-9070",
+   "street_address": "530 Ives Road",
+   "city": "East Greenwich",
+   "state": "RI",
+   "zip": "02818",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "arts",
+    "STEM",
+    "sports",
+    "nature"
+   ],
+   "activities": [
+    "arts & crafts",
+    "science",
+    "sports",
+    "water play",
+    "tide pools",
+    "nature walks"
+   ],
+   "age_min": 3,
+   "age_max": 15,
+   "description_short": "Day camp on Rocky Hill's 84-acre waterfront campus on Narragansett Bay, where age groups rotate daily through art, science and athletics, with water play, shoreline exploration and weekly themes; older teens join leadership/CIT tracks.",
+   "indoor_outdoor": "both",
+   "extended_care": true,
+   "meals_included": false,
+   "refund_policy_summary": "Refunds through April 30, 2026 minus a 5% cancellation fee; no refunds after that unless the school cancels the camp.",
+   "swim_waterfront_notes": "Weather-permitting water play daily: sprinklers, water tables, water slides and waterfront swims.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1 (4 days)",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-18",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3 (4 days)",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 9",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.rockyhill.org/summer/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "registration_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "extended_care",
+      "meals_included",
+      "refund_policy_summary",
+      "swim_waterfront_notes",
+      "sessions"
+     ],
+     "note": "Full Day Camp ages 3-15. Weeks from the page's weekly-theme list (June 15-August 14); the camps-by-date list also shows an Aug 17-20 week, not included. Prices omitted: page lists both $550/week and $335/week for full-day camp. Early Bird 7:45-9:00 and After Camp 3:30-5:00. Full-day campers bring lunch."
+    }
+   ]
+  },
+  {
+   "slug": "providence-country-day-summer-at-pcd",
+   "name": "Summer at PCD",
+   "operator_name": "Providence Country Day School",
+   "website_url": "https://www.providencecountryday.org/life-at-pcd/summer-at-pcd",
+   "registration_url": "https://providence-country-day-school.jumbula.com/",
+   "phone": "401-438-5170",
+   "street_address": "660 Waterman Ave.",
+   "city": "East Providence",
+   "state": "RI",
+   "zip": "02914",
+   "camp_type": "day",
+   "primary_categories": [
+    "arts",
+    "STEM",
+    "sports"
+   ],
+   "secondary_categories": [
+    "nature"
+   ],
+   "activities": [
+    "painting",
+    "drawing",
+    "sculpture",
+    "cooking",
+    "multi-sport",
+    "lego engineering",
+    "chess",
+    "robotics",
+    "3d printing",
+    "textile arts",
+    "baseball"
+   ],
+   "age_min": 3,
+   "age_max": 14,
+   "description_short": "Week-by-week specialty day camps on Providence Country Day's East Providence campus, including arts and outdoor exploration in its woodlands, culinary, multi-sport, LEGO engineering, robotics/3D printing, chess, textiles and a PreK camp.",
+   "price_min": 250,
+   "price_max": 400,
+   "price_per": "week",
+   "extended_care": true,
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2 (no camp July 3)",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.providencecountryday.org/life-at-pcd/summer-at-pcd",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "registration_url",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "sessions"
+     ],
+     "note": "Programs for ages 3-4 (PreK) through 14. Weekly prices $350-$400 by program (shorter Week 2 $300-$350); 4-day half-day baseball $250. Extended day 8-9 AM and 3-5 PM at $10/hour. Prices vary by program so session prices left blank."
+    }
+   ]
+  },
+  {
+   "slug": "roger-williams-park-zoo-zoocamp",
+   "name": "Summer ZooCamp",
+   "operator_name": "Roger Williams Park Zoo",
+   "website_url": "https://www.rwpzoo.org/programs/zoocamp/",
+   "registration_url": "https://rwpzoo.ticketapp.org/portal/product/45/events",
+   "email": "programs@rwpzoo.org",
+   "phone": "401-785-3510",
+   "street_address": "1000 Elmwood Avenue",
+   "city": "Providence",
+   "state": "RI",
+   "zip": "02907",
+   "camp_type": "day",
+   "primary_categories": [
+    "nature"
+   ],
+   "secondary_categories": [
+    "STEM"
+   ],
+   "activities": [
+    "crafts",
+    "animal encounters",
+    "guided zoo tours",
+    "goat feeding",
+    "games"
+   ],
+   "age_min": 4,
+   "age_max": 14,
+   "description_short": "Week-long day camps at Roger Williams Park Zoo with crafts, hands-on science activities, wild animal ambassador encounters and guided zoo tours: Tadpole Academy (4-5), Zoo Adventures (6-10) and Conservation Heroes (11-14).",
+   "indoor_outdoor": "both",
+   "price_min": 406,
+   "price_max": 436,
+   "price_per": "week",
+   "extended_care": true,
+   "refund_policy_summary": "Full refund minus a $30 processing fee through June 1, 2026 for summer camp; no refunds after that unless a waitlisted child fills the spot.",
+   "special_needs_notes": "All children welcome; staff ask to be told of needs in advance. The zoo does not provide 1:1 aides, but an approved third-party 1:1 aide (with RI BCI check) may attend.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-19",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-03",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 9",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 10",
+     "start_date": "2026-08-17",
+     "end_date": "2026-08-21",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.rwpzoo.org/programs/zoocamp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "age_min",
+      "age_max",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories"
+     ],
+     "note": "Summer programs: Tadpole Academy (4-5), Zoo Adventures (6-10), Conservation Heroes (11-14)."
+    },
+    {
+     "url": "https://www.rwpzoo.org/zoo-adventures/",
+     "checked": "2026-10-02",
+     "fields": [
+      "registration_url",
+      "activities",
+      "description_short",
+      "indoor_outdoor",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "sessions"
+     ],
+     "note": "Non-member weekly prices: Zoo Adventures and Conservation Heroes $406; Tadpole Academy $436 (members $381/$411). After care 3:30-5:30 for $100/week (not offered for Tadpole Academy). Optional pre-paid lunch. Same 10 weeks for all three programs; session prices left blank because they differ by program."
+    },
+    {
+     "url": "https://www.rwpzoo.org/zoocamp-faqs/",
+     "checked": "2026-10-02",
+     "fields": [
+      "email",
+      "phone",
+      "refund_policy_summary",
+      "special_needs_notes"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "audubon-summer-camp-bristol",
+   "name": "Audubon Summer Camp at the Nature Center and Aquarium",
+   "operator_name": "Audubon Society of Rhode Island",
+   "website_url": "https://asri.org/summercamp/",
+   "email": "camp@asri.org",
+   "phone": "401-949-5454 x3014",
+   "street_address": "1401 Hope Street",
+   "city": "Bristol",
+   "state": "RI",
+   "zip": "02809",
+   "camp_type": "day",
+   "primary_categories": [
+    "nature"
+   ],
+   "secondary_categories": [
+    "outdoor",
+    "STEM"
+   ],
+   "activities": [
+    "nature exploration",
+    "live animals",
+    "tide pooling",
+    "seining",
+    "hikes",
+    "arts & crafts",
+    "games",
+    "water play"
+   ],
+   "age_min": 5,
+   "age_max": 12,
+   "description_short": "Weekly themed nature camps at Audubon's Bristol refuge on Narragansett Bay: campers explore shore, salt marsh, fields and woods, meet live animals and visit the aquarium; older campers can join marine-biology and traveling-naturalist weeks.",
+   "indoor_outdoor": "both",
+   "price_per_week": 400,
+   "price_min": 290,
+   "price_max": 470,
+   "price_per": "week",
+   "financial_aid": true,
+   "refund_policy_summary": "Refund minus $60 for cancellations up to three weeks before the session; no refunds after that. Full refund if Audubon cancels.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-03",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://asri.org/summercamp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "email",
+      "phone",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories"
+     ]
+    },
+    {
+     "url": "https://www.audubonsummercamp.com/s/ASRI-SummerCamp2026-v2.pdf",
+     "checked": "2026-10-02",
+     "fields": [
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "financial_aid",
+      "refund_policy_summary",
+      "sessions"
+     ],
+     "note": "2026 brochure, Bristol column. Drop-off camps for ages 5-12 (9am-3pm); Early Birds is a parent-and-child half-day program for ages 2.5-4. Non-member prices: half day $290, full day $400, Marine Biology $425, Traveling Naturalist $470 (members $50 less). Seekonk (Caratunk) site not included."
+    },
+    {
+     "url": "https://asri.org/visit/nature-center-aquarium.html",
+     "checked": "2026-10-02",
+     "fields": [
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "save-the-bay-baycamp-providence",
+   "name": "Save The Bay BayCamp (Providence)",
+   "operator_name": "Save The Bay",
+   "website_url": "https://savebay.org/family-fun/camp/",
+   "email": "jswanlund@savebay.org",
+   "phone": "401-272-3540 x132",
+   "street_address": "100 Save The Bay Drive",
+   "city": "Providence",
+   "state": "RI",
+   "zip": "02905",
+   "camp_type": "day",
+   "primary_categories": [
+    "nature"
+   ],
+   "secondary_categories": [
+    "STEM",
+    "outdoor",
+    "swimming"
+   ],
+   "activities": [
+    "touch tanks",
+    "shoreline exploration",
+    "boat trips",
+    "snorkeling",
+    "swimming",
+    "marine research"
+   ],
+   "grade_min": 0,
+   "grade_max": 12,
+   "description_short": "Week-long marine-science day camps from Save The Bay's Providence center: younger campers explore the shore and touch tanks, while older groups travel Narragansett Bay on education vessels to swim, snorkel and do field research.",
+   "indoor_outdoor": "outdoor",
+   "price_per_week": 400,
+   "price_per": "week",
+   "meals_included": false,
+   "financial_aid": true,
+   "refund_policy_summary": "Full payment at registration. Full refund with at least four weeks' notice; no refund with less notice.",
+   "swim_waterfront_notes": "Junior BayCamp (K-1) does not swim. Older camps swim and snorkel from the vessel, often wading ashore; certified lifeguards at camps with swimming.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Junior BayCamp (completed K-1)",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "BayCamp (completed 2-4)",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "BayCamp (completed 2-4)",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "BayCamp (completed 2-4)",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "BayCamp (completed 2-4)",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "BayCamp (completed 2-4)",
+     "start_date": "2026-08-17",
+     "end_date": "2026-08-21",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Shipboard Camp (completed 5-7)",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Shipboard Camp (completed 5-7)",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Shipboard Camp (completed 5-7)",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "Shipboard Camp (completed 5-7)",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 400,
+     "availability": "unknown"
+    },
+    {
+     "name": "High School Camp (completed 8-12)",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 400,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://savebay.org/family-fun/camp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "grade_min",
+      "grade_max",
+      "description_short",
+      "indoor_outdoor",
+      "price_per_week",
+      "price_per",
+      "meals_included",
+      "financial_aid",
+      "refund_policy_summary",
+      "swim_waterfront_notes",
+      "sessions"
+     ],
+     "note": "Grades are grade COMPLETED at end of the school year (K-1, 2-4, 5-7, 8-12). $400/week non-member, $375 member; June 29-July 2 week prorated (price not stated). Providence dates from the page's registration links. Limited full scholarships for SNAP/EBT families. Full day 8:30-4; campers bring lunch."
+    }
+   ]
+  },
+  {
+   "slug": "french-american-school-ri-summer-camp",
+   "name": "French American School of Rhode Island Summer Camp",
+   "operator_name": "The French American School of Rhode Island",
+   "website_url": "https://www.fasri.org/enrichment-program/summer-camp",
+   "email": "vgherardi@fasri.org",
+   "phone": "401-274-3325",
+   "street_address": "75 John Street",
+   "city": "Providence",
+   "state": "RI",
+   "zip": "02906",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "academic",
+    "STEM",
+    "sports"
+   ],
+   "activities": [
+    "cooking",
+    "crafts",
+    "science",
+    "sports",
+    "swimming"
+   ],
+   "age_min": 3,
+   "age_max": 10,
+   "description_short": "Five weekly themed day camps at the French American School in Providence, run by bilingual staff, with cooking, crafts, science and sports in French and English; French is not required. Campers go to the pool in the afternoon.",
+   "price_per_week": 375,
+   "price_min": 300,
+   "price_max": 375,
+   "price_per": "week",
+   "meals_included": false,
+   "swim_waterfront_notes": "Campers go to the pool in the afternoon; bring bathing suit and towel.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1: Sports Week (4 days)",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-18",
+     "price": 300,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2: Animal Kingdom",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 375,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3: Around the World",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-03",
+     "price": 375,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4: Mad Science",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 375,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5: Ocean Week",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 375,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.fasri.org/enrichment-program/summer-camp",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "meals_included",
+      "swim_waterfront_notes",
+      "sessions"
+     ],
+     "note": "Ages 3-10, 8:30-3:30. Full 5 weeks $1725. Campers bring lunch and snack; must be potty-trained."
+    }
+   ]
+  },
+  {
+   "slug": "norman-bird-sanctuary-summer-camp",
+   "name": "Norman Bird Sanctuary Summer Camps",
+   "operator_name": "Norman Bird Sanctuary",
+   "website_url": "https://normanbirdsanctuary.org/education/camps/",
+   "street_address": "583 Third Beach Road",
+   "city": "Middletown",
+   "state": "RI",
+   "zip": "02842",
+   "camp_type": "day",
+   "primary_categories": [
+    "nature"
+   ],
+   "secondary_categories": [
+    "outdoor"
+   ],
+   "activities": [
+    "nature exploration",
+    "experiments",
+    "crafts",
+    "games",
+    "orienteering"
+   ],
+   "age_min": 4,
+   "age_max": 13,
+   "description_short": "Weekly nature day camps on Norman Bird Sanctuary's main Middletown campus: Fledglings and Goslings (4-5), Nature Day (6-11) and Explorers (12-13) explore trails and habitats through hands-on observation, experiments, crafts and games.",
+   "indoor_outdoor": "outdoor",
+   "price_per_week": 395,
+   "price_min": 316,
+   "price_max": 395,
+   "price_per": "week",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2 (no camp July 3)",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": 316,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 395,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": 395,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://normanbirdsanctuary.org/education/camps/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "operator_name",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "sessions"
+     ],
+     "note": "Main campus programs only (Fledglings & Goslings 4-5, Nature Day 6-11, Explorers 12-13; Explorers runs only Aug 3-7 and Aug 10-14). Coastal Summer Camp (8-11) is held at the separate Coastal Education Center at Third Beach and is not included. Non-member prices; members $345 ($276 week 2). Hours 9-3. ACA Find a Camp says not currently accredited."
+    }
+   ]
+  },
+  {
+   "slug": "summer-at-st-andrews-barrington",
+   "name": "Summer at St. Andrew's",
+   "operator_name": "St. Andrew's School",
+   "website_url": "https://summeratsaintandrews.org/",
+   "registration_url": "http://sasri.campbrainregistration.com",
+   "phone": "401-246-1230",
+   "street_address": "63 Federal Road",
+   "city": "Barrington",
+   "state": "RI",
+   "zip": "02806",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "adventure",
+    "sports",
+    "arts",
+    "STEM",
+    "academic"
+   ],
+   "activities": [
+    "ropes course",
+    "paddle boarding",
+    "arts",
+    "robotics",
+    "sports",
+    "academic camps"
+   ],
+   "gender_policy": "coed",
+   "age_min": 3,
+   "age_max": 17,
+   "description_short": "Nondenominational day camp at St. Andrew's School in Barrington with themed traditional day camps (Rovers 3-4, Voyagers 5-10), adventure weeks with a high and low ropes course and paddling for ages 10-16, plus sports, arts, STEAM and academic camps.",
+   "price_per_week": 385,
+   "price_min": 255,
+   "price_max": 455,
+   "price_per": "week",
+   "season_year": 2027,
+   "sessions": [
+    {
+     "name": "Voyager: Summer Camp Time Machine",
+     "start_date": "2027-06-21",
+     "end_date": "2027-06-25",
+     "price": 385,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Oceans Alive",
+     "start_date": "2027-06-28",
+     "end_date": "2027-07-02",
+     "price": 385,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Party in the USA (no camp July 5)",
+     "start_date": "2027-07-06",
+     "end_date": "2027-07-09",
+     "price": 305,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Messy Mayhem Science Week",
+     "start_date": "2027-07-12",
+     "end_date": "2027-07-16",
+     "price": 385,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Animal Safari",
+     "start_date": "2027-07-19",
+     "end_date": "2027-07-23",
+     "price": 385,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Fairytale Forest",
+     "start_date": "2027-07-26",
+     "end_date": "2027-07-30",
+     "price": 385,
+     "availability": "unknown"
+    },
+    {
+     "name": "Voyager: Under the Big Top",
+     "start_date": "2027-08-02",
+     "end_date": "2027-08-06",
+     "price": 385,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://summeratsaintandrews.org/",
+     "checked": "2026-10-02",
+     "fields": [
+      "website_url",
+      "name",
+      "registration_url",
+      "gender_policy",
+      "age_min",
+      "age_max",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories"
+     ],
+     "note": "Home page: nondenominational, co-ed day camp for ages 3 to 17."
+    },
+    {
+     "url": "https://summeratsaintandrews.org/programs/",
+     "checked": "2026-10-02",
+     "fields": [
+      "activities",
+      "description_short",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "sessions"
+     ],
+     "note": "Programs page labels the theme weeks '2027 CAMP THEME WEEKs'. Voyager (ages 5-10) $385/week, $305 for the July 4 week; Rovers (3-4) $255/week half day (+$130 afternoons); Adventure (10-16) $455/week. Separate camp-calendar page still shows 2026 weeks."
+    },
+    {
+     "url": "https://summeratsaintandrews.org/contact/",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ]
+    }
+   ]
+  }
+ ]
+}
