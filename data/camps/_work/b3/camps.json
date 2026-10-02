@@ -1,0 +1,1529 @@
+{
+ "metro": "Boston, MA",
+ "camps": [
+  {
+   "slug": "fessenden-day-camp",
+   "name": "Fessenden Day Camp",
+   "operator_name": "The Fessenden School",
+   "website_url": "https://fessendensummercamps.org/programs/day-camp/",
+   "registration_url": "https://fessenden.campintouch.com/ui/forms/application/camper/App",
+   "email": "summer@fessenden.org",
+   "phone": "617-630-2373",
+   "street_address": "250 Waltham Street",
+   "city": "Newton",
+   "state": "MA",
+   "zip": "02465",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "arts",
+    "sports",
+    "STEM"
+   ],
+   "activities": [
+    "swimming",
+    "arts and crafts",
+    "ceramics",
+    "music",
+    "performing arts",
+    "media arts",
+    "sports",
+    "nature",
+    "science",
+    "woodworking",
+    "low ropes course"
+   ],
+   "grade_max": 8,
+   "age_max": 14,
+   "description_short": "Day camp on the Fessenden School campus in West Newton for children from age 3½ through entering grade 8, with daily swim lessons plus sports, arts, ceramics, woodworking, nature and science.",
+   "indoor_outdoor": "both",
+   "extended_care": true,
+   "transportation": false,
+   "meals_included": false,
+   "financial_aid": true,
+   "refund_policy_summary": "Deposits are non-refundable; tuition paid (less deposit) is refundable for withdrawals emailed before May 1; after April 30 all fees are non-refundable.",
+   "special_needs_notes": "Families are asked to call the camp office before registering to discuss accommodations.",
+   "swim_waterfront_notes": "Two outdoor heated pools (lap and shallow beginner pool); American Red Cross Learn-to-Swim instruction; no instructional swim in June sessions or Final Five week.",
+   "aca_accredited": true,
+   "aca_source_url": "https://fessendensummercamps.org/faq/",
+   "season_year": 2027,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2027-06-21",
+     "end_date": "2027-06-25",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2027-06-28",
+     "end_date": "2027-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2027-07-06",
+     "end_date": "2027-07-09",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://fessendensummercamps.org/programs/day-camp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "website_url",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "grade_max",
+      "age_max",
+      "description_short",
+      "indoor_outdoor"
+     ],
+     "note": "Teen Trippers = entering grade 8; age_max derived from grade 8. Address is West Newton (village of Newton). Minimum age 3.5 per FAQ."
+    },
+    {
+     "url": "https://fessendensummercamps.org/faq/",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "email",
+      "phone",
+      "extended_care",
+      "transportation",
+      "meals_included",
+      "special_needs_notes",
+      "swim_waterfront_notes",
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "FAQ: 'we do not currently offer transportation'; lunch not provided (families send lunch); camp states ACA accreditation."
+    },
+    {
+     "url": "https://fessendensummercamps.org/tuition-registration/",
+     "checked": "2026-10-02",
+     "fields": [
+      "financial_aid",
+      "refund_policy_summary"
+     ],
+     "note": "Financial assistance is limited to children referred through the Wildflower Foundation."
+    },
+    {
+     "url": "https://fessendensummercamps.org/tuition-registration/dates-and-rates/",
+     "checked": "2026-10-02",
+     "fields": [
+      "registration_url",
+      "sessions"
+     ],
+     "note": "2027 season June 14-Aug 20; only Day Camp Weeks 1-3 dated so far, 2027 prices TBD (page still shows 2026 rate of $885/week full day)."
+    }
+   ]
+  },
+  {
+   "slug": "beaver-summer-camp",
+   "name": "Beaver Summer Camp",
+   "operator_name": "Beaver Country Day School",
+   "website_url": "https://bvrcamp.org/",
+   "registration_url": "https://beaver.campintouch.com/ui/forms/application/camper/App",
+   "email": "info@bvrcamp.org",
+   "phone": "617-738-2750",
+   "street_address": "791 Hammond Street",
+   "city": "Newton",
+   "state": "MA",
+   "zip": "02467",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "arts",
+    "sports",
+    "adventure"
+   ],
+   "activities": [
+    "swimming",
+    "woodshop",
+    "climbing wall",
+    "challenge course",
+    "ceramics",
+    "drama",
+    "dance",
+    "music",
+    "street hockey",
+    "tennis",
+    "gaga",
+    "field sports",
+    "design lab",
+    "nature"
+   ],
+   "age_min": 3,
+   "age_max": 15,
+   "description_short": "Day camp on the Beaver Country Day School campus in Chestnut Hill with two-week general camp sessions (PreK-grade 8) and one- or two-week specialty camps in arts, sports, design and trips; includes daily Red Cross swim lessons and a challenge course.",
+   "indoor_outdoor": "both",
+   "price_min": 1405,
+   "price_max": 1840,
+   "price_per": "session",
+   "extended_care": true,
+   "transportation": true,
+   "meals_included": true,
+   "financial_aid": true,
+   "refund_policy_summary": "Registrations may be cancelled by email until April 1 for a refund of fees paid less the non-refundable deposit.",
+   "special_needs_notes": "Campers who manage well in a typical school setting should do well; families of children needing extra support are asked to call the camp office to discuss fit.",
+   "aca_accredited": true,
+   "aca_source_url": "https://find.acacamps.org/camp_profile.php?camp_id=411",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Session 1 (General Camp, grades 1-8)",
+     "start_date": "2026-06-22",
+     "end_date": "2026-07-02",
+     "price": 1660,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 2 (General Camp, grades 1-8)",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-17",
+     "price": 1840,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 3 (General Camp, grades 1-8)",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-31",
+     "price": 1840,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session 4 (General Camp, grades 1-8)",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-14",
+     "price": 1840,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://bvrcamp.org/",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "registration_url",
+      "camp_type",
+      "age_min",
+      "age_max",
+      "description_short"
+     ],
+     "note": "Homepage: day camp in Chestnut Hill for kids ages 3-15. Chestnut Hill address is in the city of Newton."
+    },
+    {
+     "url": "https://bvrcamp.org/contact-us/",
+     "checked": "2026-10-02",
+     "fields": [
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ]
+    },
+    {
+     "url": "https://bvrcamp.org/programs/middle-camp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "indoor_outdoor",
+      "extended_care",
+      "meals_included"
+     ],
+     "note": "Daily lunch and snack provided, included in tuition; extended day 7:30-8:30am and 4-6pm for a fee."
+    },
+    {
+     "url": "https://bvrcamp.org/transportation/",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Bus routes serving Brookline, Boston and Newton; $95 each way/week per rate sheet."
+    },
+    {
+     "url": "https://bvrcamp.org/registration-faqs/",
+     "checked": "2026-10-02",
+     "fields": [
+      "financial_aid",
+      "refund_policy_summary",
+      "special_needs_notes"
+     ],
+     "note": "Financial assistance only for children referred through Steps to Success and Wildflower; no direct aid to families."
+    },
+    {
+     "url": "https://drive.google.com/file/d/1Q-GLua4cDP_8jS0-EoZEOYOi_ZwqlOAm/view?usp=sharing",
+     "checked": "2026-10-02",
+     "fields": [
+      "price_min",
+      "price_max",
+      "price_per",
+      "sessions"
+     ],
+     "note": "2026 Dates + Rates PDF linked from bvrcamp.org. Session prices shown are Middle/Upper/Senior Camp (grades 1-8); Lower Camp (PreK-K) is $1,405 / $1,560. Session 1 closed July 3. 2027 rates not yet posted."
+    },
+    {
+     "url": "https://find.acacamps.org/camp_profile.php?camp_id=411",
+     "checked": "2026-10-02",
+     "fields": [
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "ACA Find a Camp lists Beaver Summer Camp as Accredited Member."
+    }
+   ]
+  },
+  {
+   "slug": "tenacre-day-camp",
+   "name": "Tenacre Day Camp",
+   "operator_name": "Tenacre Country Day School",
+   "website_url": "https://www.tenacrecds.org/summer-programs",
+   "email": "campoffice@tenacrecds.org",
+   "phone": "781-235-3238",
+   "street_address": "80 Benvenue Street",
+   "city": "Wellesley",
+   "state": "MA",
+   "zip": "02482",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "arts",
+    "sports"
+   ],
+   "activities": [
+    "swimming",
+    "sports",
+    "arts",
+    "crafts",
+    "music",
+    "dance",
+    "nature",
+    "science",
+    "archery",
+    "ropes course",
+    "gaga ball"
+   ],
+   "grade_max": 6,
+   "age_max": 12,
+   "description_short": "Day camp on Tenacre Country Day School's Wellesley campus for children entering K-6 (plus half-day programs for 3- and 4-year-olds), with a daily swim lesson in two heated outdoor pools, archery, a ropes course, arts and sports.",
+   "indoor_outdoor": "both",
+   "extended_care": true,
+   "transportation": false,
+   "meals_included": false,
+   "refund_policy_summary": "A $200 deposit per session is refundable until January 15; tuition refunds (minus deposit) are available until April 1, after that only case by case in extreme circumstances.",
+   "swim_waterfront_notes": "Two heated outdoor pools; daily small-group swim lesson for Full Day campers taught by lifeguard-certified swim staff, plus afternoon free swim.",
+   "aca_accredited": true,
+   "aca_source_url": "https://www.tenacrecds.org/summer-programs/programs/full-day-entering-k-6th",
+   "season_year": 2027,
+   "sources": [
+    {
+     "url": "https://www.tenacrecds.org/summer-programs",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ],
+     "note": "2027 dates and rates not yet published (listed as TBD)."
+    },
+    {
+     "url": "https://www.tenacrecds.org/summer-programs/programs/full-day-entering-k-6th",
+     "checked": "2026-10-02",
+     "fields": [
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "grade_max",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "swim_waterfront_notes",
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "Full Day is entering K-6; age_max derived from grade 6. Threes program takes children 3 years old and toilet trained."
+    },
+    {
+     "url": "https://www.tenacrecds.org/summer-programs/programs/aftercamp",
+     "checked": "2026-10-02",
+     "fields": [
+      "extended_care"
+     ],
+     "note": "Aftercamp 3:15-5:15pm daily."
+    },
+    {
+     "url": "https://www.tenacrecds.org/summer-programs/programs/parent-faq",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation",
+      "meals_included"
+     ],
+     "note": "No transportation (carpool list provided). Lunch is not included; families pack lunch or purchase it by the week."
+    },
+    {
+     "url": "https://www.tenacrecds.org/summer-programs/programs/registration-information",
+     "checked": "2026-10-02",
+     "fields": [
+      "refund_policy_summary"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "dexter-southfield-day-camp",
+   "name": "Dexter Southfield Day Camp",
+   "operator_name": "Dexter Southfield School",
+   "website_url": "https://www.dextersouthfield.org/summer/day-camp",
+   "registration_url": "https://dextersouthfield.campintouch.com/ui/forms/application/camper/App",
+   "email": "summer@dextersouthfield.org",
+   "phone": "617-751-3625",
+   "street_address": "20 Newton Street",
+   "city": "Brookline",
+   "state": "MA",
+   "zip": "02445",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "arts",
+    "outdoor"
+   ],
+   "activities": [
+    "swimming",
+    "sports",
+    "woodshop",
+    "art",
+    "outdoor games",
+    "nature playscape",
+    "talent show"
+   ],
+   "gender_policy": "coed",
+   "age_min": 6,
+   "age_max": 10,
+   "description_short": "Weekly themed day camp for ages 6-10 on Dexter Southfield's Brookline campus; campers swim in the campus pool, play field sports, explore the Playscape and work in the woodshop and art room.",
+   "indoor_outdoor": "both",
+   "price_per_week": 865,
+   "price_min": 692,
+   "price_max": 865,
+   "price_per": "week",
+   "extended_care": true,
+   "transportation": true,
+   "refund_policy_summary": "Non-refundable $250 deposit per week or session; partial refunds less the deposit until June 1.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-18",
+     "price": 692,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 865,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.dextersouthfield.org/summer/day-camp",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "website_url",
+      "registration_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "gender_policy",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "sessions"
+     ],
+     "note": "2026 dates and fees; Week 1 is 4 days (no camp June 19); no camp week of June 29. Optional swim lessons."
+    },
+    {
+     "url": "https://www.dextersouthfield.org/summer/camp/info",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "refund_policy_summary"
+     ],
+     "note": "Before Camp 7:45-9am $20/day; After Camp 4-5:30pm $40/day."
+    },
+    {
+     "url": "https://www.dextersouthfield.org/summer/transportation",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Eight bus routes in greater Boston, $110/week."
+    }
+   ]
+  },
+  {
+   "slug": "dexter-southfield-scitech-camp",
+   "name": "Dexter Southfield SciTech Camp",
+   "operator_name": "Dexter Southfield School",
+   "website_url": "https://www.dextersouthfield.org/summer/scitech",
+   "registration_url": "https://dextersouthfield.campintouch.com/ui/forms/application/camper/App",
+   "email": "summer@dextersouthfield.org",
+   "phone": "617-751-3625",
+   "street_address": "20 Newton Street",
+   "city": "Brookline",
+   "state": "MA",
+   "zip": "02445",
+   "camp_type": "specialty",
+   "primary_categories": [
+    "STEM"
+   ],
+   "secondary_categories": [
+    "technology"
+   ],
+   "activities": [
+    "team stem challenges",
+    "engineering builds",
+    "escape rooms",
+    "forensics",
+    "drone flying"
+   ],
+   "gender_policy": "coed",
+   "age_min": 8,
+   "age_max": 12,
+   "description_short": "Week-long STEM camp for ages 8-12 at Dexter Southfield in Brookline where campers work in teams on a themed build or challenge each week (kites, arcade games, escape rooms, forensics) and compete on Fridays.",
+   "indoor_outdoor": "both",
+   "price_per_week": 865,
+   "price_min": 692,
+   "price_max": 865,
+   "price_per": "week",
+   "extended_care": true,
+   "transportation": true,
+   "refund_policy_summary": "Non-refundable $250 deposit per week or session; partial refunds less the deposit until June 1.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-18",
+     "price": 692,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 865,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 865,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.dextersouthfield.org/summer/scitech",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "website_url",
+      "registration_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "gender_policy",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "sessions"
+     ],
+     "note": "2026 dates, themes and fees; Week 1 is 4 days; DroneTogether joins weeks 2-7."
+    },
+    {
+     "url": "https://www.dextersouthfield.org/summer/camp/info",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "refund_policy_summary"
+     ],
+     "note": "Before Camp $20/day, After Camp $40/day."
+    },
+    {
+     "url": "https://www.dextersouthfield.org/summer/transportation",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Bus $110/week."
+    }
+   ]
+  },
+  {
+   "slug": "camp-thayer",
+   "name": "Camp Thayer",
+   "operator_name": "Thayer Academy",
+   "website_url": "https://www.thayer.org/camp-thayer",
+   "registration_url": "https://www.thayer.org/camp-thayer/register",
+   "email": "cturpel@thayer.org",
+   "phone": "781-848-7255",
+   "street_address": "745 Washington Street",
+   "city": "Braintree",
+   "state": "MA",
+   "zip": "02184",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "sports",
+    "arts",
+    "swimming"
+   ],
+   "activities": [
+    "archery",
+    "arts and crafts",
+    "basketball",
+    "boating and sailing",
+    "canoeing",
+    "clay and pottery",
+    "dance",
+    "fishing",
+    "floor hockey",
+    "graphic design",
+    "improv",
+    "kickball",
+    "lacrosse",
+    "painting",
+    "ropes course",
+    "swimming",
+    "tennis"
+   ],
+   "gender_policy": "coed",
+   "age_max": 14,
+   "description_short": "Co-ed day camp on the Thayer Academy campus in Braintree for children from age 3.9 to 14, mixing sports, arts, swimming, a ropes course and boating, with optional weekly sports and theater camps.",
+   "indoor_outdoor": "both",
+   "price_per_week": 658,
+   "price_min": 508,
+   "price_max": 658,
+   "price_per": "week",
+   "extended_care": true,
+   "transportation": true,
+   "meals_included": true,
+   "refund_policy_summary": "Deposit is forfeited on any cancellation; after June 15 no tuition is refunded, but an optional Tuition Refund Plan ($10/camper/week) repays 60-75% of unused tuition for absences longer than four consecutive days.",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-15",
+     "end_date": "2026-06-18",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 658,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 658,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 658,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 658,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 658,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 658,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.thayer.org/camp-thayer",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "gender_policy",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "meals_included"
+     ],
+     "note": "Ages 3.9-14; lunch and snacks provided daily. Address is Thayer Academy's (camp runs on campus)."
+    },
+    {
+     "url": "https://www.thayer.org/camp-thayer/programs",
+     "checked": "2026-10-02",
+     "fields": [
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "sessions"
+     ],
+     "note": "General Camp (ages 6-13) $658/week; Lower Camp (3.9-5) $508/week. Weeks 1 and 3 are 4-day weeks and 'pro-rated' (prorated price not stated). Extended day 7:30-9am $80/wk, 4-6pm $100/wk. Week dates from camp-thayer main page."
+    },
+    {
+     "url": "https://www.thayer.org/camp-thayer/register",
+     "checked": "2026-10-02",
+     "fields": [
+      "registration_url",
+      "refund_policy_summary"
+     ]
+    },
+    {
+     "url": "https://www.thayer.org/camp-thayer/bus-schedule",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Three bus routes (Stoughton/Milton, Hull/Hingham/Quincy, South Shore), $150/week."
+    }
+   ]
+  },
+  {
+   "slug": "crs-summer-charles-river-creative-arts-program",
+   "name": "CRS Summer - Charles River Creative Arts Program",
+   "operator_name": "Charles River School",
+   "website_url": "https://www.charlesriverschool.org/crs-summer/learn-more/about-crs-summer/",
+   "registration_url": "https://crssummer.campbrainregistration.com/",
+   "email": "summer@charlesriverschool.org",
+   "phone": "508-785-8248",
+   "street_address": "6 Old Meadow Road",
+   "city": "Dover",
+   "state": "MA",
+   "zip": "02030",
+   "camp_type": "specialty",
+   "primary_categories": [
+    "arts",
+    "performing_arts"
+   ],
+   "secondary_categories": [
+    "STEM",
+    "nature",
+    "sports"
+   ],
+   "activities": [
+    "music",
+    "art",
+    "drama",
+    "nature",
+    "stem",
+    "sports",
+    "musical theater"
+   ],
+   "age_min": 4,
+   "age_max": 15,
+   "description_short": "Multi-arts day program on the Charles River School campus in Dover where campers build a schedule of visual and performing arts classes, plus nature, STEM and sports, in two-week sessions.",
+   "indoor_outdoor": "both",
+   "price_min": 1510,
+   "price_max": 1707,
+   "price_per": "session",
+   "extended_care": true,
+   "meals_included": true,
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "CRCAP Session 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-07-02",
+     "price": 1510,
+     "availability": "unknown"
+    },
+    {
+     "name": "CRCAP Session 2",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-17",
+     "price": 1675,
+     "availability": "unknown"
+    },
+    {
+     "name": "CRCAP Session 3",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-31",
+     "price": 1675,
+     "availability": "unknown"
+    },
+    {
+     "name": "CRCAP Session 4",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-14",
+     "price": 1675,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.charlesriverschool.org/crs-summer/learn-more/about-crs-summer/",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "registration_url",
+      "email",
+      "phone",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "meals_included"
+     ],
+     "note": "Ages 4-15 across programs; lunch included daily in dining hall."
+    },
+    {
+     "url": "https://www.charlesriverschool.org/crs-summer/learn-more/session-dates-and-rates/",
+     "checked": "2026-10-02",
+     "fields": [
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "sessions"
+     ],
+     "note": "Sessions are CRCAP (rising grades 2-7) 2026 prices; Creative Starts (ages 4-7) is $1,537-$1,707 per session. Aftercare until 5:30pm for an extra fee. Address from page footer. 2027 not yet posted."
+    }
+   ]
+  },
+  {
+   "slug": "belmont-day-camp",
+   "name": "Belmont Day Camp",
+   "operator_name": "Belmont Day School",
+   "website_url": "https://www.belmontday.org/summer/belmont-day-camp/",
+   "registration_url": "https://belmontday.campintouch.com/ui/forms/application/camper/App",
+   "email": "zdarbeloff@belmontday.org",
+   "phone": "617-932-3893",
+   "street_address": "55 Day School Lane",
+   "city": "Belmont",
+   "state": "MA",
+   "zip": "02478",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "swimming",
+    "arts",
+    "sports",
+    "nature"
+   ],
+   "activities": [
+    "swimming",
+    "arts and crafts",
+    "nature",
+    "yoga",
+    "sports",
+    "tennis",
+    "woodworking",
+    "archery",
+    "ropes",
+    "music",
+    "drama and movement",
+    "science"
+   ],
+   "age_min": 3,
+   "age_max": 15,
+   "description_short": "Large day camp on the Belmont Day School campus for children ages 3-15, grouped by grade, with a daily swim lesson and free swim plus arts, nature, sports, woodshop and archery for older campers.",
+   "indoor_outdoor": "both",
+   "price_per_week": 800,
+   "price_min": 640,
+   "price_max": 1650,
+   "price_per": "session",
+   "extended_care": true,
+   "transportation": true,
+   "financial_aid": true,
+   "refund_policy_summary": "Full refunds only for unforeseen medical or family emergencies; otherwise a $100 per-session fee and, after April 15, 25% of each session are non-refundable, and no refunds within two weeks of a session start.",
+   "special_needs_notes": "Campers must be fully toilet-trained; families anticipating a need for physical or social support are asked to contact the Director of Summer Programs to plan.",
+   "aca_accredited": true,
+   "aca_source_url": "https://www.belmontday.org/summer/",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Session A1",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": 640,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session A2",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 800,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session B",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-24",
+     "price": 1600,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session C",
+     "start_date": "2026-07-27",
+     "end_date": "2026-08-07",
+     "price": 1600,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session D",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-21",
+     "price": 1650,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.belmontday.org/summer/belmont-day-camp/",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "website_url",
+      "registration_url",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "special_needs_notes"
+     ]
+    },
+    {
+     "url": "https://www.belmontday.org/summer/",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "email",
+      "phone",
+      "aca_accredited",
+      "aca_source_url"
+     ],
+     "note": "Page states Belmont Day School maintains ACA accreditation."
+    },
+    {
+     "url": "https://www.belmontday.org/",
+     "checked": "2026-10-02",
+     "fields": [
+      "street_address",
+      "city",
+      "state",
+      "zip"
+     ]
+    },
+    {
+     "url": "https://www.belmontday.org/summer/belmont-day-camp/dates-rates/",
+     "checked": "2026-10-02",
+     "fields": [
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "financial_aid",
+      "refund_policy_summary",
+      "sessions"
+     ],
+     "note": "2026 sessions for preschool-grade 7; A2 is the one-week session ($800). Morning extended day $75/week, afternoon $350 per two-week session. Financial assistance by contacting the director."
+    },
+    {
+     "url": "https://www.belmontday.org/summer/camp-bus-service/",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "One bus route with stops in Cambridge, Somerville and Arlington; $170/family/week."
+    }
+   ]
+  },
+  {
+   "slug": "summer-at-bbn",
+   "name": "Summer @ BB&N",
+   "operator_name": "Buckingham Browne & Nichols School",
+   "website_url": "https://bbnsummer.com/",
+   "registration_url": "https://bbnsummer.com/registered-families/register/",
+   "phone": "617-800-2200",
+   "street_address": "80 Gerry's Landing Road",
+   "city": "Cambridge",
+   "state": "MA",
+   "zip": "02138",
+   "camp_type": "day",
+   "primary_categories": [
+    "general"
+   ],
+   "secondary_categories": [
+    "sports",
+    "arts",
+    "STEM",
+    "technology"
+   ],
+   "activities": [
+    "coding",
+    "chess",
+    "debate",
+    "filmmaking",
+    "parkour",
+    "art",
+    "karate",
+    "outdoor exploration"
+   ],
+   "age_min": 4,
+   "grade_max": 12,
+   "age_max": 18,
+   "description_short": "Weekly day camps on BB&N's Upper School campus in Cambridge, from classic camps for PreK-grade 9 to specialty weeks in coding, chess, debate, filmmaking and art, plus sports camps; campers are bused to Brandeis for swimming.",
+   "indoor_outdoor": "both",
+   "price_per_week": 750,
+   "price_min": 600,
+   "price_max": 950,
+   "price_per": "week",
+   "extended_care": true,
+   "transportation": true,
+   "meals_included": true,
+   "financial_aid": true,
+   "refund_policy_summary": "No refunds for withdrawals after June 1; early-morning and extended-day purchases are non-refundable.",
+   "swim_waterfront_notes": "All swimming is off-campus at Brandeis University's pool, reached by BB&N buses and supervised by Brandeis lifeguards; classic campers swim twice a week.",
+   "aca_accredited": true,
+   "aca_source_url": "https://bbnsummer.com/bbn-aca-accredited/",
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 1",
+     "start_date": "2026-06-22",
+     "end_date": "2026-06-26",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 2",
+     "start_date": "2026-06-29",
+     "end_date": "2026-07-02",
+     "price": 600,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 3",
+     "start_date": "2026-07-06",
+     "end_date": "2026-07-10",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 4",
+     "start_date": "2026-07-13",
+     "end_date": "2026-07-17",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 750,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": 750,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://bbnsummer.com/",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "website_url",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "age_min",
+      "grade_max",
+      "age_max",
+      "description_short",
+      "indoor_outdoor"
+     ],
+     "note": "Serves campers from 4 years old through rising 12th grade; age_max derived from grade 12."
+    },
+    {
+     "url": "https://bbnsummer.com/dates-registration/",
+     "checked": "2026-10-02",
+     "fields": [
+      "activities",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "extended_care",
+      "sessions"
+     ],
+     "note": "2026 calendar (Week 2 start printed as 06/29/25, clearly 2026). Session prices are the Kiddie/Junior Day Camp rate; Senior $800, Teen $850, specialty $900-$950; Week 2 is a 4-day holiday week. Early drop-off 7:15 and extended day to 5:30 for a fee."
+    },
+    {
+     "url": "https://bbnsummer.com/registered-families/policies-procedures/",
+     "checked": "2026-10-02",
+     "fields": [
+      "operator_name",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "refund_policy_summary"
+     ]
+    },
+    {
+     "url": "https://bbnsummer.com/registered-families/register/",
+     "checked": "2026-10-02",
+     "fields": [
+      "registration_url"
+     ]
+    },
+    {
+     "url": "https://bbnsummer.com/bbn-aca-accredited/",
+     "checked": "2026-10-02",
+     "fields": [
+      "phone",
+      "aca_accredited",
+      "aca_source_url"
+     ]
+    },
+    {
+     "url": "https://bbnsummer.com/why-bbn/food-nutrition/",
+     "checked": "2026-10-02",
+     "fields": [
+      "meals_included"
+     ],
+     "note": "Hot/cold lunch and snack included in tuition."
+    },
+    {
+     "url": "https://bbnsummer.com/why-bbn/bus-transportation/",
+     "checked": "2026-10-02",
+     "fields": [
+      "transportation"
+     ],
+     "note": "Beacon Hill and Cambridge routes; $100/week round trip."
+    },
+    {
+     "url": "https://bbnsummer.com/registered-families/financial-assistance/",
+     "checked": "2026-10-02",
+     "fields": [
+      "financial_aid"
+     ],
+     "note": "Scholarships via the City of Cambridge and City of Watertown for residents."
+    },
+    {
+     "url": "https://bbnsummer.com/why-bbn/swim/",
+     "checked": "2026-10-02",
+     "fields": [
+      "swim_waterfront_notes"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "brookline-arts-center-summer-art-programs",
+   "name": "Brookline Arts Center Summer Art Programs",
+   "operator_name": "Brookline Arts Center",
+   "website_url": "https://brooklineartscenter.org/summer-2026-kids",
+   "email": "office@brooklineartscenter.com",
+   "phone": "617-566-5715",
+   "street_address": "86 Monmouth Street",
+   "city": "Brookline",
+   "state": "MA",
+   "zip": "02446",
+   "camp_type": "specialty",
+   "primary_categories": [
+    "arts"
+   ],
+   "secondary_categories": [],
+   "activities": [
+    "ceramics",
+    "jewelry and metalsmithing",
+    "drawing",
+    "painting",
+    "collage",
+    "sculpture",
+    "printmaking",
+    "comics"
+   ],
+   "age_min": 5,
+   "age_max": 17,
+   "description_short": "Week-long, full-day studio art programs at the Brookline Arts Center for ages 5-17, grouped by age, covering ceramics, drawing and painting, comics, mixed media, and jewelry and metalsmithing for teens.",
+   "indoor_outdoor": "indoor",
+   "price_per_week": 730,
+   "price_min": 521,
+   "price_max": 810,
+   "price_per": "week",
+   "financial_aid": true,
+   "season_year": 2026,
+   "sessions": [
+    {
+     "name": "Week 5",
+     "start_date": "2026-07-20",
+     "end_date": "2026-07-24",
+     "price": 730,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 6",
+     "start_date": "2026-07-27",
+     "end_date": "2026-07-31",
+     "price": 730,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 7",
+     "start_date": "2026-08-03",
+     "end_date": "2026-08-07",
+     "price": 730,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 8",
+     "start_date": "2026-08-10",
+     "end_date": "2026-08-14",
+     "price": 730,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 9",
+     "start_date": "2026-08-17",
+     "end_date": "2026-08-21",
+     "price": 730,
+     "availability": "unknown"
+    },
+    {
+     "name": "Week 10",
+     "start_date": "2026-08-24",
+     "end_date": "2026-08-28",
+     "price": 730,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://brooklineartscenter.org/summer-2026-kids",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "email",
+      "phone",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "activities",
+      "age_min",
+      "age_max",
+      "description_short",
+      "indoor_outdoor",
+      "price_per_week",
+      "price_min",
+      "price_max",
+      "price_per",
+      "financial_aid",
+      "sessions"
+     ],
+     "note": "Page currently lists 2026 Weeks 5-10 only. Session price is the $730 class fee for most ages 5-12 classes; ceramics $810, teen jewelry (9am-2pm) $521; materials fee $45-$55 extra."
+    }
+   ]
+  },
+  {
+   "slug": "tufts-childrens-theater",
+   "name": "Tufts Children's Theater",
+   "operator_name": "Tufts University Department of Theatre, Dance, and Performance Studies",
+   "website_url": "https://tdps.tufts.edu/childrens-theater",
+   "email": "tct@tufts.edu",
+   "street_address": "40 Talbot Avenue",
+   "city": "Medford",
+   "state": "MA",
+   "zip": "02155",
+   "camp_type": "specialty",
+   "primary_categories": [
+    "performing_arts"
+   ],
+   "secondary_categories": [
+    "arts"
+   ],
+   "activities": [
+    "drama",
+    "dance",
+    "music",
+    "art",
+    "musical theater",
+    "technical theater"
+   ],
+   "age_min": 7,
+   "age_max": 16,
+   "description_short": "Summer theater programs at Tufts University in Medford: Creative Arts (ages 7-12) rotates daily through drama, dance, art and music, and Magic Circle Theater (ages 11-16) rehearses and stages productions on performance or technical tracks.",
+   "indoor_outdoor": "both",
+   "meals_included": true,
+   "season_year": 2027,
+   "sessions": [
+    {
+     "name": "Session One (tentative)",
+     "start_date": "2027-07-06",
+     "end_date": "2027-07-23",
+     "price": null,
+     "availability": "unknown"
+    },
+    {
+     "name": "Session Two (tentative)",
+     "start_date": "2027-07-26",
+     "end_date": "2027-08-13",
+     "price": null,
+     "availability": "unknown"
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://tdps.tufts.edu/childrens-theater",
+     "checked": "2026-10-02",
+     "fields": [
+      "name",
+      "operator_name",
+      "website_url",
+      "street_address",
+      "city",
+      "state",
+      "zip",
+      "camp_type",
+      "primary_categories",
+      "secondary_categories",
+      "description_short",
+      "indoor_outdoor",
+      "sessions"
+     ],
+     "note": "Tentative 2027 dates; registration opens around Dec 1. Address is the department's (Aidekman Arts Center). 2027 tuition not yet posted."
+    },
+    {
+     "url": "https://tdps.tufts.edu/childrens-theater/creative-arts",
+     "checked": "2026-10-02",
+     "fields": [
+      "email",
+      "activities",
+      "age_min",
+      "meals_included"
+     ],
+     "note": "Creative Arts ages 7-12, 9am-4pm; lunch in university dining hall included in tuition."
+    },
+    {
+     "url": "https://tdps.tufts.edu/childrens-theater/magic-circle-theater",
+     "checked": "2026-10-02",
+     "fields": [
+      "age_max"
+     ],
+     "note": "Magic Circle Theater ages 11-16."
+    }
+   ]
+  }
+ ]
+}
