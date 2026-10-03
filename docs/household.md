@@ -54,7 +54,8 @@ need an account before anyone can be invited.
   morning of, plus anything overdue. Each email has only that person's jobs.
 - **Weekly** (Sundays): owners and co-parents get the week ahead by person, what nobody
   has yet, and what's overdue.
-- A `reminder_sends` row per member, kind and day makes re-runs harmless.
+- A `reminder_sends` row per member, kind and the day the jobs are for makes re-runs harmless, and
+  switching between "morning of" and "evening before" neither drops nor repeats a day.
 
 Run it twice a day: `--slot morning` (about 7am Eastern) sends same-day digests to
 people who chose "the morning of"; `--slot evening` (about 6pm) sends tomorrow's jobs to
@@ -73,7 +74,7 @@ or from a scheduler: `POST /api/v1/internal/reminders/run?slot=evening&dry_run=t
 ### Email settings
 
 ```
-HOUSEHOLD_EMAIL_MODE=log      # log (default): render and log, send nothing
+HOUSEHOLD_EMAIL_MODE=log      # log (default): log recipient and subject only, send nothing
                               # resend: send through Resend; off: drop
 RESEND_API_KEY=               # needed for resend mode
 EMAIL_FROM=CampFinder <hello@campfinder.com>
@@ -81,7 +82,13 @@ REMINDER_TZ=America/New_York  # what "today" means for reminders
 REMINDER_CRON_SECRET=         # enables the HTTP trigger
 ```
 
-Real email only goes out when `HOUSEHOLD_EMAIL_MODE=resend`. Tests use `MemoryMailer`.
+Real email only goes out when `HOUSEHOLD_EMAIL_MODE=resend` and `RESEND_API_KEY` is set (resend
+without a key logs an error and sends nothing). Until then invites report `emailed: false` and the
+app shows the link for the parent to send themselves, and reminders are not marked as sent.
+Tests use `MemoryMailer`.
+
+The owner starts out named "Parent" (never derived from their email) and can rename
+themselves on the Household page; that name is what helpers and the assistant see.
 
 ## Setup
 

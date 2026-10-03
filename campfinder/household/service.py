@@ -10,6 +10,7 @@ the functions here enforce the per-role rules that depend on the row being touch
 from __future__ import annotations
 
 import hashlib
+import re
 import secrets
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta, timezone
@@ -79,12 +80,19 @@ def ensure_owner_member(family: dict[str, Any]) -> dict[str, Any] | None:
     rows = sb.table("family_members").select("*").eq("family_id", family["id"]).eq("user_id", str(owner)).execute().data
     if rows:
         return rows[0]
-    email = user_email(str(owner)) or ""
-    name = email.split("@")[0].replace(".", " ").title() if email else "Parent"
-    return sb.table("family_members").insert({
-        "family_id": family["id"], "user_id": str(owner), "email": email, "display_name": name or "Parent",
-        "role": "owner", "status": "active", "accepted_at": _now().isoformat(),
-    }).execute().data[0]
+    # A neutral name until the owner picks one: deriving it from the email would put part
+    # of the address in front of co-parents and the assistant.
+    try:
+        return sb.table("family_members").insert({
+            "family_id": family["id"], "user_id": str(owner), "email": user_email(str(owner)) or "",
+            "display_name": "Parent", "role": "owner", "status": "active", "accepted_at": _now().isoformat(),
+        }).execute().data[0]
+    except Exception:
+        # Two first requests raced; the other one created the row.
+        rows = sb.table("family_members").select("*").eq("family_id", family["id"]).eq("user_id", str(owner)).execute().data
+        if rows:
+            return rows[0]
+        raise
 
 
 def actor_for(access: FamilyAccess, via: str = "app") -> Actor:
@@ -411,6 +419,12 @@ def create_tasks(actor: Actor, tasks: list[TaskCreate]) -> list[dict[str, Any]]:
     _require_full_plan(actor)
     for t in tasks:
         _check_assignee(actor.family_id, t.assignee_id)
+    event_ids = {str(t.event_id) for t in tasks if t.event_id}
+    if event_ids:
+        mine = get_supabase().table("family_events").select("id").eq("family_id", actor.family_id) \
+            .in_("id", list(event_ids)).execute().data or []
+        if len(mine) != len(event_ids):
+            raise HTTPException(status_code=404, detail="That calendar event isn't on this family's calendar")
     if not tasks:
         return []
     rows = get_supabase().table("family_tasks").insert([_task_row(actor.family_id, t, actor) for t in tasks]).execute().data
@@ -422,6 +436,8 @@ def create_tasks(actor: Actor, tasks: list[TaskCreate]) -> list[dict[str, Any]]:
 def update_task(actor: Actor, task_id: str, req: TaskUpdate) -> dict[str, Any]:
     row = _get_task(actor.family_id, task_id)
     changes = req.model_dump(mode="json", exclude_unset=True)
+    # Only time and notes can be cleared; a null anything else means "no change".
+    changes = {k: v for k, v in changes.items() if v is not None or k in ("due_time", "notes")}
     if not actor.full_plan:
         if actor.role == "viewer" or str(row.get("assignee_id")) != str(actor.member_id):
             raise HTTPException(status_code=403, detail="You can only update jobs assigned to you")
@@ -493,12 +509,24 @@ def select_tasks(family_id: str, *, kinds: list[str] | None = None, weekdays: li
     return out
 
 
+CAMP_LABEL_MAX = 100
+
+
 def _camp_label(event: dict[str, Any]) -> str:
-    title = event["title"]
-    child = event.get("child_name")
-    if child and title.lower().startswith(child.lower()):
-        title = title[len(child):].lstrip(" :-–·")
-    return title or event["title"]
+    """'Maya: Riverside Soccer Camp' -> 'Riverside Soccer Camp' (but 'Avalon Sailing' stays whole for Ava)."""
+    title = event["title"].strip()
+    child = (event.get("child_name") or "").strip()
+    if child:
+        m = re.match(rf"{re.escape(child)}\s*[:\-–·]\s*(.+)", title, flags=re.I)
+        if m:
+            title = m.group(1)
+    if len(title) > CAMP_LABEL_MAX:
+        title = title[: CAMP_LABEL_MAX - 1].rstrip() + "…"
+    return title
+
+
+def _fit(title: str, limit: int = 160) -> str:
+    return title if len(title) <= limit else title[: limit - 1].rstrip() + "…"
 
 
 def generate_plan_tasks(actor: Actor, req: GenerateRequest) -> list[dict[str, Any]]:
@@ -532,7 +560,7 @@ def generate_plan_tasks(actor: Actor, req: GenerateRequest) -> list[dict[str, An
         common = dict(child_name=child, event_id=e["id"], camp_id=e.get("camp_id"))
         if req.include_packing:
             add(TaskCreate(
-                kind="packing", title=f"Pack for {camp}" + (f" ({child})" if child else ""),
+                kind="packing", title=_fit(f"Pack for {camp}" + (f" ({child})" if child else "")),
                 due_date=start - timedelta(days=1), **common,
                 checklist=[ChecklistItem(item=i) for i in (req.packing_items or DEFAULT_PACKING)],
             ))
@@ -540,8 +568,8 @@ def generate_plan_tasks(actor: Actor, req: GenerateRequest) -> list[dict[str, An
             d = start
             while d <= end:
                 if d.weekday() in req.weekdays:
-                    add(TaskCreate(kind="dropoff", title=f"Drop off {who}at {camp}", due_date=d, due_time=req.dropoff_time, **common))
-                    add(TaskCreate(kind="pickup", title=f"Pick up {who}from {camp}", due_date=d, due_time=req.pickup_time, **common))
+                    add(TaskCreate(kind="dropoff", title=_fit(f"Drop off {who}at {camp}"), due_date=d, due_time=req.dropoff_time, **common))
+                    add(TaskCreate(kind="pickup", title=_fit(f"Pick up {who}from {camp}"), due_date=d, due_time=req.pickup_time, **common))
                 d += timedelta(days=1)
     return create_tasks(actor, new) if new else []
 

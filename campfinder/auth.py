@@ -90,6 +90,10 @@ def active_membership(family_id: str, user_id: str) -> dict[str, Any] | None:
     return rows[0] if rows else None
 
 
+def _has_members(family_id: str) -> bool:
+    return bool(get_supabase().table("family_members").select("id").eq("family_id", family_id).limit(1).execute().data)
+
+
 def family_access(
     family_id: UUID | str, user_id: str | None, *, roles: tuple[str, ...] = FULL_PLAN, require_account: bool = False,
 ) -> FamilyAccess:
@@ -100,6 +104,10 @@ def family_access(
     family = rows[0]
     owner = family.get("owner_user_id")
     if owner is None and not require_account:
+        if _has_members(family["id"]):
+            # The owner's account was deleted: the family stays locked rather than
+            # falling back to "anyone with the id".
+            raise HTTPException(status_code=403, detail="This family's owner account no longer exists")
         return FamilyAccess(family, "owner", None)  # guest family: the unguessable id is the key
     if user_id is None:
         raise HTTPException(status_code=401, detail="Sign in required", headers={"WWW-Authenticate": "Bearer"})

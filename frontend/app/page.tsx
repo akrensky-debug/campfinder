@@ -301,13 +301,15 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
 
       <div className="bg-gray-50 rounded-2xl p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Info kit</p>
-        {family.signed_in ? (
+        {family.can_open_kit ? (
           <>
             <p className="text-sm text-gray-600 mb-2">
               Allergies, emergency contacts, insurance: fill them in once, share only what each camp asks for.
             </p>
             <a href="/kit" className="text-sm font-medium text-brand-700 hover:underline">Open your info kit →</a>
           </>
+        ) : family.signed_in ? (
+          <p className="text-sm text-gray-600">The info kit is private to the family's owner. They can share it with you from the Household page.</p>
         ) : (
           <>
             <p className="text-sm text-gray-600 mb-2">

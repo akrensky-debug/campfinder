@@ -40,14 +40,17 @@ export default function HouseholdPage() {
       .catch(e => setError(e.message))
   }, [session, refresh])
 
-  async function act(fn: () => Promise<unknown>) {
-    if (!family) return
+  /** Run a change, refresh, and report whether it worked (errors show at the top of the page). */
+  async function act(fn: () => Promise<unknown>): Promise<boolean> {
+    if (!family) return false
     setError('')
     try {
       await fn()
       await refresh(family)
+      return true
     } catch (e) {
       setError((e as Error).message)
+      return false
     }
   }
 
@@ -156,15 +159,15 @@ function TaskBoard({ tasks, members, fullPlan, youId, onToggle, onChecklist, onA
 
   const visible = tasks.filter(t => showDone || t.status === 'open')
   const groups = useMemo(() => {
-    const byPerson = new Map<string, { label: string; tasks: Task[] }>()
+    const byPerson = new Map<string, { key: string; label: string; tasks: Task[] }>()
     const order = [youId, ...members.map(m => m.id), null]
     for (const key of order) {
       const label = key === null ? 'Nobody yet' : key === youId ? 'You' : members.find(m => m.id === key)?.display_name ?? ''
-      byPerson.set(String(key), { label, tasks: [] })
+      byPerson.set(String(key), { key: String(key), label, tasks: [] })
     }
     for (const t of visible) {
       const k = String(t.assignee_id)
-      if (!byPerson.has(k)) byPerson.set(k, { label: t.assignee_name ?? 'Someone', tasks: [] })
+      if (!byPerson.has(k)) byPerson.set(k, { key: k, label: t.assignee_name ?? 'Someone', tasks: [] })
       byPerson.get(k)!.tasks.push(t)
     }
     return Array.from(byPerson.values()).filter(g => g.tasks.length)
@@ -205,7 +208,7 @@ function TaskBoard({ tasks, members, fullPlan, youId, onToggle, onChecklist, onA
       ) : (
         <div className="space-y-6">
           {groups.map(g => (
-            <div key={g.label} className="space-y-2">
+            <div key={g.key} className="space-y-2">
               <h3 className="text-sm font-semibold text-gray-700">{g.label} <span className="text-gray-400 font-normal">· {g.tasks.filter(t => t.status === 'open').length} open</span></h3>
               {weeks(g.tasks).map(([week, ts]) => (
                 <div key={week} className={card + ' !p-0 overflow-hidden'}>
@@ -406,19 +409,24 @@ function CalendarSection({ events, tasks, members, fullPlan, onGenerate, onAssig
 // ---------------------------------------------------------------------------
 
 function PeopleSection({ household, familyId, act, onLeft }: {
-  household: Household; familyId: string; act: (fn: () => Promise<unknown>) => Promise<void>; onLeft: () => void
+  household: Household; familyId: string; act: (fn: () => Promise<unknown>) => Promise<boolean>; onLeft: () => void
 }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState<Exclude<Role, 'owner'>>('caregiver')
-  const [link, setLink] = useState('')
+  const [link, setLink] = useState<{ url: string; emailed: boolean } | null>(null)
   const manage = household.can_manage
+
+  function rename(m: Member) {
+    const next = prompt(m.is_you ? 'What should your household call you?' : `Rename ${m.display_name}`, m.display_name)?.trim()
+    if (next && next !== m.display_name) act(() => updateMember(familyId, m.id, { display_name: next }))
+  }
 
   async function invite(e: React.FormEvent) {
     e.preventDefault()
     await act(async () => {
       const res = await inviteMember(familyId, { display_name: name, email, role })
-      setLink(res.url)
+      setLink({ url: res.url, emailed: res.emailed })
       setName('')
       setEmail('')
     })
@@ -426,8 +434,7 @@ function PeopleSection({ household, familyId, act, onLeft }: {
 
   async function leave() {
     if (!confirm('Leave this family? You will lose access to its plan and calendar.')) return
-    await act(() => leaveFamily(familyId))
-    onLeft()
+    if (await act(() => leaveFamily(familyId))) onLeft()
   }
 
   if (household.role === 'caregiver' || household.role === 'viewer') {
@@ -449,6 +456,7 @@ function PeopleSection({ household, familyId, act, onLeft }: {
             <div className="flex-1 min-w-[10rem]">
               <p className="text-sm font-medium text-gray-900">
                 {m.display_name}{m.is_you && <span className="text-gray-400 font-normal"> (you)</span>}
+                {manage && <button onClick={() => rename(m)} className="ml-2 text-xs font-normal text-brand-700">Rename</button>}
               </p>
               <p className="text-xs text-gray-500">
                 {m.email ?? ROLE_LABELS[m.role]}
@@ -479,7 +487,10 @@ function PeopleSection({ household, familyId, act, onLeft }: {
                   </label>
                 )}
                 {m.status === 'invited' && (
-                  <button onClick={() => act(async () => setLink((await inviteMember(familyId, { display_name: m.display_name, email: m.email ?? '', role: m.role as Exclude<Role, 'owner'> })).url))} className="text-xs text-brand-700">
+                  <button onClick={() => act(async () => {
+                    const res = await inviteMember(familyId, { display_name: m.display_name, email: m.email ?? '', role: m.role as Exclude<Role, 'owner'> })
+                    setLink({ url: res.url, emailed: res.emailed })
+                  })} className="text-xs text-brand-700">
                     Resend
                   </button>
                 )}
@@ -515,7 +526,12 @@ function PeopleSection({ household, familyId, act, onLeft }: {
           </div>
           <button className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 py-2 rounded-xl text-sm">Send invite</button>
           <p className="text-xs text-gray-500">They sign in with that email to accept. The link works for 7 days. The info kit stays with you unless you turn it on for a co-parent.</p>
-          {link && <CopyLink label="Invite sent. You can also share this link yourself:" url={link} />}
+          {link && (
+            <CopyLink
+              label={link.emailed ? 'Invite emailed. You can also share this link yourself:' : "Email isn't set up yet, so send them this link yourself:"}
+              url={link.url}
+            />
+          )}
         </form>
       ) : (
         <button onClick={leave} className="text-sm text-red-600 hover:text-red-700">Leave this family</button>
@@ -540,7 +556,7 @@ function CopyLink({ label, url }: { label: string; url: string }) {
 }
 
 function MySettings({ familyId, you, role, feed, act }: {
-  familyId: string; you: Member; role: Role; feed: string | null; act: (fn: () => Promise<unknown>) => Promise<void>
+  familyId: string; you: Member; role: Role; feed: string | null; act: (fn: () => Promise<unknown>) => Promise<boolean>
 }) {
   const webcal = feed?.replace(/^https?:/, 'webcal:')
   const [copied, setCopied] = useState(false)

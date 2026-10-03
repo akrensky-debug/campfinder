@@ -136,7 +136,8 @@ export const acceptInvite = (token: string) => call<{ family_id: string; role: R
 export function weekOf(iso: string): string {
   const d = new Date(iso + 'T00:00:00')
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7))
-  return d.toISOString().slice(0, 10)
+  // Local date parts: toISOString() would shift to UTC and land on Sunday east of Greenwich.
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 export function fmtDay(iso: string): string {

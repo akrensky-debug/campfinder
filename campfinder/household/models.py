@@ -6,7 +6,7 @@ from datetime import date, datetime, time
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 Role = Literal["owner", "co_parent", "caregiver", "viewer"]
 InviteRole = Literal["co_parent", "caregiver", "viewer"]
@@ -41,11 +41,22 @@ class Member(BaseModel):
     is_you: bool = False
 
 
+def _strip_name(v: str | None) -> str | None:
+    if v is None:
+        return v
+    v = " ".join(v.split())
+    if not v:
+        raise ValueError("Name can't be blank")
+    return v
+
+
 class InviteCreate(BaseModel):
     display_name: str = Field(min_length=1, max_length=60, description="What the family calls them, e.g. 'Grandma'.")
     email: str = Field(min_length=3, max_length=200, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
     role: InviteRole = "caregiver"
     send_email: bool = True
+
+    _name = field_validator("display_name")(_strip_name)
 
 
 class InviteCreated(BaseModel):
@@ -68,6 +79,8 @@ class MemberUpdate(BaseModel):
     display_name: str | None = Field(default=None, min_length=1, max_length=60)
     role: InviteRole | None = None
     kit_access: bool | None = None
+
+    _name = field_validator("display_name")(_strip_name)
 
 
 class MyPrefs(BaseModel):

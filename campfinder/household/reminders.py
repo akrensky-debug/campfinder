@@ -139,9 +139,11 @@ def plan_reminders(today: date, weekly: bool | None = None, slot: str | None = N
         if pref in SLOT_PREFS[slot] and m["role"] != "viewer":
             day = today if pref == "daily" else today + timedelta(days=1)
             tasks = task_rows(m["family_id"], assignee_id=str(m["id"]), start=day, end=day, status="open")
-            if tasks and not _already_sent(m["id"], "digest", today):
+            # Keyed on the day the jobs are for, so switching between "morning of" and
+            # "evening before" neither drops nor repeats a day.
+            if tasks and not _already_sent(m["id"], "digest", day):
                 overdue = task_rows(m["family_id"], assignee_id=str(m["id"]), end=today - timedelta(days=1), status="open")
-                out.append(Outgoing(m["id"], "digest", today, len(tasks), render_digest(m, tasks, day, overdue)))
+                out.append(Outgoing(m["id"], "digest", day, len(tasks), render_digest(m, tasks, day, overdue)))
         if weekly and m["role"] in ("owner", "co_parent") and m.get("weekly_summary", True):
             start = today + timedelta(days=1)
             tasks = task_rows(m["family_id"], start=start, end=start + timedelta(days=6), status="open")

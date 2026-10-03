@@ -51,6 +51,10 @@ def family(client: TestClient, db: FakeSupabase) -> dict[str, Any]:
     fam = client.post("/api/v1/families").json()
     claimed = client.post(f"/api/v1/families/{fam['id']}/claim", headers=h(OWNER))
     assert claimed.status_code == 200
+    me = client.get(f"/api/v1/families/{fam['id']}/household", headers=h(OWNER)).json()["you"]
+    assert me["display_name"] == "Parent"  # never derived from the email address
+    assert client.patch(f"/api/v1/families/{fam['id']}/members/{me['id']}", headers=h(OWNER),
+                        json={"display_name": "Mom"}).status_code == 200
     db.table("families").update({"profile": {"kids": [{"name": "Maya", "age": 8, "notes": "peanut allergy"}],
                                              "home_location": "Providence, RI"}}).eq("id", fam["id"]).execute()
     db.table("family_events").insert([

@@ -41,6 +41,7 @@ export interface Family {
   signed_in: boolean
   role: Role
   my_calendar_url: string | null
+  can_open_kit: boolean
 }
 
 export interface Comparison {

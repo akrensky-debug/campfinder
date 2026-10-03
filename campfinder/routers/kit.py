@@ -53,7 +53,8 @@ async def list_shares(family_id: UUID, user_id: str = Depends(required_user)) ->
 async def create_share(family_id: UUID, req: ShareCreate, user_id: str = Depends(required_user)) -> ShareCreated:
     access = authorize_kit(family_id, user_id)
     share, token = service.create_share(str(family_id), req)
-    _log(access, "kit_shared", {"recipient": req.recipient, "children": req.children,
+    # Field names and counts only: the audit log is visible to every co-parent.
+    _log(access, "kit_shared", {"share_id": str(share.id), "children": len(req.children),
                                 "fields": req.household_fields + req.child_fields})
     return ShareCreated(share=share, url=f"{get_settings().frontend_url.rstrip('/')}/share/{token}")
 
@@ -61,8 +62,9 @@ async def create_share(family_id: UUID, req: ShareCreate, user_id: str = Depends
 @router.post("/families/{family_id}/kit/shares/{share_id}/revoke", response_model=ShareSummary, summary="Withdraw a share")
 async def revoke_share(family_id: UUID, share_id: UUID, user_id: str = Depends(required_user)) -> ShareSummary:
     access = authorize_kit(family_id, user_id)
+    share = service.revoke_share(str(family_id), str(share_id))
     _log(access, "kit_share_withdrawn", {"share_id": str(share_id)})
-    return service.revoke_share(str(family_id), str(share_id))
+    return share
 
 
 @router.get("/shares/{token}", response_model=SharedPackage, summary="Open a shared package (recipient view)")

@@ -71,3 +71,24 @@ def test_cron_endpoint(client, plan, outbox, monkeypatch):
     res = client.post("/api/v1/internal/reminders/run?dry_run=true&on=2027-07-05&weekly=false",
                       headers={"X-Cron-Secret": "s3cret"}).json()
     assert res["count"] == 1 and "Pick up Maya" in res["emails"][0]["text"] and outbox == []
+
+
+@pytest.mark.asyncio
+async def test_switching_reminder_time_neither_drops_nor_repeats_a_day(client, plan, outbox):
+    gm_tasks = client.get(f"/api/v1/families/{plan}/tasks", headers=h(GRANDMA)).json()
+    gm_id = gm_tasks[0]["assignee_id"]
+    client.post(f"/api/v1/families/{plan}/tasks", headers=h(OWNER), json=[
+        {"kind": "pickup", "title": "Wednesday pickup", "due_date": "2027-07-07", "assignee_id": gm_id}])
+    client.patch(f"/api/v1/families/{plan}/me", headers=h(GRANDMA), json={"reminder_pref": "daily"})
+    assert len(await run_reminders(date(2027, 7, 6), weekly=False, slot="morning")) == 1   # Tuesday's job
+    client.patch(f"/api/v1/families/{plan}/me", headers=h(GRANDMA), json={"reminder_pref": "day_before"})
+    sent = await run_reminders(date(2027, 7, 6), weekly=False, slot="evening")             # Wednesday's job
+    assert len(sent) == 1 and "Wednesday pickup" in sent[0].email.text
+
+
+@pytest.mark.asyncio
+async def test_log_mode_reports_not_sent(plan, db):
+    from campfinder.household import mailer
+    mailer.set_mailer(mailer.LogMailer())
+    assert await run_reminders(date(2027, 7, 5), weekly=False) == []
+    assert not db.tables.get("reminder_sends")

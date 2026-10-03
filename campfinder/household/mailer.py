@@ -2,7 +2,8 @@
 Outgoing household email (invites, reminders, weekly summaries).
 
 HOUSEHOLD_EMAIL_MODE picks the transport:
-  log     (default) render and log the message, send nothing
+  log     (default) log who it was for and the subject, send nothing (bodies hold
+          invite links, so they are not logged)
   resend  send through Resend (needs RESEND_API_KEY)
   off     drop silently
 Tests swap in a MemoryMailer with set_mailer(). Real email only goes out when the
@@ -32,9 +33,11 @@ class Mailer(Protocol):
 
 
 class LogMailer:
+    """Sends nothing and says so: callers report "not emailed" and reminders aren't marked sent."""
+
     async def send(self, email: Email) -> bool:
-        log.info("email (not sent, HOUSEHOLD_EMAIL_MODE=log) to=%s subject=%r\n%s", email.to, email.subject, email.text)
-        return True
+        log.info("email not sent (HOUSEHOLD_EMAIL_MODE=log) to=%s subject=%r", email.to, email.subject)
+        return False
 
 
 class OffMailer:
@@ -80,8 +83,12 @@ def get_mailer() -> Mailer:
     if _mailer is None:
         mode = os.environ.get("HOUSEHOLD_EMAIL_MODE", "log").lower()
         key = os.environ.get("RESEND_API_KEY", "")
-        if mode == "resend" and key:
-            _mailer = ResendMailer(key, os.environ.get("EMAIL_FROM", "CampFinder <hello@campfinder.com>"))
+        if mode == "resend":
+            if not key:
+                log.error("HOUSEHOLD_EMAIL_MODE=resend but RESEND_API_KEY is not set: no email will be sent")
+                _mailer = OffMailer()
+            else:
+                _mailer = ResendMailer(key, os.environ.get("EMAIL_FROM", "CampFinder <hello@campfinder.com>"))
         elif mode == "off":
             _mailer = OffMailer()
         else:

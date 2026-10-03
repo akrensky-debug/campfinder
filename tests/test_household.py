@@ -208,3 +208,83 @@ def test_guest_family_tasks_work_but_household_needs_account(client):
     assert client.get(f"/api/v1/families/{fam['id']}/household").json()["members"] == []
     assert client.post(f"/api/v1/families/{fam['id']}/members/invite",
                        json={"display_name": "G", "email": "g@example.com", "role": "caregiver"}).status_code == 401
+
+
+# --- regressions from review -------------------------------------------------
+
+def test_null_fields_in_task_update_are_ignored(client, family):
+    fid = family["id"]
+    gm = invite(client, fid, "Grandma", "grandma@example.com", "caregiver")
+    join(client, gm, GRANDMA)
+    t = client.post(f"/api/v1/families/{fid}/tasks", headers=h(OWNER), json=[
+        {"kind": "pickup", "title": "Pick up Maya", "due_date": "2027-07-06", "due_time": "15:00",
+         "notes": "gate", "assignee_id": gm["member"]["id"]}]).json()[0]
+    res = client.patch(f"/api/v1/families/{fid}/tasks/{t['id']}", headers=h(GRANDMA), json={"status": None})
+    assert res.status_code == 200 and res.json()["status"] == "open" and res.json()["completed_at"] is None
+    res = client.patch(f"/api/v1/families/{fid}/tasks/{t['id']}", headers=h(OWNER),
+                       json={"title": None, "due_time": None, "notes": None})
+    body = res.json()
+    assert res.status_code == 200 and body["title"] == "Pick up Maya" and body["due_time"] is None and body["notes"] is None
+
+
+def test_camp_label_and_long_titles(client, db, family):
+    fid = family["id"]
+    db.table("family_events").insert([
+        {"family_id": fid, "title": "Avalon Sailing Camp", "start_date": "2027-08-02", "end_date": "2027-08-02",
+         "child_name": "Ava", "camp_id": "11111111-1111-1111-1111-111111111111"},
+        {"family_id": fid, "title": "Maya: " + "Very Long Camp Name " * 12, "start_date": "2027-08-09",
+         "end_date": "2027-08-09", "child_name": "Maya", "camp_id": "11111111-1111-1111-1111-111111111111"},
+    ]).execute()
+    tasks = client.post(f"/api/v1/families/{fid}/tasks/generate", headers=h(OWNER), json={}).json()
+    titles = {t["title"] for t in tasks}
+    assert "Drop off Ava at Avalon Sailing Camp" in titles
+    assert all(len(t) <= 160 for t in titles)
+    assert any(t.startswith("Pick up Maya from Very Long Camp Name") for t in titles)
+
+
+def test_task_event_must_belong_to_family(client, family):
+    other = client.post("/api/v1/families").json()
+    ev = client.post(f"/api/v1/families/{family['id']}/tasks", headers=h(OWNER), json=[
+        {"title": "x", "due_date": "2027-07-01", "event_id": "22222222-2222-2222-2222-222222222222"}])
+    assert ev.status_code == 404
+    assert other["id"] != family["id"]
+
+
+def test_blank_names_rejected(client, family):
+    res = client.post(f"/api/v1/families/{family['id']}/members/invite", headers=h(OWNER),
+                      json={"display_name": "   ", "email": "g@example.com", "role": "caregiver"})
+    assert res.status_code == 422
+
+
+def test_family_with_members_stays_locked_if_owner_account_is_deleted(client, db, family):
+    fid = family["id"]
+    join(client, invite(client, fid, "Grandma", "grandma@example.com", "caregiver"), GRANDMA)
+    db.table("families").update({"owner_user_id": None}).eq("id", fid).execute()  # auth.users ON DELETE SET NULL
+    assert client.get(f"/api/v1/families/{fid}").status_code == 403
+    assert client.get(f"/api/v1/families/{fid}/tasks").status_code == 403
+
+
+def test_removed_members_chats_are_deleted_not_handed_over(client, db, family):
+    fid = family["id"]
+    dad = invite(client, fid, "Dan", "dad@example.com", "co_parent")
+    join(client, dad, DAD)
+    db.table("agent_conversations").insert({"family_id": fid, "started_by": dad["member"]["id"]}).execute()
+    client.delete(f"/api/v1/families/{fid}/members/{dad['member']['id']}", headers=h(OWNER))
+    assert db.tables["agent_conversations"] == []
+
+
+def test_kit_audit_holds_no_share_values(client, family, monkeypatch):
+    import base64, os
+    from campfinder.config import get_settings
+    monkeypatch.setattr(get_settings(), "kit_encryption_key", base64.urlsafe_b64encode(os.urandom(32)).decode())
+    fid = family["id"]
+    client.put(f"/api/v1/families/{fid}/kit", headers=h(OWNER),
+               json={"household": {}, "children": [{"name": "Maya", "allergies": "peanuts"}]})
+    client.post(f"/api/v1/families/{fid}/kit/shares", headers=h(OWNER),
+                json={"recipient": "Riverside STEM Camp", "children": ["Maya"], "child_fields": ["allergies"]})
+    bogus = client.post(f"/api/v1/families/{fid}/kit/shares/33333333-3333-3333-3333-333333333333/revoke", headers=h(OWNER))
+    assert bogus.status_code == 404
+    log = client.get(f"/api/v1/families/{fid}/audit", headers=h(OWNER)).json()
+    text = str(log)
+    assert "Riverside STEM" not in text and "Maya" not in text and "peanut" not in text
+    assert not any(e["action"] == "kit_share_withdrawn" for e in log)

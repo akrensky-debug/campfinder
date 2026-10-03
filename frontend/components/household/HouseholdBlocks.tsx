@@ -101,13 +101,15 @@ export function InviteProposal({ data, familyId }: { data: Of<'invite_proposal'>
   const [role, setRole] = useState<Exclude<Role, 'owner'>>(data.role)
   const [state, setState] = useState<'idle' | 'busy' | 'done' | 'dismissed'>('idle')
   const [error, setError] = useState('')
+  const [sent, setSent] = useState<{ url: string; emailed: boolean } | null>(null)
   async function send(e: React.FormEvent) {
     e.preventDefault()
     if (!familyId) return
     setState('busy')
     setError('')
     try {
-      await inviteMember(familyId, { display_name: name, email, role })
+      const res = await inviteMember(familyId, { display_name: name, email, role })
+      setSent({ url: res.url, emailed: res.emailed })
       setState('done')
     } catch (err) {
       setError((err as Error).message)
@@ -115,7 +117,16 @@ export function InviteProposal({ data, familyId }: { data: Of<'invite_proposal'>
     }
   }
   if (state === 'dismissed') return <p className="text-sm text-gray-400">No invite sent.</p>
-  if (state === 'done') return <p className="text-sm font-medium text-green-700">✓ Invite sent to {name} ({email}).</p>
+  if (state === 'done') {
+    return sent?.emailed ? (
+      <p className="text-sm font-medium text-green-700">✓ Invite emailed to {name} ({email}).</p>
+    ) : (
+      <div className="text-sm space-y-1">
+        <p className="font-medium text-green-700">✓ {name} is invited. Email isn't set up yet, so send them this link:</p>
+        <input readOnly value={sent?.url ?? ''} onFocus={e => e.target.select()} className="w-full border border-gray-200 rounded-lg px-3 py-2" />
+      </div>
+    )
+  }
   return (
     <form onSubmit={send} className={`${box} border-brand-200 space-y-3`}>
       <p className="text-sm font-semibold text-gray-900">Invite {name} to your household?</p>

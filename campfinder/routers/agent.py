@@ -31,6 +31,7 @@ class FamilyResponse(BaseModel):
     signed_in: bool = Field(default=False, description="True when the family belongs to an account.")
     role: str = Field(default="owner", description="The caller's role: owner, co_parent, caregiver or viewer.")
     my_calendar_url: str | None = Field(default=None, description="The caller's own feed: the plan plus their jobs.")
+    can_open_kit: bool = Field(default=False, description="Owner, or a co-parent the owner gave the info kit to.")
 
 
 class ChatRequest(BaseModel):
@@ -66,6 +67,7 @@ def _family_response(request: Request, family: dict[str, Any], access: FamilyAcc
         signed_in=family.get("owner_user_id") is not None,
         role=role,
         my_calendar_url=member_calendar_url(request, member),
+        can_open_kit=access.kit_allowed if access else family.get("owner_user_id") is not None,
     )
 
 

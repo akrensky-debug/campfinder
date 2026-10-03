@@ -189,6 +189,8 @@ class FakeSupabase:
                         t[col] = None
             self.tables["reminder_sends"] = [r for r in self.tables.get("reminder_sends", [])
                                              if str(r["member_id"]) != str(row["id"])]
+            self.tables["agent_conversations"] = [r for r in self.tables.get("agent_conversations", [])
+                                                  if str(r.get("started_by")) != str(row["id"])]
         if table == "family_events":
             for t in self.tables.get("family_tasks", []):
                 if str(t.get("event_id")) == str(row["id"]):

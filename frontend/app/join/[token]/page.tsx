@@ -57,6 +57,11 @@ export default function JoinPage() {
         <>
           <h1 className="text-2xl font-bold text-gray-900">Join a family</h1>
           <p className="text-gray-600">{error || 'Checking your invite…'}</p>
+          {error && (
+            <p className="text-sm text-gray-500">
+              Already joined? <a href="/household" className="text-brand-700 font-medium hover:underline">Go to your household →</a>
+            </p>
+          )}
         </>
       ) : (
         <>

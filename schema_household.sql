@@ -82,9 +82,10 @@ CREATE TABLE IF NOT EXISTS reminder_sends (
 );
 
 -- Each conversation belongs to the member who started it (null: started before households,
--- treated as the owner's), so co-parents don't read each other's chats.
+-- treated as the owner's), so co-parents don't read each other's chats. A member's chats
+-- are deleted with them rather than passing to anyone else.
 ALTER TABLE agent_conversations
-    ADD COLUMN IF NOT EXISTS started_by UUID REFERENCES family_members(id) ON DELETE SET NULL;
+    ADD COLUMN IF NOT EXISTS started_by UUID REFERENCES family_members(id) ON DELETE CASCADE;
 
 ALTER TABLE family_members   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE family_tasks     ENABLE ROW LEVEL SECURITY;
