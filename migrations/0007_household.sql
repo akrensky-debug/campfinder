@@ -1,5 +1,5 @@
 -- Shared plan and delegation: household members, tasks, reminders and an audit log.
--- Run after schema_accounts_kit.sql. Only the backend (service key) touches these
+-- Run after 0005_accounts_kit.sql. Only the backend (service key) touches these
 -- tables; RLS is on with no policies, so the anon and authenticated roles see nothing.
 
 -- People who share a family's plan. The owner gets a row too (role 'owner') so they

@@ -92,8 +92,9 @@ themselves on the Household page; that name is what helpers and the assistant se
 
 ## Setup
 
-1. Run `schema_household.sql` after `schema_accounts_kit.sql` (applied to the live
-   project as migration `household_members_tasks`).
+1. `migrations/0007_household.sql` is applied by `python -m campfinder.migrate` (Railway runs it
+   before every deploy). It is idempotent; it was also applied to the live project by hand
+   (migrations `household_members_tasks`, `conversation_started_by`, `conversation_started_by_cascade`).
 2. In Supabase Auth > URL Configuration, add `<frontend>/join/**` to the redirect URLs
    so the sign-in link from an invite comes back to the invite.
 3. Set the email settings above, and schedule the reminder job.
