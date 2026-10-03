@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 from campfinder.agent.runner import run_agent
 from campfinder.agent.tools import list_family_events
 from campfinder.household.context import acting_as
+from campfinder.household.service import actor_for
 from campfinder.auth import ALL_ROLES, FamilyAccess, active_membership, authorize_family, family_access, optional_user, required_user
 from campfinder.kit.service import delete_family_data
 from campfinder.database import get_supabase
@@ -137,6 +138,7 @@ async def delete_family(family_id: UUID, user_id: str | None = Depends(optional_
 @router.post("/agent/chat", summary="Chat with the family agent (server-sent events)")
 async def chat(req: ChatRequest, user_id: str | None = Depends(optional_user)) -> StreamingResponse:
     access = family_access(req.family_id, user_id)  # owner and co-parents
+    actor_for(access)  # make sure the speaker has a member row, so the conversation is theirs
 
     async def events() -> AsyncIterator[str]:
         acting_as(access)

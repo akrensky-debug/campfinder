@@ -25,6 +25,7 @@ from campfinder.agent.tools import (
     run_tool,
 )
 from campfinder.config import get_settings
+from campfinder.household.context import current_access
 from campfinder.database import get_supabase
 
 log = logging.getLogger(__name__)
@@ -92,17 +93,34 @@ def _context_block(family_id: str) -> str:
     )
 
 
+def _speaker_id() -> str | None:
+    """The household member chatting in this turn, if the family has members."""
+    access = current_access()
+    return str(access.member["id"]) if access and access.member else None
+
+
 def create_conversation(family_id: str) -> str:
-    row = get_supabase().table("agent_conversations").insert({"family_id": family_id}).execute().data[0]
-    return row["id"]
+    row = {"family_id": family_id}
+    if (speaker := _speaker_id()) is not None:
+        row["started_by"] = speaker
+    return get_supabase().table("agent_conversations").insert(row).execute().data[0]["id"]
 
 
 def load_conversation(conversation_id: str, family_id: str) -> list[dict[str, Any]] | None:
+    """A conversation belongs to whoever started it: co-parents don't read each other's
+    chats. Older conversations with no starter belong to the family's owner."""
     rows = (
-        get_supabase().table("agent_conversations").select("messages")
+        get_supabase().table("agent_conversations").select("messages, started_by")
         .eq("id", conversation_id).eq("family_id", family_id).execute().data
     )
-    return rows[0]["messages"] if rows else None
+    if not rows:
+        return None
+    started_by, access = rows[0].get("started_by"), current_access()
+    if access is not None and access.family.get("owner_user_id") is not None:
+        mine = str(started_by) == _speaker_id() if started_by else access.role == "owner"
+        if not mine:
+            return None
+    return rows[0]["messages"]
 
 
 def save_conversation(conversation_id: str, messages: list[dict[str, Any]]) -> None:

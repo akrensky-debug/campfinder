@@ -126,3 +126,20 @@ def test_household_tools_are_not_on_mcp():
 async def test_household_tools_need_a_family():
     with pytest.raises(ToolError):
         await run_tool("list_tasks", {}, None)
+
+
+def test_conversations_are_private_to_who_started_them(client, family, monkeypatch):
+    fid = family["id"]
+    join(client, invite(client, fid, "Dan", "dad@example.com", "co_parent"), DAD)
+    use(monkeypatch, [[Block("text", text="Hi Mom.")], [Block("text", text="Again.")]])
+    first = chat(client, fid, OWNER, "Plan Maya's summer")
+    conv = next(e["id"] for e in first if e["type"] == "conversation")
+
+    res = client.post("/api/v1/agent/chat", headers=h(DAD),
+                      json={"family_id": fid, "conversation_id": conv, "message": "what did she say?"})
+    events = [json.loads(l[6:]) for l in res.text.split("\n\n") if l.startswith("data: ")]
+    assert events[0] == {"type": "error", "message": "Conversation not found."}
+
+    again = client.post("/api/v1/agent/chat", headers=h(OWNER),
+                        json={"family_id": fid, "conversation_id": conv, "message": "more"})
+    assert '"Again."' in again.text

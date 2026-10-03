@@ -81,6 +81,11 @@ CREATE TABLE IF NOT EXISTS reminder_sends (
     UNIQUE (member_id, kind, period)
 );
 
+-- Each conversation belongs to the member who started it (null: started before households,
+-- treated as the owner's), so co-parents don't read each other's chats.
+ALTER TABLE agent_conversations
+    ADD COLUMN IF NOT EXISTS started_by UUID REFERENCES family_members(id) ON DELETE SET NULL;
+
 ALTER TABLE family_members   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE family_tasks     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE family_audit_log ENABLE ROW LEVEL SECURITY;
