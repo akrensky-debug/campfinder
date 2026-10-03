@@ -163,12 +163,6 @@ read any camp's website, so a directory is worth nothing. What agents cannot get
 owner has confirmed, with a date, and the spots actually left. So the owner loop comes first,
 and our data reaches parents through their agents as early as possible.*
 
-> **Status on `main`, 3 October 2026.** Already built: a read-only MCP server serving public
-> camp facts to Claude and ChatGPT (no family data); the in-app planning agent with family
-> profile and calendar; sign-in and the encrypted info kit; and, in review, household sharing
-> and delegation (PR #4). Owner confirmation, the listing tool and registration alerts exist on
-> the retired `claude/product-plan` branch and are being ported to `main` in small PRs.
-
 Build, in this order:
 
 1. Owner confirmation by email or text: "here is your listing, reply if anything is wrong".
@@ -187,6 +181,11 @@ Build, in this order:
 Done when: 150 camps are live, at least 30 owners have confirmed, Claude or ChatGPT can answer
 a camp question from our data with the source shown, and parents can sign up for alerts under
 the new brand.
+
+*Status on 3 October 2026: the MCP server (with the ChatGPT and Claude apps) and the family
+profile, with sign-in and the encrypted info kit, were built early and are on `main`. Owner
+confirmation is not built yet, so nothing the MCP server returns can say "confirmed by the
+owner" until it is. That makes item 1 the most important next build.*
 
 ### Phase 3: Soft launch (Dec)
 

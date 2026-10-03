@@ -127,7 +127,11 @@ class Kid(BaseModel):
     name: str | None = Field(default=None, description="First name or nickname only.")
     age: int | None = Field(default=None, ge=0, le=19)
     interests: list[str] = Field(default_factory=list)
-    notes: str | None = Field(default=None, description="Needs, allergies, friends, dislikes.")
+    notes: str | None = Field(
+        default=None,
+        description="Friends, likes, dislikes, schedule needs. Never medical, allergy, medication or "
+        "dietary details: those belong in the encrypted info kit, not here.",
+    )
 
 
 class UpdateFamilyProfileInput(BaseModel):

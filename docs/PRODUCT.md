@@ -128,9 +128,6 @@ data.
 
 ## What already exists (as of April 2026 beta)
 
-*Superseded on `main` as of October 2026: see the status note in `ROADMAP.md` Phase 2 and the
-README. Kept for history.*
-
 - **Backend:** FastAPI with Postgres and PostGIS on Supabase, set up for Railway. Search,
   camp detail, compare, sessions, summer planner, freshness and trust grades, leads, camp
   claims, and a Stripe Pro plan.

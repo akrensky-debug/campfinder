@@ -18,13 +18,10 @@ it did.
 | Analyst | Weekly numbers, market sizing, competitor tracking | Reports | Nothing: it only reads |
 | Engineering | The codebase (Claude Code) | Branches, tests, pull requests | Merges, deploys, anything destructive |
 
-Status on 1 October 2026: Engineering is working. Listings exists as the ingest tool, with a
-person reviewing every result. The other four are planned.
-
-Status on 3 October 2026: `main` is the trunk. On it, the read-only MCP server is live (camp
-tools only, no family data), and an in-app planning agent helps signed-in parents with their
-own family's plan; household tools (jobs, invites) only propose, and the parent confirms. The
-ingest tool is on the retired `claude/product-plan` branch and is being ported to `main`.
+Status on 3 October 2026: Engineering is working. Listings exists as the ingest tool, with a
+person reviewing every result. Parent help exists in an early form as the in-app family
+planning agent (`campfinder/agent`), which answers only from our camp data and never sees the
+info kit. The other three are planned.
 
 ## Rules
 
@@ -32,12 +29,13 @@ ingest tool is on the retired `claude/product-plan` branch and is being ported t
    and says how to reach a person ("reply and Andrew will see it"). Andrew's name goes only on
    messages he wrote or approved. The outreach scripts in `docs/brand/OUTREACH-CAMPS.md` are
    Andrew's own first-contact emails and stay in his name.
-2. **Every agent action is recorded with what caused it.** The listing change log
-   (`listing_changes`) already stores each change with the message behind it; every agent's
-   actions get the same treatment. Company rule 13: a dated record of every change.
+2. **Every agent action is recorded with what caused it.** Each change to a listing is stored
+   with the message behind it, and every agent's actions get the same treatment. Company rule
+   13: a dated record of every change. (Not built on `main` yet; it comes with owner
+   confirmation by email.)
 3. **Permissions are set by role, in code.** Each agent gets credentials that can reach only
-   what its job needs. Parent help cannot read `child_medical`. A rule in a prompt is not a
-   permission.
+   what its job needs. Parent help cannot read the info kit (`family_kits`), where medical
+   and allergy details live. A rule in a prompt is not a permission.
 4. **Agents never get past a camp's own systems.** An agent fills in a camp's form only when the
    camp has agreed, and never retries a host that refused it (see the fetcher policy in
    `docs/ingest-test-set.md`).

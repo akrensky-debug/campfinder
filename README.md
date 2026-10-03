@@ -25,31 +25,25 @@ SUPABASE_SERVICE_KEY=your-service-key
 DATABASE_URL=postgresql://postgres:[password]@db.your-project.supabase.co:5432/postgres
 ```
 
-### 3. Run the database schema
-
-Connect to your Supabase project and run:
+### 3. Create the database tables
 
 ```bash
-psql $DATABASE_URL -f schema.sql
+python -m campfinder.migrate            # apply pending migrations
+python -m campfinder.migrate --status   # show applied and pending
 ```
 
-Or paste `schema.sql` into the Supabase SQL editor.
+The schema lives in `migrations/`, one numbered file per change, each applied once
+and recorded in `schema_migrations`. Railway runs this before every deploy. To change
+the schema, add a new file; never edit one that has been applied.
 
-### 4. Seed the database
+### 4. Seed the database (local development only)
 
 ```bash
 python -m campfinder.seed.generate
 ```
 
-This inserts 50 synthetic camps across Providence/Boston and NYC metro, with sessions and field sources.
-
-Then create the family tables:
-
-```bash
-psql $DATABASE_URL -f schema_family.sql
-psql $DATABASE_URL -f schema_activity_api.sql
-psql $DATABASE_URL -f schema_accounts_kit.sql
-```
+This inserts 50 synthetic camps across Providence/Boston and NYC metro. Never run it
+against production.
 
 ### 5. Start the API server
 
@@ -127,10 +121,10 @@ kids, town, dates and logistics, and keeps a family calendar that parents subscr
 to from Google, Apple or Outlook Calendar.
 
 - Tools live in `campfinder/agent/tools.py`; the loop is `campfinder/agent/runner.py`.
-- Requires `ANTHROPIC_API_KEY` and the tables in `schema_family.sql`.
+- Requires `ANTHROPIC_API_KEY` and the family tables (`migrations/0004_family.sql`).
 - The partner-facing Activity API (`campfinder/activity/`, `docs/activity-api.md`) serves the
   same data in the Family Activity schema, with API keys, rate limits, per-session calendar
-  files and anonymous demand reporting. Requires `schema_activity_api.sql`.
+  files and anonymous demand reporting. Requires `migrations/0006_activity_api.sql`.
 - The same camp tools are served over MCP at `/mcp`, so Claude, ChatGPT and other
   agents can connect CampFinder as a data source. Family tools stay site-only.
 - In ChatGPT and Claude, results render as camp cards with a handoff back to CampFinder.
@@ -209,8 +203,8 @@ campfinder/
   chatgpt/widget.html  # Camp cards (MCP Apps UI) shown in ChatGPT and Claude
   static/              # Icons for the MCP server metadata and listings
 assistant-apps/        # ChatGPT plugin package (build.sh makes the ZIP)
-schema.sql             # Full Postgres/PostGIS schema
-schema_family.sql      # Families, family calendar, agent conversations
+migrations/            # Numbered SQL migrations (python -m campfinder.migrate)
+tests/                 # pytest; database tests start a throwaway Postgres
 requirements.txt
 .env.example
 ```
