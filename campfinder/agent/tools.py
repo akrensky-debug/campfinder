@@ -403,6 +403,9 @@ FAMILY_TOOLS: list[ToolSpec] = [
 
 ALL_TOOLS = {t.name: t for t in CAMP_TOOLS + FAMILY_TOOLS}
 
+# Registration day (watch, record, checklist, propose a package) adds its tools to the lists above.
+import campfinder.agent.booking_tools  # noqa: E402,F401
+
 
 def _inline_refs(schema: dict[str, Any]) -> dict[str, Any]:
     """Inline $defs so each tool's input_schema is a single self-contained object."""
