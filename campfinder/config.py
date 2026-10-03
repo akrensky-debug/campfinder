@@ -44,7 +44,15 @@ class Settings:
     # from shared IP ranges, so this guards against abuse, not per-parent use.
     mcp_rate_per_minute: int = int(os.environ.get("MCP_RATE_PER_MINUTE", "600"))
 
-    cors_origins: list[str] = ["*"]  # Tighten in production
+    # Browser origins allowed to call the API, comma-separated. Defaults to the frontend
+    # and local development. Sign-in uses a bearer token, never cookies.
+    cors_origins_env: str = os.environ.get("CORS_ORIGINS", "")
+
+    @property
+    def cors_origins(self) -> list[str]:
+        if self.cors_origins_env.strip():
+            return [o.strip().rstrip("/") for o in self.cors_origins_env.split(",") if o.strip()]
+        return sorted({self.frontend_url.rstrip("/"), "http://localhost:3000"})
     api_prefix: str = "/api/v1"
 
 
