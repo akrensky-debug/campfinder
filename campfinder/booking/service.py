@@ -129,10 +129,12 @@ def next_step(r: dict[str, Any], opens_at: datetime | None, today: date | None =
     if status == "waitlisted":
         steps.append("On the waitlist. Mark it registered if a spot opens.")
     due = _parse_date(r.get("payment_due_date"))
+    bal = f"${float(r['balance_due']):,.0f} " if r.get("balance_due") else ""
     if pay in ("unpaid", "deposit") and due:
         late = " (overdue)" if due < today else ""
-        bal = f"${float(r['balance_due']):,.0f} " if r.get("balance_due") else ""
         steps.append(f"Pay {bal}by {_fmt_day(due)}{late}.")
+    elif pay in ("unpaid", "deposit") and bal and status == "registered":
+        steps.append(f"Pay {bal}to the camp. Add the due date so we can remind you.")
     forms_due = _parse_date(r.get("forms_due_date"))
     if forms_due and forms_due >= today:
         steps.append(f"Forms due {_fmt_day(forms_due)}.")

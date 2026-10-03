@@ -94,6 +94,7 @@ export default function KitPage() {
           What camps ask for at registration, filled in once. It's encrypted, never shown to the
           assistant, and shared only as a package you choose.
         </p>
+        <a href="/registrations" className="inline-block mt-2 text-sm font-medium text-brand-700">Registrations and reminders ›</a>
       </header>
 
       <section className="space-y-5">

@@ -1,5 +1,6 @@
 import type { CampSearchResult } from '@/lib/api'
 import { authHeaders } from '@/lib/auth'
+import type { BookingUIData } from '@/components/booking/BookingBlocks'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 const FAMILY_KEY = 'cf_family_id'
@@ -77,6 +78,7 @@ export type UIData =
   | ({ type: 'plan' } & Plan)
   | { type: 'calendar'; events: FamilyEvent[] }
   | { type: 'profile'; profile: FamilyProfile }
+  | BookingUIData
 
 export type AgentEvent =
   | { type: 'conversation'; id: string }

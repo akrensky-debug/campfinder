@@ -181,3 +181,12 @@ def test_package_shares_only_after_confirm(client: TestClient, db: FakeSupabase,
     c = client.get(f"/api/v1/families/{family['id']}/register-checklist", params={"camp_id": CAMP},
                    headers=h(OWNER)).json()
     assert len(c["shares"]) == 1 and next(s for s in c["steps"] if s["key"] == "package")["done"] is True
+
+
+def test_next_step_flags_unpaid_balance_without_due_date(client: TestClient, db: FakeSupabase, family: dict[str, Any]) -> None:
+    r = client.post(regs(client, family), headers=h(OWNER), json={"camp_id": CAMP, "session_id": SESSION}).json()
+    r = client.patch(f"{regs(client, family)}/{r['id']}", headers=h(OWNER),
+                     json={"status": "registered", "balance_due": 425}).json()
+    assert r["next_step"] == "Pay $425 to the camp. Add the due date so we can remind you."
+    r = client.patch(f"{regs(client, family)}/{r['id']}", headers=h(OWNER), json={"payment_status": "paid"}).json()
+    assert r["next_step"] == "All set."

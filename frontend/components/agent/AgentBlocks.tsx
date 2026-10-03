@@ -1,5 +1,6 @@
 import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
+import { BookingBlock } from '@/components/booking/BookingBlocks'
 import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
 
 const SHOWN_CAMPS = 5
@@ -161,5 +162,8 @@ export function AgentBlock({ data }: { data: UIData }) {
     case 'plan':        return <PlanView plan={data} />
     case 'calendar':    return <CalendarList events={data.events} />
     case 'profile':     return null // reflected in the family panel
+    case 'registrations':
+    case 'register_checklist':
+    case 'registration_package': return <BookingBlock data={data} />
   }
 }

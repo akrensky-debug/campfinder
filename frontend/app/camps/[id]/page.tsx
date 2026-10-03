@@ -81,6 +81,12 @@ export default function CampDetailPage() {
                 Visit camp website ↗
               </a>
             )}
+            <a
+              href={`/register/${camp.id}`}
+              className="bg-gray-900 text-white font-semibold px-5 py-2.5 rounded-xl text-center hover:bg-gray-800 transition-colors text-sm"
+            >
+              Get ready to register
+            </a>
             {camp.registration_url && (
               <a
                 href={camp.registration_url}
