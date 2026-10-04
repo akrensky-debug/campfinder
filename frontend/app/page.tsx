@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Events, captureAssistantArrival, track } from '@/lib/analytics'
 import {
   loadFamily, resetCalendarLink, streamChat,
@@ -35,9 +36,16 @@ export default function AgentHome() {
   const [busy, setBusy] = useState(false)
   const [panelOpen, setPanelOpen] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    loadFamily().then(setFamily).catch(() => setFamilyError(true))
+    loadFamily()
+      .then(f => {
+        // Caregivers and viewers see their jobs and the calendar, not the planning chat.
+        if (f.role === 'caregiver' || f.role === 'viewer') router.replace('/household')
+        else setFamily(f)
+      })
+      .catch(() => setFamilyError(true))
     // Arriving from ChatGPT or another assistant: pre-fill what the parent was asking for.
     const params = new URLSearchParams(window.location.search)
     const q = params.get('q')
@@ -155,7 +163,7 @@ export default function AgentHome() {
           </div>
         ) : (
           <div className="flex-1 py-6 space-y-6">
-            {messages.map((m, i) => <MessageView key={i} message={m} />)}
+            {messages.map((m, i) => <MessageView key={i} message={m} familyId={family?.id} />)}
             <div ref={bottomRef} />
           </div>
         )}
@@ -199,7 +207,7 @@ export default function AgentHome() {
   )
 }
 
-function MessageView({ message }: { message: Message }) {
+function MessageView({ message, familyId }: { message: Message; familyId?: string }) {
   if (message.role === 'user') {
     return (
       <div className="flex justify-end">
@@ -212,7 +220,7 @@ function MessageView({ message }: { message: Message }) {
   return (
     <div className="space-y-3 text-gray-800">
       {message.parts.map((p, i) =>
-        p.kind === 'text' ? <AgentText key={i} text={p.text} /> : <AgentBlock key={i} data={p.data} />,
+        p.kind === 'text' ? <AgentText key={i} text={p.text} /> : <AgentBlock key={i} data={p.data} familyId={familyId} />,
       )}
       {message.status && (
         <p className="text-sm text-gray-400 flex items-center gap-2">
@@ -282,14 +290,26 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
       </div>
 
       <div className="bg-gray-50 rounded-2xl p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Household & jobs</p>
+        <p className="text-sm text-gray-600 mb-2">
+          {family.signed_in
+            ? 'Hand off pickups, forms and payments to your partner, a grandparent or the nanny. They get a reminder before each one.'
+            : 'Keep a job list for drop-offs, forms and payments. Save to an account to share it.'}
+        </p>
+        <a href="/household" className="text-sm font-medium text-brand-700 hover:underline">Who's doing what →</a>
+      </div>
+
+      <div className="bg-gray-50 rounded-2xl p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Info kit</p>
-        {family.signed_in ? (
+        {family.can_open_kit ? (
           <>
             <p className="text-sm text-gray-600 mb-2">
               Allergies, emergency contacts, insurance: fill them in once, share only what each camp asks for.
             </p>
             <a href="/kit" className="text-sm font-medium text-brand-700 hover:underline">Open your info kit →</a>
           </>
+        ) : family.signed_in ? (
+          <p className="text-sm text-gray-600">The info kit is private to the family's owner. They can share it with you from the Household page.</p>
         ) : (
           <>
             <p className="text-sm text-gray-600 mb-2">

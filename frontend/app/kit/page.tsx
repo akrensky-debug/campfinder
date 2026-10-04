@@ -36,6 +36,11 @@ export default function KitPage() {
     if (!session) return
     loadFamily()
       .then(async f => {
+        if (!f.can_open_kit) {
+          // Caregivers, viewers and co-parents without access: no form to fill in and lose.
+          setError('private')
+          return
+        }
         setFamily(f)
         const [k, s] = await Promise.all([getKit(f.id), listShares(f.id)])
         // First visit: start a card for each kid the agent already knows about.
@@ -80,6 +85,19 @@ export default function KitPage() {
     await deleteFamily(family.id)
     await signOut()
     router.replace('/')
+  }
+
+  if (error === 'private') {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 space-y-2">
+        <h1 className="text-2xl font-bold text-gray-900">Info kit</h1>
+        <p className="text-gray-600">
+          The info kit (medical details, emergency contacts, insurance) is private to the family's owner.
+          They can give a co-parent access from the Household page.
+        </p>
+        <a href="/household" className="text-sm font-medium text-brand-700 hover:underline">Go to Household →</a>
+      </div>
+    )
   }
 
   if (!session || !family) {

@@ -23,12 +23,12 @@ export async function authHeaders(): Promise<Record<string, string>> {
 }
 
 /** Email sign-in link. Returns an error message, or null on success. */
-export async function sendSignInLink(email: string): Promise<string | null> {
+export async function sendSignInLink(email: string, returnPath = '/signin'): Promise<string | null> {
   const sb = supabase()
   if (!sb) return 'Sign-in is not set up yet.'
   const { error } = await sb.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: `${window.location.origin}/signin` },
+    options: { emailRedirectTo: `${window.location.origin}${returnPath}` },
   })
   return error ? error.message : null
 }
