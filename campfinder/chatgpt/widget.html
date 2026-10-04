@@ -42,7 +42,8 @@
 <body>
 <div class="wrap" id="root"><div class="empty">Finding camps…</div></div>
 <script>
-  // MCP Apps bridge (protocol 2026-01-26), with the window.openai fallback ChatGPT also offers.
+  // MCP Apps bridge (protocol 2026-01-26), shared by ChatGPT and Claude, with the
+  // window.openai fallback ChatGPT also offers.
   let nextId = 1;
   const pending = new Map();
   function request(method, params) {
@@ -53,10 +54,17 @@
   function notify(method, params) {
     window.parent.postMessage({ jsonrpc: "2.0", method, params }, "*");
   }
+  let hostReady = false;
   function openLink(url) {
     if (window.openai && window.openai.openExternal) { window.openai.openExternal({ href: url }); return; }
-    request("ui/open-link", { url }).catch(() => window.open(url, "_blank", "noopener"));
+    // Claude may ask the parent to confirm; if they decline, don't open it anyway.
+    if (hostReady) { request("ui/open-link", { url }).catch(() => {}); return; }
+    window.open(url, "_blank", "noopener");
   }
+  function reportSize() {
+    notify("ui/notifications/size-changed", { width: document.body.scrollWidth, height: document.body.scrollHeight });
+  }
+  if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const day = d => new Date(d + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" });
@@ -84,11 +92,39 @@
     </div>`;
   }
 
+  // Year-round classes and lessons (find_activities).
+  const KIND = { class: "Class", lesson: "Lessons", league: "League", after_school: "After school", event: "Event" };
+  const money = n => n === 0 ? "Free" : "$" + (n % 1 ? n.toFixed(2) : Math.round(n));
+  function activityCard(a) {
+    const chips = [];
+    if (TRUST[a.verification_status]) chips.push(`<span class="chip ok">✓ ${esc(TRUST[a.verification_status])}</span>`);
+    else chips.push(`<span class="chip">Not yet verified</span>`);
+    if (a.age_min != null && a.age_max != null) chips.push(`<span class="chip">Ages ${a.age_min}–${a.age_max}</span>`);
+    if (a.trial_available) chips.push(`<span class="chip">Trial class</span>`);
+    const where = [a.provider_name, a.city && a.state ? `${a.city}, ${a.state}` : "", a.distance_miles != null ? `${a.distance_miles} mi` : ""].filter(Boolean).join(" · ");
+    const price = a.per_class != null ? `${money(a.per_class)}<small>/class</small>` : a.term_price != null ? `${money(a.term_price)}<small>/term</small>` : "";
+    const times = (a.offerings || []).slice(0, 3).map(o =>
+      `<div class="dates">${esc(o.schedule || "Time not published")}${o.skill_level ? " · " + esc(o.skill_level) : ""}${o.start_date ? " · from " + day(o.start_date) : ""}${o.enrollment_status === "upcoming" && o.enrollment_opens ? " · registration opens " + day(o.enrollment_opens) : ""}</div>`).join("");
+    return `<div class="card">
+      <div class="row">
+        <div><div class="meta">${esc(KIND[a.kind] || a.kind)}</div><div class="name">${esc(a.name)}</div><div class="meta">${esc(where)}</div></div>
+        ${price ? `<div class="price">${price}</div>` : ""}
+      </div>
+      ${times}
+      <div class="chips">${chips.join("")}</div>
+      ${a.match_reasons && a.match_reasons.length ? `<div class="why">${esc(a.match_reasons.slice(0, 2).join(" · "))}</div>` : ""}
+      <button class="btn" data-url="${esc(a.url)}">Times, prices and sources →</button>
+    </div>`;
+  }
+
   function render(data) {
     const root = document.getElementById("root");
     if (!data) return;
     const parts = [];
-    if (data.sessions && data.sessions.length) {
+    if (data.activities) {
+      if (data.activities.length) data.activities.forEach(a => parts.push(activityCard(a)));
+      else parts.push(`<div class="empty">${esc(data.note || "No classes matched. Try other days or a wider area.")}</div>`);
+    } else if (data.sessions && data.sessions.length) {
       data.sessions.forEach(s => parts.push(campCard(s.camp, s)));
     } else if (data.camps && data.camps.length) {
       data.camps.forEach(c => parts.push(campCard(c)));
@@ -97,15 +133,15 @@
     }
     if (data.plan_url) {
       parts.push(`<div class="card cta">
-        <div class="name">Plan the whole summer on CampFinder</div>
+        <div class="name">${esc(data.plan_title || "Plan the whole summer on CampFinder")}</div>
         <div class="meta">Save these picks, fill every week, and put it all on one family calendar you can share.</div>
         <button class="btn" data-url="${esc(data.plan_url)}">Continue on CampFinder →</button>
       </div>`);
     }
-    parts.push(`<div class="foot">Camp data from CampFinder</div>`);
+    parts.push(`<div class="foot">Program data from CampFinder</div>`);
     root.innerHTML = parts.join("");
     root.querySelectorAll("[data-url]").forEach(el => el.addEventListener("click", () => openLink(el.dataset.url)));
-    notify("ui/notifications/size-changed", { width: document.body.scrollWidth, height: document.body.scrollHeight });
+    reportSize();
   }
 
   window.addEventListener("message", event => {
@@ -117,6 +153,11 @@
       msg.error ? p.reject(msg.error) : p.resolve(msg.result);
       return;
     }
+    // Requests from the host (ping, ui/resource-teardown) need an answer.
+    if (msg.id != null && msg.method) {
+      window.parent.postMessage({ jsonrpc: "2.0", id: msg.id, result: {} }, "*");
+      return;
+    }
     if (msg.method === "ui/notifications/tool-result") render(msg.params && msg.params.structuredContent);
     if (msg.method === "ui/notifications/host-context-changed" && msg.params && msg.params.theme) {
       document.documentElement.dataset.theme = msg.params.theme;
@@ -124,10 +165,11 @@
   });
 
   request("ui/initialize", {
-    appInfo: { name: "CampFinder", version: "1.0.0" },
-    appCapabilities: {},
+    appInfo: { name: "CampFinder", version: "1.2.0" },
+    appCapabilities: { availableDisplayModes: ["inline"] },
     protocolVersion: "2026-01-26",
   }).then(result => {
+    hostReady = true;
     const theme = result && result.hostContext && result.hostContext.theme;
     if (theme) document.documentElement.dataset.theme = theme;
     notify("ui/notifications/initialized", {});

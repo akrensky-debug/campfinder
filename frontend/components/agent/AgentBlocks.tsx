@@ -1,7 +1,9 @@
 import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
 import { BookingBlock } from '@/components/booking/BookingBlocks'
+import { AssignProposal, HouseholdCard, InviteProposal, MessageDraft, TasksCard } from '@/components/household/HouseholdBlocks'
 import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
+import { ActivityDetailCard, ActivityResults, ScheduleFitView, WeekView, weeklyLabel } from '@/components/agent/ActivityBlocks'
 
 const SHOWN_CAMPS = 5
 
@@ -146,7 +148,9 @@ export function CalendarList({ events, compact = false }: { events: FamilyEvent[
     <ul className="space-y-1.5">
       {events.map(e => (
         <li key={e.id} className={`flex gap-3 text-sm ${compact ? '' : 'bg-white border border-gray-200 rounded-lg px-3 py-2'}`}>
-          <span className="text-gray-500 whitespace-nowrap w-28 shrink-0">{fmtRange(e.start_date, e.end_date)}</span>
+          <span className="text-gray-500 w-28 shrink-0">
+            {e.rrule ? weeklyLabel(e.rrule, e.start_time) : fmtRange(e.start_date, e.end_date)}
+          </span>
           <span className="text-gray-800 min-w-0">{e.title}</span>
         </li>
       ))}
@@ -154,7 +158,7 @@ export function CalendarList({ events, compact = false }: { events: FamilyEvent[
   )
 }
 
-export function AgentBlock({ data }: { data: UIData }) {
+export function AgentBlock({ data, familyId }: { data: UIData; familyId?: string }) {
   switch (data.type) {
     case 'camps':       return <CampResults camps={data.camps} />
     case 'camp_detail': return <CampDetailCard camp={data.camp} />
@@ -165,5 +169,15 @@ export function AgentBlock({ data }: { data: UIData }) {
     case 'registrations':
     case 'register_checklist':
     case 'registration_package': return <BookingBlock data={data} />
+    // Year-round activities
+    case 'activities':      return <ActivityResults activities={data.activities} />
+    case 'activity_detail': return <ActivityDetailCard activity={data.activity} />
+    case 'schedule_fit':    return <ScheduleFitView results={data.results} />
+    case 'week':            return <WeekView week={data.week} />
+    case 'tasks':           return <TasksCard data={data} />
+    case 'household':       return <HouseholdCard data={data} />
+    case 'assign_proposal': return <AssignProposal data={data} familyId={familyId} />
+    case 'invite_proposal': return <InviteProposal data={data} familyId={familyId} />
+    case 'message_draft':   return <MessageDraft data={data} />
   }
 }

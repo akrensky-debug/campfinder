@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { getCamp, type CampDetail } from '@/lib/api'
-import { Events } from '@/lib/analytics'
+import { Events, captureAssistantArrival } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
 import RequestInfoModal from '@/components/RequestInfoModal'
 
@@ -12,6 +12,10 @@ export default function CampDetailPage() {
   const [camp, setCamp]         = useState<CampDetail | null>(null)
   const [loading, setLoading]   = useState(true)
   const [showModal, setModal]   = useState(false)
+
+  useEffect(() => {
+    captureAssistantArrival(new URLSearchParams(window.location.search))
+  }, [])
 
   useEffect(() => {
     if (!id) return
@@ -55,6 +59,11 @@ export default function CampDetailPage() {
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-3">{camp.name}</h1>
             <TrustBadge status={camp.verification_status} aca={camp.aca_accredited} />
+            {camp.trust_summary?.confirmed_by_camp_at && (
+              <p className="text-xs text-green-700 mt-2">
+                ✓ Confirmed by the camp on {new Date(camp.trust_summary.confirmed_by_camp_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </p>
+            )}
             {camp.last_updated_date && (
               <p className="text-xs text-gray-400 mt-2">
                 Last updated {new Date(camp.last_updated_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}

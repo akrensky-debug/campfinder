@@ -1,10 +1,8 @@
 -- CampFinder Phase 2 schema additions
--- Run in Supabase SQL editor
+-- Re-runnable: the live database had these tables before the migration runner existed.
 
--- ── 1. Replace leads table with full spec ──────────────────────────────────
-DROP TABLE IF EXISTS leads CASCADE;
-
-CREATE TABLE leads (
+-- ── 1. Leads ──────────────────────────────────
+CREATE TABLE IF NOT EXISTS leads (
     id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     parent_email        TEXT NOT NULL,
     parent_zip          TEXT,
@@ -26,11 +24,12 @@ CREATE TABLE leads (
     updated_at          TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_leads_email   ON leads (parent_email);
-CREATE INDEX idx_leads_status  ON leads (lead_status);
-CREATE INDEX idx_leads_camp    ON leads (target_camp_id);
-CREATE INDEX idx_leads_created ON leads (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_leads_email   ON leads (parent_email);
+CREATE INDEX IF NOT EXISTS idx_leads_status  ON leads (lead_status);
+CREATE INDEX IF NOT EXISTS idx_leads_camp    ON leads (target_camp_id);
+CREATE INDEX IF NOT EXISTS idx_leads_created ON leads (created_at DESC);
 
+DROP TRIGGER IF EXISTS trg_leads_updated_at ON leads;
 CREATE TRIGGER trg_leads_updated_at
     BEFORE UPDATE ON leads
     FOR EACH ROW EXECUTE FUNCTION set_updated_at();
@@ -45,9 +44,9 @@ CREATE TABLE IF NOT EXISTS analytics_events (
     created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_events_event   ON analytics_events (event);
-CREATE INDEX idx_events_session ON analytics_events (session_id);
-CREATE INDEX idx_events_created ON analytics_events (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_events_event   ON analytics_events (event);
+CREATE INDEX IF NOT EXISTS idx_events_session ON analytics_events (session_id);
+CREATE INDEX IF NOT EXISTS idx_events_created ON analytics_events (created_at DESC);
 
 -- ── 3. Camp ownership (for claim flow) ────────────────────────────────────
 CREATE TABLE IF NOT EXISTS camp_ownership (
@@ -65,8 +64,8 @@ CREATE TABLE IF NOT EXISTS camp_ownership (
     UNIQUE (camp_id)
 );
 
-CREATE INDEX idx_ownership_email ON camp_ownership (email);
-CREATE INDEX idx_ownership_camp  ON camp_ownership (camp_id);
+CREATE INDEX IF NOT EXISTS idx_ownership_email ON camp_ownership (email);
+CREATE INDEX IF NOT EXISTS idx_ownership_camp  ON camp_ownership (camp_id);
 
 -- Only the backend (service key) reads and writes these tables.
 ALTER TABLE leads            ENABLE ROW LEVEL SECURITY;

@@ -1,6 +1,6 @@
 -- Registration day: when registration opens, what each camp's form asks for, what the
 -- family has registered for (and paid), reminder settings, and the sandbox booking log.
--- Run after schema_accounts_kit.sql. Additive: no existing table is altered.
+-- Run after 0005_accounts_kit.sql. Additive: no existing table is altered.
 -- Only the backend (service key) touches these tables; RLS is on with no policies,
 -- so the anon and authenticated keys can read or write nothing.
 

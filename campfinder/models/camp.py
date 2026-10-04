@@ -33,6 +33,8 @@ class TrustSummary(BaseModel):
     fields_unverified: list[str] = Field(default_factory=list)
     fields_missing: list[str] = Field(default_factory=list)
     accreditation: AccreditationSummary
+    confirmed_by_camp_at: datetime | None = Field(
+        default=None, description="When the camp itself last confirmed this listing; null if it never has.")
 
 
 class CampDetail(BaseModel):

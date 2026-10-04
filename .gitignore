@@ -9,3 +9,5 @@ __pycache__/
 .claude/
 .env
 *.tsbuildinfo
+.pytest_cache/
+assistant-apps/dist/
