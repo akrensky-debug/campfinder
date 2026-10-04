@@ -32,7 +32,7 @@ async def get_camp(camp_id: UUID) -> CampDetail:
     cid = str(camp_id)
 
     rows = client.table("camps").select("*").eq("id", cid).execute().data
-    if not rows:
+    if not rows or rows[0].get("is_active") is False:  # taken down by its owner or the team
         raise HTTPException(status_code=404, detail="Camp not found")
     camp = rows[0]
 
@@ -156,5 +156,10 @@ def _build_trust_summary(
         accreditation=AccreditationSummary(
             status="confirmed" if camp.get("aca_accredited") else "not_confirmed",
             source=camp.get("aca_source_url"),
+        ),
+        confirmed_by_camp_at=max(
+            (str(fs["last_verified"]) for fs in field_sources
+             if fs.get("source_type") == "camp_verified" and fs.get("last_verified")),
+            default=None,
         ),
     )

@@ -20,6 +20,7 @@ The database and sign-in are the Supabase project `cdzzmyambonhkhsoltfw` (us-eas
 | `KIT_ENCRYPTION_KEY` | `python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"` | The info kit |
 | `CORS_ORIGINS` | Optional. Comma-separated; defaults to `FRONTEND_URL` and `http://localhost:3000` | Browser access |
 | `RESEND_API_KEY` | Optional. Without it, email is logged, not sent | Email |
+| `OWNER_EMAIL_SIGNATURE`, `OWNER_REPLY_TO` | Optional. Sign-off and reply address for camp owner emails | Owner confirmation |
 | `OPENAI_APPS_CHALLENGE`, `CHATGPT_WIDGET_DOMAIN` | From the OpenAI dashboard, when submitting the ChatGPT app | ChatGPT app review |
 
 Never paste a key or password into a chat. Put it straight into Railway.
