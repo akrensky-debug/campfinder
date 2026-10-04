@@ -127,6 +127,7 @@ fields for chosen kids) behind expiring, revocable links that log every open. Lo
 | `GET/POST/PATCH` | `/api/v1/families/{id}/tasks[/assign\|/generate]` | Jobs: rides, forms, payments, packing lists, deadlines |
 | `GET/POST` | `/api/v1/invites/{token}[/accept]` | Preview and accept an invite |
 | `GET`  | `/api/v1/calendar/member/{token}.ics` | One person's feed: the family plan plus their jobs |
+| `GET/POST` | `/api/v1/owners/confirm/{token}` | A camp owner checks their listing: looks right, or take it down (see `docs/owner-confirmation.md`) |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools to any client |
 | `POST` | `/chatgpt/mcp`, `/claude/mcp` | The same server tuned for the ChatGPT app and the Claude connector |

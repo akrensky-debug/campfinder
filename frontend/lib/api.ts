@@ -50,6 +50,7 @@ export interface TrustSummary {
   fields_unverified: string[]
   fields_missing: string[]
   accreditation: { status: string; source: string | null }
+  confirmed_by_camp_at?: string | null
 }
 
 export interface CampDetail extends CampSearchResult {

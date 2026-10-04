@@ -26,6 +26,7 @@ class Email:
     subject: str
     html: str
     text: str
+    reply_to: str | None = None  # where a reply goes, e.g. a person who reads owner replies
 
 
 class Mailer(Protocol):
@@ -66,7 +67,8 @@ class ResendMailer:
             res = await client.post(
                 "https://api.resend.com/emails",
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-                json={"from": self.sender, "to": [email.to], "subject": email.subject, "html": email.html, "text": email.text},
+                json={"from": self.sender, "to": [email.to], "subject": email.subject, "html": email.html, "text": email.text,
+                      **({"reply_to": email.reply_to} if email.reply_to else {})},
                 timeout=10,
             )
         if res.status_code >= 300:
