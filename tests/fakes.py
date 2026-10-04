@@ -54,14 +54,20 @@ class Query:
         self.payload: Any = None
         self._order: tuple[str, bool] | None = None
         self._limit: int | None = None
+        self.on_conflict: list[str] = []
 
     # builders
     def select(self, *_a: Any, **_k: Any) -> "Query":
         self.op = "select"
         return self
 
-    def insert(self, rows: Any) -> "Query":
+    def insert(self, rows: Any, **_k: Any) -> "Query":
         self.op, self.payload = "insert", rows
+        return self
+
+    def upsert(self, rows: Any, on_conflict: str = "", **_k: Any) -> "Query":
+        self.op, self.payload = "upsert", rows
+        self.on_conflict = [c.strip() for c in on_conflict.split(",") if c.strip()]
         return self
 
     def update(self, values: dict[str, Any]) -> "Query":
@@ -117,10 +123,16 @@ class Query:
 
     def execute(self) -> Result:
         rows = self.db.tables.setdefault(self.table, [])
-        if self.op == "insert":
+        if self.op in ("insert", "upsert"):
             items = self.payload if isinstance(self.payload, list) else [self.payload]
             out = []
             for item in items:
+                if self.op == "upsert" and self.on_conflict:
+                    existing = next((r for r in rows if all(str(r.get(k)) == str(item.get(k)) for k in self.on_conflict)), None)
+                    if existing is not None:
+                        existing.update(copy.deepcopy(item))
+                        out.append(copy.deepcopy(existing))
+                        continue
                 row = {}
                 for k, v in DEFAULTS.get(self.table, {}).items():
                     row[k] = v() if callable(v) else copy.deepcopy(v)
@@ -241,16 +253,31 @@ class FakeStream:
         return self.response
 
 
-class FakeAnthropic:
-    """Replays scripted turns: each is a list of Blocks; tool_use turns stop with 'tool_use'."""
+def text_block(text: str) -> Block:
+    return Block("text", text=text)
 
-    def __init__(self, turns: list[list[Block]]):
+
+def tool_use_block(name: str, inp: dict[str, Any]) -> Block:
+    return Block("tool_use", id=f"toolu_{uuid.uuid4().hex[:8]}", name=name, input=inp)
+
+
+class FakeAnthropic:
+    """Replays scripted turns. A turn is a list of Blocks (tool_use turns stop with
+    'tool_use') or a (blocks, stop_reason) pair. Every request is recorded in `calls`
+    (also available as `requests`)."""
+
+    def __init__(self, turns: list[Any]):
         self.turns = list(turns)
         self.calls: list[dict[str, Any]] = []
+        self.requests = self.calls
         self.beta = SimpleNamespace(messages=SimpleNamespace(stream=self._stream))
 
     def _stream(self, **kwargs: Any) -> FakeStream:
         self.calls.append(copy.deepcopy(kwargs))
-        content = self.turns.pop(0)
-        stop = "tool_use" if any(b.type == "tool_use" for b in content) else "end_turn"
+        turn = self.turns.pop(0)
+        if isinstance(turn, tuple):
+            content, stop = turn
+        else:
+            content = turn
+            stop = "tool_use" if any(b.type == "tool_use" for b in content) else "end_turn"
         return FakeStream(SimpleNamespace(content=content, stop_reason=stop))

@@ -52,3 +52,18 @@ def test_migration_files_are_numbered() -> None:
     for name in names:
         prefix = name.split("_", 1)[0]
         assert prefix.isdigit() and len(prefix) == 4, name
+
+
+async def test_every_migration_is_safe_to_rerun(migrated: asyncpg.Connection) -> None:
+    """The live database was built from the old schema_*.sql files before the runner existed,
+    so its first run applies every migration on top of tables that are already there.
+    Each one must therefore be re-runnable. Simulated here by forgetting what was applied
+    and running them all again, inside a transaction that is rolled back."""
+    tx = migrated.transaction()
+    await tx.start()
+    try:
+        await migrated.execute("DELETE FROM schema_migrations")
+        applied = await apply_migrations(migrated)
+        assert applied == [p.name for p in list_migration_files()]
+    finally:
+        await tx.rollback()

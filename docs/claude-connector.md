@@ -12,7 +12,7 @@ Strategy: `docs/assistant-apps-strategy.md`. Founder steps: `docs/assistant-apps
 | --- | --- |
 | Claude endpoint | `https://<api>/claude/mcp` (stateless streamable HTTP, no auth) |
 | Tools | the same five read-only tools as ChatGPT (`campfinder/mcp_server.py`) |
-| Camp cards | the same MCP App (`ui://campfinder/camps-v2.html`) **without** `ui.domain` |
+| Camp cards | the same MCP App (`ui://campfinder/camps-v3.html`) **without** `ui.domain` |
 | Links | `ui/open-link` to our own site; tagged `utm_source=claude` |
 | Server metadata | `title`, `websiteUrl` and light and dark `icons` served from `/static/` |
 | Smoke test | `python -m campfinder.scripts.check_mcp https://<api>/claude/mcp` |
