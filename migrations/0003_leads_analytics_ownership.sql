@@ -1,9 +1,6 @@
 -- CampFinder Phase 2 schema additions
--- Run in Supabase SQL editor
 
--- ── 1. Replace leads table with full spec ──────────────────────────────────
-DROP TABLE IF EXISTS leads CASCADE;
-
+-- ── 1. Leads ──────────────────────────────────
 CREATE TABLE leads (
     id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     parent_email        TEXT NOT NULL,

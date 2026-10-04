@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { getCamp, type CampDetail } from '@/lib/api'
-import { Events } from '@/lib/analytics'
+import { Events, captureAssistantArrival } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
 import RequestInfoModal from '@/components/RequestInfoModal'
 
@@ -12,6 +12,10 @@ export default function CampDetailPage() {
   const [camp, setCamp]         = useState<CampDetail | null>(null)
   const [loading, setLoading]   = useState(true)
   const [showModal, setModal]   = useState(false)
+
+  useEffect(() => {
+    captureAssistantArrival(new URLSearchParams(window.location.search))
+  }, [])
 
   useEffect(() => {
     if (!id) return

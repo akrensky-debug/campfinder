@@ -1,24 +1,4 @@
--- CampFinder Phase 2: Leads + Camp Submissions
-
-CREATE TABLE IF NOT EXISTS leads (
-    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email               TEXT NOT NULL,
-    first_name          TEXT,
-    search_location     TEXT,
-    search_age          INTEGER,
-    search_camp_type    TEXT,
-    search_categories   TEXT[],
-    matched_camp_ids    UUID[],
-    source              TEXT DEFAULT 'search_gate',  -- search_gate, camp_detail, operator_form
-    status              TEXT DEFAULT 'new'
-                            CHECK (status IN ('new', 'emailed', 'contacted', 'converted')),
-    created_at          TIMESTAMPTZ DEFAULT NOW(),
-    updated_at          TIMESTAMPTZ DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_leads_email   ON leads (email);
-CREATE INDEX IF NOT EXISTS idx_leads_status  ON leads (status);
-CREATE INDEX IF NOT EXISTS idx_leads_created ON leads (created_at DESC);
+-- Camp submissions from operators. (The leads table is created in 0003, in the shape the code uses.)
 
 CREATE TABLE IF NOT EXISTS camp_submissions (
     id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -45,5 +25,4 @@ CREATE TABLE IF NOT EXISTS camp_submissions (
 CREATE INDEX IF NOT EXISTS idx_submissions_status ON camp_submissions (status);
 CREATE INDEX IF NOT EXISTS idx_submissions_created ON camp_submissions (created_at DESC);
 
-ALTER TABLE leads            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE camp_submissions ENABLE ROW LEVEL SECURITY;

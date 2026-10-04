@@ -15,6 +15,7 @@ from typing import Any, AsyncIterator
 
 import anthropic
 
+from campfinder.agent.household_tools import HOUSEHOLD_PROMPT, household_context
 from campfinder.agent.tools import (
     ALL_TOOLS,
     ToolError,
@@ -24,6 +25,7 @@ from campfinder.agent.tools import (
     run_tool,
 )
 from campfinder.config import get_settings
+from campfinder.household.context import current_access
 from campfinder.database import get_supabase
 
 log = logging.getLogger(__name__)
@@ -32,7 +34,7 @@ MODEL = "claude-opus-5-5"
 MAX_TURNS = 10
 
 SYSTEM_PROMPT = """\
-You are CampFinder, a planning assistant for busy parents, most often moms. Your job is to \
+You are CampFinder, a planning assistant for busy parents. Your job is to \
 take things off their plate: find the right summer camps and activities for each kid, work \
 out the logistics, and put the decisions on the family calendar so nothing has to be \
 remembered or re-typed.
@@ -58,13 +60,13 @@ they agree.
 - Never ask for or repeat medical, insurance, birth date or contact details in chat. Those \
 belong in the family's info kit (the Info kit page), which is encrypted, never shown to you, \
 and shared with a camp only as a package the parent approves. If the parent starts typing \
-them, point her to the info kit instead.
+them, point them to the info kit instead and keep it out of the family profile.
 - Keep replies short and warm, written for someone reading on a phone between other things. \
 Use plain language and no tables; the UI renders the structured data.
 
 Coverage today is summer camps in the Northeast US (CT, MA, ME, NH, NJ, NY, PA, RI, VT). If \
 asked about something outside that, say what you can't do yet and help with what you can.\
-"""
+""" + HOUSEHOLD_PROMPT
 
 
 def _client() -> anthropic.AsyncAnthropic:
@@ -86,21 +88,39 @@ def _context_block(family_id: str) -> str:
         f"Today is {date.today().isoformat()}.\n"
         f"Family profile: {json.dumps(profile) if profile else 'empty (new family)'}\n"
         f"Family calendar: {json.dumps(calendar) if calendar else 'empty'}\n"
+        f"{household_context(family_id)}\n"
         "</context>"
     )
 
 
+def _speaker_id() -> str | None:
+    """The household member chatting in this turn, if the family has members."""
+    access = current_access()
+    return str(access.member["id"]) if access and access.member else None
+
+
 def create_conversation(family_id: str) -> str:
-    row = get_supabase().table("agent_conversations").insert({"family_id": family_id}).execute().data[0]
-    return row["id"]
+    row = {"family_id": family_id}
+    if (speaker := _speaker_id()) is not None:
+        row["started_by"] = speaker
+    return get_supabase().table("agent_conversations").insert(row).execute().data[0]["id"]
 
 
 def load_conversation(conversation_id: str, family_id: str) -> list[dict[str, Any]] | None:
+    """A conversation belongs to whoever started it: co-parents don't read each other's
+    chats. Older conversations with no starter belong to the family's owner."""
     rows = (
-        get_supabase().table("agent_conversations").select("messages")
+        get_supabase().table("agent_conversations").select("messages, started_by")
         .eq("id", conversation_id).eq("family_id", family_id).execute().data
     )
-    return rows[0]["messages"] if rows else None
+    if not rows:
+        return None
+    started_by, access = rows[0].get("started_by"), current_access()
+    if access is not None and access.family.get("owner_user_id") is not None:
+        mine = str(started_by) == _speaker_id() if started_by else access.role == "owner"
+        if not mine:
+            return None
+    return rows[0]["messages"]
 
 
 def save_conversation(conversation_id: str, messages: list[dict[str, Any]]) -> None:
