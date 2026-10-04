@@ -29,11 +29,30 @@ class Settings:
     stripe_webhook_secret: str = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
     stripe_pro_price_id: str = os.environ.get("STRIPE_PRO_PRICE_ID", "")
     anthropic_api_key: str = os.environ.get("ANTHROPIC_API_KEY", "")
+    # Model the listing tool (python -m campfinder.ingest) uses to read camp websites.
+    ingest_model: str = os.environ.get("INGEST_MODEL", "claude-opus-5-5")
     # 32 random bytes, base64: python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
     kit_encryption_key: str = os.environ.get("KIT_ENCRYPTION_KEY", "")
     frontend_url: str = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+    # Public origin of this API, used for server icons in MCP metadata.
+    public_api_url: str = os.environ.get("PUBLIC_API_URL", "http://localhost:8000")
+    # ChatGPT app review: the token from the OpenAI dashboard, served at
+    # /.well-known/openai-apps-challenge, and the widget's origin (unique per app).
+    openai_apps_challenge: str = os.environ.get("OPENAI_APPS_CHALLENGE", "")
+    chatgpt_widget_domain: str = os.environ.get("CHATGPT_WIDGET_DOMAIN", "")
+    # Requests per minute per client IP on the MCP endpoints. ChatGPT and Claude call
+    # from shared IP ranges, so this guards against abuse, not per-parent use.
+    mcp_rate_per_minute: int = int(os.environ.get("MCP_RATE_PER_MINUTE", "600"))
 
-    cors_origins: list[str] = ["*"]  # Tighten in production
+    # Browser origins allowed to call the API, comma-separated. Defaults to the frontend
+    # and local development. Sign-in uses a bearer token, never cookies.
+    cors_origins_env: str = os.environ.get("CORS_ORIGINS", "")
+
+    @property
+    def cors_origins(self) -> list[str]:
+        if self.cors_origins_env.strip():
+            return [o.strip().rstrip("/") for o in self.cors_origins_env.split(",") if o.strip()]
+        return sorted({self.frontend_url.rstrip("/"), "http://localhost:3000"})
     api_prefix: str = "/api/v1"
 
 

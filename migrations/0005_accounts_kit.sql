@@ -1,5 +1,5 @@
 -- Parent accounts, private calendar links, and the encrypted family info kit.
--- Run after schema_family.sql. Requires Supabase Auth (auth.users).
+-- Requires Supabase Auth (auth.users).
 
 ALTER TABLE families
     ADD COLUMN IF NOT EXISTS owner_user_id UUID UNIQUE REFERENCES auth.users(id) ON DELETE SET NULL,

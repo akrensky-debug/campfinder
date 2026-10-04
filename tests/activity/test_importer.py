@@ -3,7 +3,7 @@ import copy
 import pytest
 
 from campfinder.activity.importer import DatasetError, apply_plan, plan_dataset, summarize
-from tests.conftest import make_dataset
+from tests.activity.conftest import make_dataset
 
 
 def test_plan_flattens_facts_and_keeps_provenance():

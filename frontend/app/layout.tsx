@@ -5,6 +5,7 @@ import AccountLink from '@/components/AccountLink'
 export const metadata: Metadata = {
   title: 'CampFinder -- There is finally a better way to plan your kid\'s summer.',
   description: 'Search verified summer camps near you. Filter by age, type, price, and interests. Request info in one click.',
+  icons: { icon: '/icon.png', apple: '/icon.png' },
   openGraph: {
     title: 'CampFinder',
     description: 'There is finally a better way to plan your kid\'s summer.',
@@ -58,6 +59,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/operators" className="block hover:text-brand-600">For Camps</a>
                 <a href="/operators/submit" className="block hover:text-brand-600">List Your Camp</a>
                 <a href="/operators/claim" className="block hover:text-brand-600">Claim Listing</a>
+              </div>
+              <div>
+                <p className="font-semibold text-gray-700 mb-2">Help</p>
+                <a href="/support" className="block hover:text-brand-600">Support</a>
+                <a href="/privacy" className="block hover:text-brand-600">Privacy</a>
+                <a href="/terms" className="block hover:text-brand-600">Terms</a>
               </div>
             </div>
           </div>

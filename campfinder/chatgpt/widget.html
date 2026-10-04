@@ -42,7 +42,8 @@
 <body>
 <div class="wrap" id="root"><div class="empty">Finding camps…</div></div>
 <script>
-  // MCP Apps bridge (protocol 2026-01-26), with the window.openai fallback ChatGPT also offers.
+  // MCP Apps bridge (protocol 2026-01-26), shared by ChatGPT and Claude, with the
+  // window.openai fallback ChatGPT also offers.
   let nextId = 1;
   const pending = new Map();
   function request(method, params) {
@@ -53,10 +54,17 @@
   function notify(method, params) {
     window.parent.postMessage({ jsonrpc: "2.0", method, params }, "*");
   }
+  let hostReady = false;
   function openLink(url) {
     if (window.openai && window.openai.openExternal) { window.openai.openExternal({ href: url }); return; }
-    request("ui/open-link", { url }).catch(() => window.open(url, "_blank", "noopener"));
+    // Claude may ask the parent to confirm; if they decline, don't open it anyway.
+    if (hostReady) { request("ui/open-link", { url }).catch(() => {}); return; }
+    window.open(url, "_blank", "noopener");
   }
+  function reportSize() {
+    notify("ui/notifications/size-changed", { width: document.body.scrollWidth, height: document.body.scrollHeight });
+  }
+  if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const day = d => new Date(d + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" });
@@ -133,7 +141,7 @@
     parts.push(`<div class="foot">Program data from CampFinder</div>`);
     root.innerHTML = parts.join("");
     root.querySelectorAll("[data-url]").forEach(el => el.addEventListener("click", () => openLink(el.dataset.url)));
-    notify("ui/notifications/size-changed", { width: document.body.scrollWidth, height: document.body.scrollHeight });
+    reportSize();
   }
 
   window.addEventListener("message", event => {
@@ -145,6 +153,11 @@
       msg.error ? p.reject(msg.error) : p.resolve(msg.result);
       return;
     }
+    // Requests from the host (ping, ui/resource-teardown) need an answer.
+    if (msg.id != null && msg.method) {
+      window.parent.postMessage({ jsonrpc: "2.0", id: msg.id, result: {} }, "*");
+      return;
+    }
     if (msg.method === "ui/notifications/tool-result") render(msg.params && msg.params.structuredContent);
     if (msg.method === "ui/notifications/host-context-changed" && msg.params && msg.params.theme) {
       document.documentElement.dataset.theme = msg.params.theme;
@@ -152,10 +165,11 @@
   });
 
   request("ui/initialize", {
-    appInfo: { name: "CampFinder", version: "1.0.0" },
-    appCapabilities: {},
+    appInfo: { name: "CampFinder", version: "1.2.0" },
+    appCapabilities: { availableDisplayModes: ["inline"] },
     protocolVersion: "2026-01-26",
   }).then(result => {
+    hostReady = true;
     const theme = result && result.hostContext && result.hostContext.theme;
     if (theme) document.documentElement.dataset.theme = theme;
     notify("ui/notifications/initialized", {});

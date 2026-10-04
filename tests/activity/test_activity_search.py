@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from campfinder.activity import programs as activities
 from campfinder.activity.schedule import TimeWindow
 from campfinder.main import create_app
-from tests.conftest import API_KEY
+from tests.activity.conftest import API_KEY
 
 AUTH = {"Authorization": f"Bearer {API_KEY}"}
 

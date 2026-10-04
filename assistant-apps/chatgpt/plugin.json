@@ -1,0 +1,95 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "campfinder",
+  "version": "1.3.0",
+  "description": "Find and plan kids' summer camps in the Northeast US with verified dates, prices and logistics.",
+  "author": {
+    "name": "Invisible Industries",
+    "email": "hello@campfinder.com",
+    "url": "https://campfinder.com"
+  },
+  "homepage": "https://campfinder.com",
+  "keywords": ["summer camp", "day camp", "sleepaway camp", "kids activities", "parents", "family planning"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "CampFinder",
+        "shortDescription": "Find and plan kids' camps",
+        "longDescription": "CampFinder helps parents find the right summer camps for each child in the Northeast US (CT, MA, ME, NH, NJ, NY, PA, RI and VT), starting with Providence and Boston.\n\nTell ChatGPT your town, your kids' ages and interests, and the weeks you need covered. CampFinder returns day camps, sleepaway camps and specialty programs ranked for your child, with weekly prices, session dates, extended care, transportation and financial aid, and it shows which details are verified by CampFinder or by the camp. You can find camps with openings in a given week, compare a shortlist side by side, and check which weeks of the summer are covered.\n\nEach result links to the camp's full details. To plan every week for every child and keep it all on one family calendar, continue on CampFinder.\n\nCampFinder is for parents and guardians. It does not register you for camps or take payments: you register with each camp directly. It only receives the search details ChatGPT fills in, such as town and age, never your conversation. Camps outside the Northeast are not covered yet.",
+        "developerName": "Invisible Industries",
+        "category": "Lifestyle",
+        "capabilities": ["Search camps", "Find open weeks", "Camp details", "Compare camps", "Plan the summer"],
+        "websiteURL": "https://campfinder.com",
+        "supportURL": "https://campfinder.com/support",
+        "privacyPolicyURL": "https://campfinder.com/privacy",
+        "termsOfServiceURL": "https://campfinder.com/terms",
+        "defaultPrompt": [
+          "Find STEM day camps near Providence for my 8-year-old",
+          "Which camps near Boston have aftercare until 5:30?",
+          "I need camp coverage for the week of July 5"
+        ],
+        "brandColor": "#2563EB",
+        "brandColorDark": "#60A5FA",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Find camps for a child near a town",
+              "prompt": "Find summer day camps near Providence, RI for my 8 year old who loves science.",
+              "tools_triggered": "search_camps",
+              "expected_behavior": "Calls search_camps with location 'Providence, RI', age 8 and a STEM interest. Shows camp cards with price per week, distance, ages, verification status and why each fits, plus a link to continue planning on CampFinder."
+            },
+            {
+              "description": "Filter by logistics and budget",
+              "prompt": "Day camps in Boston with extended care for under $400 a week.",
+              "tools_triggered": "search_camps",
+              "expected_behavior": "Calls search_camps with location 'Boston, MA', requires_extended_care true and max_price_per_week 400. Every card shown has extended care and a weekly price at or below $400, or the reply says none matched."
+            },
+            {
+              "description": "Fill a specific week",
+              "prompt": "What camps still have openings the week of July 5 near Cranston, RI?",
+              "tools_triggered": "find_sessions",
+              "expected_behavior": "Calls find_sessions with location 'Cranston, RI' and that week's dates. Shows dated session cards, soonest first, with availability, or says nothing is open that week."
+            },
+            {
+              "description": "Details and comparison of results",
+              "prompt": "Compare the top two camps for my 8 year old near Providence and tell me their refund policies.",
+              "tools_triggered": "search_camps, compare_camps, get_camp_details",
+              "expected_behavior": "Finds camps, then compares the top two on price, dates, ages, distance, extended care and transportation in plain language, and reports each refund policy or says it is not listed. States only facts the tools return."
+            },
+            {
+              "description": "Outside coverage",
+              "prompt": "Find summer camps in Columbus, Ohio for my 9 year old.",
+              "tools_triggered": "search_camps",
+              "expected_behavior": "Returns no camps and explains that CampFinder covers the Northeast US today. Does not invent camps and shows no link to continue planning."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Registration and payment are not supported",
+              "prompt": "Sign my son up for the first camp and pay the deposit with my card."
+            },
+            {
+              "description": "Family records are not collected in ChatGPT",
+              "prompt": "Save my daughter's allergies and pediatrician's phone number to CampFinder."
+            },
+            {
+              "description": "Unrelated request",
+              "prompt": "Suggest a movie for family night."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "CampFinder does not sell anything or process payments. Parents register and pay with each camp on the camp's own website."
+      },
+      "publication": {
+        "countries": ["US"],
+        "release_notes": "First release: camp search, open weeks, camp details, comparison and summer planning for the Northeast US."
+      }
+    }
+  }
+}

@@ -2,163 +2,282 @@
 
 from __future__ import annotations
 
+import copy
 import uuid
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from types import SimpleNamespace
 from typing import Any
 
+# ---------------------------------------------------------------------------
+# Supabase
+# ---------------------------------------------------------------------------
 
-class _Result:
+
+def _token() -> str:
+    return uuid.uuid4().hex
+
+
+DEFAULTS: dict[str, dict[str, Any]] = {
+    "families": {"profile": {}, "owner_user_id": None, "calendar_token": _token},
+    "family_events": {"notes": None, "child_name": None, "camp_id": None, "session_id": None},
+    "family_members": {
+        "user_id": None, "status": "invited", "kit_access": False, "invite_token_hash": None, "invite_expires_at": None,
+        "invited_by": None, "calendar_token": _token, "reminder_pref": "day_before", "weekly_summary": True,
+        "accepted_at": None,
+    },
+    "family_tasks": {
+        "notes": None, "child_name": None, "due_time": None, "assignee_id": None, "status": "open", "event_id": None,
+        "camp_id": None, "checklist": [], "created_by": None, "completed_by": None, "completed_at": None,
+    },
+    "family_audit_log": {"via": "app", "target_type": None, "target_id": None, "detail": {}},
+    "agent_conversations": {"messages": []},
+    "reminder_sends": {"task_count": 0},
+}
+UNIQUE = {
+    "family_members": [("family_id", "email")],
+    "reminder_sends": [("member_id", "kind", "period")],
+}
+SERIAL = {"family_audit_log", "reminder_sends", "kit_share_events", "activity_demand"}
+
+
+class Result:
     def __init__(self, data: list[dict[str, Any]]):
         self.data = data
 
 
-class _Query:
+class Query:
     def __init__(self, db: "FakeSupabase", table: str):
         self.db, self.table = db, table
-        self.filters: list[Any] = []
+        self.filters: list[tuple[str, str, Any]] = []
         self.op = "select"
         self.payload: Any = None
-        self.on_conflict = ""
-        self.order_key: str | None = None
-        self.limit_n: int | None = None
+        self._order: tuple[str, bool] | None = None
+        self._limit: int | None = None
+        self.on_conflict: list[str] = []
 
-    # filters
-    def select(self, *_a: Any, **_k: Any) -> "_Query":
+    # builders
+    def select(self, *_a: Any, **_k: Any) -> "Query":
+        self.op = "select"
         return self
 
-    def eq(self, col: str, val: Any) -> "_Query":
-        self.filters.append(lambda r: str(r.get(col)) == str(val) if not isinstance(val, bool) else r.get(col) is val)
+    def insert(self, rows: Any, **_k: Any) -> "Query":
+        self.op, self.payload = "insert", rows
         return self
 
-    def in_(self, col: str, vals: list[Any]) -> "_Query":
-        s = {str(v) for v in vals}
-        self.filters.append(lambda r: str(r.get(col)) in s)
+    def upsert(self, rows: Any, on_conflict: str = "", **_k: Any) -> "Query":
+        self.op, self.payload = "upsert", rows
+        self.on_conflict = [c.strip() for c in on_conflict.split(",") if c.strip()]
         return self
 
-    def order(self, col: str, **_k: Any) -> "_Query":
-        self.order_key = col
+    def update(self, values: dict[str, Any]) -> "Query":
+        self.op, self.payload = "update", values
         return self
 
-    def limit(self, n: int) -> "_Query":
-        self.limit_n = n
-        return self
-
-    # writes
-    def insert(self, payload: Any, **_k: Any) -> "_Query":
-        self.op, self.payload = "insert", payload
-        return self
-
-    def upsert(self, payload: Any, on_conflict: str = "", **_k: Any) -> "_Query":
-        self.op, self.payload, self.on_conflict = "upsert", payload, on_conflict
-        return self
-
-    def update(self, payload: dict[str, Any]) -> "_Query":
-        self.op, self.payload = "update", payload
-        return self
-
-    def delete(self) -> "_Query":
+    def delete(self) -> "Query":
         self.op = "delete"
         return self
 
-    def _match(self, r: dict[str, Any]) -> bool:
-        return all(f(r) for f in self.filters)
+    def eq(self, col: str, v: Any) -> "Query":
+        self.filters.append(("eq", col, v))
+        return self
 
-    def execute(self) -> _Result:
+    def neq(self, col: str, v: Any) -> "Query":
+        self.filters.append(("neq", col, v))
+        return self
+
+    def in_(self, col: str, vs: list[Any]) -> "Query":
+        self.filters.append(("in", col, [str(v) for v in vs]))
+        return self
+
+    def gte(self, col: str, v: Any) -> "Query":
+        self.filters.append(("gte", col, v))
+        return self
+
+    def lte(self, col: str, v: Any) -> "Query":
+        self.filters.append(("lte", col, v))
+        return self
+
+    def order(self, col: str, desc: bool = False) -> "Query":
+        self._order = (col, desc)
+        return self
+
+    def limit(self, n: int) -> "Query":
+        self._limit = n
+        return self
+
+    def _match(self, row: dict[str, Any]) -> bool:
+        for op, col, v in self.filters:
+            have = row.get(col)
+            if op == "eq" and (have is None or str(have) != str(v)):
+                return False
+            if op == "neq" and str(have) == str(v):
+                return False
+            if op == "in" and str(have) not in v:
+                return False
+            if op == "gte" and (have is None or str(have) < str(v)):
+                return False
+            if op == "lte" and (have is None or str(have) > str(v)):
+                return False
+        return True
+
+    def execute(self) -> Result:
         rows = self.db.tables.setdefault(self.table, [])
-        if self.op == "select":
-            out = [dict(r) for r in rows if self._match(r)]
-            if self.order_key:
-                out.sort(key=lambda r: str(r.get(self.order_key) or ""))
-            return _Result(out[: self.limit_n] if self.limit_n else out)
         if self.op in ("insert", "upsert"):
             items = self.payload if isinstance(self.payload, list) else [self.payload]
             out = []
-            keys = [k for k in self.on_conflict.split(",") if k]
             for item in items:
-                existing = next((r for r in rows if keys and all(str(r.get(k)) == str(item.get(k)) for k in keys)), None)
-                if existing is not None and self.op == "upsert":
-                    existing.update(item)
-                    out.append(dict(existing))
-                    continue
-                row = {"id": str(uuid.uuid4()), **self.db.defaults.get(self.table, {}), **item}
+                if self.op == "upsert" and self.on_conflict:
+                    existing = next((r for r in rows if all(str(r.get(k)) == str(item.get(k)) for k in self.on_conflict)), None)
+                    if existing is not None:
+                        existing.update(copy.deepcopy(item))
+                        out.append(copy.deepcopy(existing))
+                        continue
+                row = {}
+                for k, v in DEFAULTS.get(self.table, {}).items():
+                    row[k] = v() if callable(v) else copy.deepcopy(v)
+                row.update(copy.deepcopy(item))
+                if self.table in SERIAL:
+                    row.setdefault("id", len(rows) + 1)
+                else:
+                    row.setdefault("id", str(uuid.uuid4()))
+                row.setdefault("created_at", datetime.now(timezone.utc).isoformat())
+                for cols in UNIQUE.get(self.table, []):
+                    key = tuple(str(row.get(c)).lower() for c in cols)
+                    if any(tuple(str(r.get(c)).lower() for c in cols) == key for r in rows):
+                        raise Exception(f"duplicate key value violates unique constraint on {self.table}{cols}")
                 rows.append(row)
-                out.append(dict(row))
-            return _Result(out)
+                out.append(copy.deepcopy(row))
+            return Result(out)
+        matched = [r for r in rows if self._match(r)]
         if self.op == "update":
-            out = []
-            for r in rows:
-                if self._match(r):
-                    r.update(self.payload)
-                    out.append(dict(r))
-            return _Result(out)
+            for r in matched:
+                r.update(copy.deepcopy(self.payload))
+            return Result(copy.deepcopy(matched))
         if self.op == "delete":
-            gone = [r for r in rows if self._match(r)]
-            self.db.tables[self.table] = [r for r in rows if not self._match(r)]
-            return _Result(gone)
-        raise AssertionError(self.op)
+            for r in matched:
+                rows.remove(r)
+                self.db.cascade(self.table, r)
+            return Result(copy.deepcopy(matched))
+        if self._order:
+            col, desc = self._order
+            matched = sorted(matched, key=lambda r: str(r.get(col) or ""), reverse=desc)
+        if self._limit is not None:
+            matched = matched[: self._limit]
+        return Result(copy.deepcopy(matched))
+
+
+@dataclass
+class FakeAuth:
+    tokens: dict[str, str] = field(default_factory=dict)   # access token -> user id
+    emails: dict[str, str] = field(default_factory=dict)   # user id -> email
+
+    def get_user(self, token: str) -> Any:
+        uid = self.tokens.get(token)
+        return SimpleNamespace(user=SimpleNamespace(id=uid, email=self.emails.get(uid))) if uid else None
+
+    @property
+    def admin(self) -> Any:
+        return SimpleNamespace(get_user_by_id=lambda uid: SimpleNamespace(
+            user=SimpleNamespace(id=uid, email=self.emails.get(str(uid)))))
 
 
 class FakeSupabase:
     def __init__(self) -> None:
         self.tables: dict[str, list[dict[str, Any]]] = {}
-        self.defaults: dict[str, dict[str, Any]] = {
-            "families": {"profile": {}, "calendar_token": "t" * 32, "owner_user_id": None},
-            "agent_conversations": {"messages": []},
-        }
+        self.auth = FakeAuth()
 
-    def table(self, name: str) -> _Query:
-        return _Query(self, name)
+    def table(self, name: str) -> Query:
+        return Query(self, name)
+
+    def cascade(self, table: str, row: dict[str, Any]) -> None:
+        if table == "families":
+            for t, rows in self.tables.items():
+                self.tables[t] = [r for r in rows if str(r.get("family_id")) != str(row["id"])]
+        if table == "family_members":
+            for t in self.tables.get("family_tasks", []):
+                for col in ("assignee_id", "created_by", "completed_by"):
+                    if str(t.get(col)) == str(row["id"]):
+                        t[col] = None
+            self.tables["reminder_sends"] = [r for r in self.tables.get("reminder_sends", [])
+                                             if str(r["member_id"]) != str(row["id"])]
+            self.tables["agent_conversations"] = [r for r in self.tables.get("agent_conversations", [])
+                                                  if str(r.get("started_by")) != str(row["id"])]
+        if table == "family_events":
+            for t in self.tables.get("family_tasks", []):
+                if str(t.get("event_id")) == str(row["id"]):
+                    t["event_id"] = None
+
+    def add_user(self, user_id: str, email: str, token: str) -> None:
+        self.auth.tokens[token] = user_id
+        self.auth.emails[user_id] = email
 
 
 # ---------------------------------------------------------------------------
-# Anthropic: a scripted stream of responses
+# Anthropic
 # ---------------------------------------------------------------------------
 
-class _Block(SimpleNamespace):
+
+@dataclass
+class Block:
+    type: str
+    text: str | None = None
+    id: str | None = None
+    name: str | None = None
+    input: dict[str, Any] | None = None
+
     def model_dump(self, **_k: Any) -> dict[str, Any]:
-        return {k: v for k, v in vars(self).items() if v is not None}
+        return {k: v for k, v in self.__dict__.items() if v is not None}
 
 
-def text_block(text: str) -> _Block:
-    return _Block(type="text", text=text)
+class FakeStream:
+    def __init__(self, response: Any):
+        self.response = response
 
-
-def tool_use_block(name: str, inp: dict[str, Any]) -> _Block:
-    return _Block(type="tool_use", id=f"toolu_{uuid.uuid4().hex[:8]}", name=name, input=inp)
-
-
-class _Stream:
-    def __init__(self, content: list[_Block], stop_reason: str):
-        self.message = SimpleNamespace(content=content, stop_reason=stop_reason)
-
-    async def __aenter__(self) -> "_Stream":
+    async def __aenter__(self) -> "FakeStream":
         return self
 
-    async def __aexit__(self, *_a: Any) -> None:
+    async def __aexit__(self, *a: Any) -> None:
         return None
 
-    def __aiter__(self):
-        async def gen():
-            for b in self.message.content:
+    def __aiter__(self) -> Any:
+        async def gen() -> Any:
+            for b in self.response.content:
                 if b.type == "text":
                     yield SimpleNamespace(type="text", text=b.text)
-                else:
+                elif b.type == "tool_use":
                     yield SimpleNamespace(type="content_block_start", content_block=b)
         return gen()
 
     async def get_final_message(self) -> Any:
-        return self.message
+        return self.response
+
+
+def text_block(text: str) -> Block:
+    return Block("text", text=text)
+
+
+def tool_use_block(name: str, inp: dict[str, Any]) -> Block:
+    return Block("tool_use", id=f"toolu_{uuid.uuid4().hex[:8]}", name=name, input=inp)
 
 
 class FakeAnthropic:
-    """Returns the scripted responses in order and records every request."""
+    """Replays scripted turns. A turn is a list of Blocks (tool_use turns stop with
+    'tool_use') or a (blocks, stop_reason) pair. Every request is recorded in `calls`
+    (also available as `requests`)."""
 
-    def __init__(self, responses: list[tuple[list[_Block], str]]):
-        self.responses = list(responses)
-        self.requests: list[dict[str, Any]] = []
+    def __init__(self, turns: list[Any]):
+        self.turns = list(turns)
+        self.calls: list[dict[str, Any]] = []
+        self.requests = self.calls
         self.beta = SimpleNamespace(messages=SimpleNamespace(stream=self._stream))
 
-    def _stream(self, **kwargs: Any) -> _Stream:
-        self.requests.append(kwargs)
-        content, stop = self.responses.pop(0)
-        return _Stream(content, stop)
+    def _stream(self, **kwargs: Any) -> FakeStream:
+        self.calls.append(copy.deepcopy(kwargs))
+        turn = self.turns.pop(0)
+        if isinstance(turn, tuple):
+            content, stop = turn
+        else:
+            content = turn
+            stop = "tool_use" if any(b.type == "tool_use" for b in content) else "end_turn"
+        return FakeStream(SimpleNamespace(content=content, stop_reason=stop))

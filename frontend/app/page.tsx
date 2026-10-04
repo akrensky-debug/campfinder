@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { track } from '@/lib/analytics'
+import { useRouter } from 'next/navigation'
+import { Events, captureAssistantArrival, track } from '@/lib/analytics'
 import {
   loadFamily, resetCalendarLink, streamChat,
   type AgentEvent, type Family, type UIData,
@@ -37,15 +38,21 @@ export default function AgentHome() {
   const [busy, setBusy] = useState(false)
   const [panelOpen, setPanelOpen] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    loadFamily().then(setFamily).catch(() => setFamilyError(true))
+    loadFamily()
+      .then(f => {
+        // Caregivers and viewers see their jobs and the calendar, not the planning chat.
+        if (f.role === 'caregiver' || f.role === 'viewer') router.replace('/household')
+        else setFamily(f)
+      })
+      .catch(() => setFamilyError(true))
     // Arriving from ChatGPT or another assistant: pre-fill what the parent was asking for.
     const params = new URLSearchParams(window.location.search)
     const q = params.get('q')
     if (q) setInput(q.slice(0, 1000))
-    const source = params.get('utm_source')
-    if (source) track('assistant_handoff', { source, campaign: params.get('utm_campaign'), prefilled: !!q })
+    captureAssistantArrival(params, !!q)
   }, [])
 
   useEffect(() => {
@@ -159,7 +166,7 @@ export default function AgentHome() {
           </div>
         ) : (
           <div className="flex-1 py-6 space-y-6">
-            {messages.map((m, i) => <MessageView key={i} message={m} />)}
+            {messages.map((m, i) => <MessageView key={i} message={m} familyId={family?.id} />)}
             <div ref={bottomRef} />
           </div>
         )}
@@ -203,7 +210,7 @@ export default function AgentHome() {
   )
 }
 
-function MessageView({ message }: { message: Message }) {
+function MessageView({ message, familyId }: { message: Message; familyId?: string }) {
   if (message.role === 'user') {
     return (
       <div className="flex justify-end">
@@ -216,7 +223,7 @@ function MessageView({ message }: { message: Message }) {
   return (
     <div className="space-y-3 text-gray-800">
       {message.parts.map((p, i) =>
-        p.kind === 'text' ? <AgentText key={i} text={p.text} /> : <AgentBlock key={i} data={p.data} />,
+        p.kind === 'text' ? <AgentText key={i} text={p.text} /> : <AgentBlock key={i} data={p.data} familyId={familyId} />,
       )}
       {message.status && (
         <p className="text-sm text-gray-400 flex items-center gap-2">
@@ -272,12 +279,12 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
         <CalendarList events={events} compact />
         {events.length > 0 && feed && webcal && (
           <div className="mt-3 pt-3 border-t border-gray-200 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
-            <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline">
+            <a href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer" onClick={() => Events.calendarSubscribed('google')} className="text-brand-700 hover:underline">
               Add to Google Calendar
             </a>
-            <a href={webcal} className="text-brand-700 hover:underline">Apple / Outlook</a>
+            <a href={webcal} onClick={() => Events.calendarSubscribed('webcal')} className="text-brand-700 hover:underline">Apple / Outlook</a>
             <button
-              onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true) }}
+              onClick={() => { navigator.clipboard?.writeText(feed); setCopied(true); Events.calendarSubscribed('copy') }}
               className="text-gray-500 hover:text-gray-800"
             >
               {copied ? 'Link copied' : 'Copy private link'}
@@ -288,14 +295,26 @@ function FamilyPanel({ family, onChange }: { family: Family; onChange: (f: Famil
       </div>
 
       <div className="bg-gray-50 rounded-2xl p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Household & jobs</p>
+        <p className="text-sm text-gray-600 mb-2">
+          {family.signed_in
+            ? 'Hand off pickups, forms and payments to your partner, a grandparent or the nanny. They get a reminder before each one.'
+            : 'Keep a job list for drop-offs, forms and payments. Save to an account to share it.'}
+        </p>
+        <a href="/household" className="text-sm font-medium text-brand-700 hover:underline">Who's doing what →</a>
+      </div>
+
+      <div className="bg-gray-50 rounded-2xl p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Info kit</p>
-        {family.signed_in ? (
+        {family.can_open_kit ? (
           <>
             <p className="text-sm text-gray-600 mb-2">
               Allergies, emergency contacts, insurance: fill them in once, share only what each camp asks for.
             </p>
             <a href="/kit" className="text-sm font-medium text-brand-700 hover:underline">Open your info kit →</a>
           </>
+        ) : family.signed_in ? (
+          <p className="text-sm text-gray-600">The info kit is private to the family's owner. They can share it with you from the Household page.</p>
         ) : (
           <>
             <p className="text-sm text-gray-600 mb-2">

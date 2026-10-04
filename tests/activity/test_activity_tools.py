@@ -96,7 +96,8 @@ async def test_add_activity_and_custom_commitment_to_calendar_and_feed(seeded, f
     ev = seeded.tables["family_events"]
     assert ev[0]["rrule"] == "FREQ=WEEKLY;BYDAY=TU" and ev[0]["exdates"]
     client = TestClient(create_app())
-    feed = client.get(f"/api/v1/calendar/{'t' * 32}.ics").text
+    token = next(f["calendar_token"] for f in seeded.tables["families"] if f["id"] == family)
+    feed = client.get(f"/api/v1/calendar/{token}.ics").text
     assert feed.count("BEGIN:VEVENT") == 2 and "RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;UNTIL=" in feed
     assert "EXDATE;TZID=America/New_York" in feed and "LOCATION:1 Pool St\\, Providence" in feed
 
@@ -113,7 +114,8 @@ async def test_remind_enrollment(seeded, family):
     # Stage 2 closes before its first class; Winter opens in two weeks.
     assert any(t.startswith("Last day to register: Youth Swim Lessons (Fall Session)") for t in titles)
     assert any(t.startswith("Registration opens: Youth Swim Lessons (Winter Session)") for t in titles)
-    feed = TestClient(create_app()).get(f"/api/v1/calendar/{'t' * 32}.ics").text
+    token = next(f["calendar_token"] for f in seeded.tables["families"] if f["id"] == family)
+    feed = TestClient(create_app()).get(f"/api/v1/calendar/{token}.ics").text
     assert "BEGIN:VALARM" in feed and "TRIGGER:-PT900M" in feed
 
 
@@ -140,14 +142,14 @@ def test_family_tools_not_offered_without_family():
 
 
 async def test_mcp_lists_activity_tools_with_parent_phrasing_and_widget(seeded):
-    from campfinder.mcp_server import _widget_payload, mcp
-    tools = {t.name: t for t in await mcp.list_tools()}
+    from campfinder.mcp_server import _widget_payload, servers
+    tools = {t.name: t for t in await servers["/mcp"].list_tools()}
     assert "swim lessons near me for a 5 year old" in tools["find_activities"].description
     assert "Saturday soccer for kids in Cranston" in tools["find_activities"].description
     assert "add_activity_to_calendar" not in tools
     args = {"location": "Providence, RI", "age": 5, "interests": ["swim"]}
     out = await run_tool("find_activities", args)
-    payload = _widget_payload("find_activities", args, out)
+    payload = _widget_payload("find_activities", args, out, "assistant")
     assert payload["activities"][0]["url"].startswith("http") and "utm_campaign=activity_card" in payload["activities"][0]["url"]
     assert "activity_handoff" in payload["plan_url"]
 

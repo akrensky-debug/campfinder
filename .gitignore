@@ -10,3 +10,4 @@ __pycache__/
 .env
 *.tsbuildinfo
 .pytest_cache/
+assistant-apps/dist/

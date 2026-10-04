@@ -1,5 +1,5 @@
 -- Year-round programs: classes, lessons, leagues, after-school programs and events.
--- Additive: camps and sessions are untouched. Run after schema.sql and schema_family.sql.
+-- Additive: camps and sessions are untouched. Run after 0004_family.sql.
 --
 --   programs           what a provider offers ("Youth Swim Lessons"), its ages, levels, policies
 --   program_offerings  one scheduled run of it: where, which term, which weekdays and times

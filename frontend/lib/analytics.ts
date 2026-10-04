@@ -15,8 +15,32 @@ function getSessionId(): string {
   return sid
 }
 
+// Which assistant (ChatGPT, Claude) first sent this browser, kept for 30 days so a
+// family saved after an emailed sign-in link still counts toward that door.
+const SOURCE_KEY = 'cf_src'
+const SOURCE_TTL_MS = 30 * 24 * 3600 * 1000
+
+function arrivalSource(): string | undefined {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SOURCE_KEY) || 'null')
+    if (saved && Date.now() - saved.at < SOURCE_TTL_MS) return saved.source
+  } catch {}
+  return undefined
+}
+
+/** Record an arrival from an assistant link (utm_source=chatgpt|claude|...). */
+export function captureAssistantArrival(params: URLSearchParams, prefilled = false): void {
+  const source = params.get('utm_source')
+  if (!source) return
+  try {
+    if (!arrivalSource()) localStorage.setItem(SOURCE_KEY, JSON.stringify({ source, at: Date.now() }))
+  } catch {}
+  track('assistant_handoff', { source, campaign: params.get('utm_campaign'), prefilled })
+}
+
 export function track(event: string, properties?: Record<string, unknown>): void {
   if (typeof window === 'undefined') return
+  const source = arrivalSource()
   fetch(`${API}/api/v1/events`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -24,7 +48,7 @@ export function track(event: string, properties?: Record<string, unknown>): void
       event,
       session_id: getSessionId(),
       page: window.location.pathname,
-      properties,
+      properties: source ? { ...properties, arrival_source: source } : properties,
     }),
     keepalive: true,
   }).catch(() => {}) // fire-and-forget, never throw
@@ -46,4 +70,6 @@ export const Events = {
   claimFlowStarted:       (id: string) => track('claim_flow_started', { camp_id: id }),
   stripeCheckoutStarted:  (id: string) => track('stripe_checkout_started', { camp_id: id }),
   stripeCheckoutCompleted:(id: string) => track('stripe_checkout_completed', { camp_id: id }),
+  familySaved:            () => track('family_saved'),
+  calendarSubscribed:     (how: string) => track('calendar_subscribed', { how }),
 }

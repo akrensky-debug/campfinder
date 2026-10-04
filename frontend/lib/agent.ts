@@ -1,6 +1,8 @@
 import type { CampSearchResult } from '@/lib/api'
 import type { ActivityCard, ActivityProgram, FamilyWeek, ScheduleFitResult } from '@/lib/activities'
 import { authHeaders } from '@/lib/auth'
+import { Events } from '@/lib/analytics'
+import type { Role, Task } from '@/lib/household'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 const FAMILY_KEY = 'cf_family_id'
@@ -45,6 +47,9 @@ export interface Family {
   events: FamilyEvent[]
   calendar_url: string | null
   signed_in: boolean
+  role: Role
+  my_calendar_url: string | null
+  can_open_kit: boolean
 }
 
 export interface Comparison {
@@ -89,6 +94,11 @@ export type UIData =
   | { type: 'activity_detail'; activity: ActivityProgram }
   | { type: 'schedule_fit'; checked_against: string; results: ScheduleFitResult[] }
   | { type: 'week'; week: FamilyWeek; events: FamilyEvent[] }
+  | { type: 'tasks'; title?: string | null; tasks: Task[] }
+  | { type: 'household'; members: Array<{ id: string; name: string; role: Role; status: string }> }
+  | { type: 'assign_proposal'; summary: string; member: { id: string; name: string; status: string } | null; task_ids: string[]; tasks: Task[] }
+  | { type: 'invite_proposal'; display_name: string; role: Exclude<Role, 'owner'>; email: string }
+  | { type: 'message_draft'; subject: string; body: string; recipients: Array<{ name: string; email: string | null }> }
 
 export type AgentEvent =
   | { type: 'conversation'; id: string }
@@ -100,6 +110,10 @@ export type AgentEvent =
 
 function readFamilyId(): string | null {
   try { return localStorage.getItem(FAMILY_KEY) } catch { return null }
+}
+
+export function rememberFamily(id: string) {
+  writeFamilyId(id)
 }
 
 function writeFamilyId(id: string) {
@@ -124,7 +138,8 @@ export async function loadFamily(): Promise<Family> {
   const existing = readFamilyId()
 
   if (auth.Authorization) {
-    const mine = await fetch(`${API}/api/v1/me/family`, { headers: auth, cache: 'no-store' })
+    const pick = existing ? `?family_id=${encodeURIComponent(existing)}` : ''
+    const mine = await fetch(`${API}/api/v1/me/family${pick}`, { headers: auth, cache: 'no-store' })
     if (mine.ok) {
       const family: Family = await mine.json()
       writeFamilyId(family.id)
@@ -140,6 +155,7 @@ export async function loadFamily(): Promise<Family> {
     if (claimed.ok) {
       const family: Family = await claimed.json()
       writeFamilyId(family.id)
+      Events.familySaved()
       return family
     }
   }

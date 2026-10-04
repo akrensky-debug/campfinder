@@ -1,5 +1,6 @@
 import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
+import { AssignProposal, HouseholdCard, InviteProposal, MessageDraft, TasksCard } from '@/components/household/HouseholdBlocks'
 import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
 import { ActivityDetailCard, ActivityResults, ScheduleFitView, WeekView, weeklyLabel } from '@/components/agent/ActivityBlocks'
 
@@ -156,7 +157,7 @@ export function CalendarList({ events, compact = false }: { events: FamilyEvent[
   )
 }
 
-export function AgentBlock({ data }: { data: UIData }) {
+export function AgentBlock({ data, familyId }: { data: UIData; familyId?: string }) {
   switch (data.type) {
     case 'camps':       return <CampResults camps={data.camps} />
     case 'camp_detail': return <CampDetailCard camp={data.camp} />
@@ -169,5 +170,10 @@ export function AgentBlock({ data }: { data: UIData }) {
     case 'activity_detail': return <ActivityDetailCard activity={data.activity} />
     case 'schedule_fit':    return <ScheduleFitView results={data.results} />
     case 'week':            return <WeekView week={data.week} />
+    case 'tasks':           return <TasksCard data={data} />
+    case 'household':       return <HouseholdCard data={data} />
+    case 'assign_proposal': return <AssignProposal data={data} familyId={familyId} />
+    case 'invite_proposal': return <InviteProposal data={data} familyId={familyId} />
+    case 'message_draft':   return <MessageDraft data={data} />
   }
 }
