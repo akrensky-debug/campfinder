@@ -42,6 +42,18 @@ python -m campfinder.seed.generate
 ```
 
 This inserts 50 synthetic camps across Providence/Boston and NYC metro, with sessions and field sources.
+Use it only for local development. Production uses the real listings:
+
+```bash
+python -m campfinder.seed.import_real --check            # validate data/camps/*.json
+python -m campfinder.seed.import_real --load             # upsert via Supabase (service key)
+python -m campfinder.seed.import_real --sql load.sql     # or SQL for the SQL editor / MCP
+```
+
+`data/camps/` holds 96 real Providence and Boston camps researched from each camp's own
+site, with a source URL and check date for every filled field (`field_sources`). Listings
+load as `unverified`. Refresh each season by editing the JSON and re-running the import;
+ids are stable, so rows update in place. See `docs/camp-data-research.md`.
 
 Then create the family tables:
 

@@ -250,49 +250,67 @@ def summarise(records: list[tuple[str, dict[str, Any]]]) -> str:
     return "\n".join(lines)
 
 
-# ── SQL output (for running through the Supabase SQL editor or MCP) ─────────
+# ── SQL output (for the Supabase SQL editor or MCP) ─────────────────────────
+# Rows travel as compact JSON that Postgres expands with jsonb_populate_recordset,
+# so the statements stay small. Bodies use plain single quotes (no $$ quoting).
 
-def _lit(v: Any) -> str:
-    if v is None:
-        return "NULL"
-    if isinstance(v, bool):
-        return "TRUE" if v else "FALSE"
-    if isinstance(v, (int, float)):
-        return repr(v)
-    if isinstance(v, list):
-        return "ARRAY[" + ",".join(_lit(x) for x in v) + "]::text[]" if v else "'{}'::text[]"
-    return "'" + str(v).replace("'", "''") + "'"
+def _q(rows: list) -> str:
+    body = ",\n".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) for r in rows)
+    return "'[\n" + body.replace("'", "''") + "\n]'::jsonb"
 
 
-def _insert(table: str, rows: list[dict], conflict: str, chunk: int = 50) -> list[str]:
+def _chunks(items: list, max_chars: int) -> list[list]:
+    out, cur, size = [], [], 0
+    for it in items:
+        n = len(json.dumps(it, ensure_ascii=False))
+        if cur and size + n > max_chars:
+            out.append(cur)
+            cur, size = [], 0
+        cur.append(it)
+        size += n
+    return out + ([cur] if cur else [])
+
+
+def to_sql(camps: list[dict], sessions: list[dict], sources: list[dict], max_chars: int = 20000) -> list[str]:
     stmts = []
-    if not rows:
-        return stmts
-    cols = list(rows[0])
+    cols = list(camps[0]) if camps else []
     updates = ", ".join(f"{c} = EXCLUDED.{c}" for c in cols if c != "id")
-    for i in range(0, len(rows), chunk):
-        values = ",\n".join(
-            "(" + ", ".join(
-                f"ST_GeogFromText({_lit(r[c])})" if c == "location" else _lit(r[c]) for c in cols
-            ) + ")"
-            for r in rows[i:i + chunk]
-        )
+    compact = [{k: v for k, v in c.items() if v is not None} for c in camps]
+    for chunk in _chunks(compact, max_chars):
         stmts.append(
-            f"INSERT INTO {table} ({', '.join(cols)}) VALUES\n{values}\n"
-            f"ON CONFLICT ({conflict}) DO UPDATE SET {updates};"
+            f"INSERT INTO camps ({', '.join(cols)})\n"
+            f"SELECT {', '.join(cols)} FROM jsonb_populate_recordset(NULL::camps, {_q(chunk)})\n"
+            f"ON CONFLICT (id) DO UPDATE SET {updates};"
+        )
+    ids = "', '".join(c["id"] for c in camps)
+    stmts.append(f"DELETE FROM sessions WHERE camp_id IN ('{ids}');")
+    stmts.append(f"DELETE FROM field_sources WHERE camp_id IN ('{ids}');")
+    # sessions: [camp_id, [[id, name, start, end, days, weeks, price, full_season, availability], ...]]
+    by_camp: dict[str, list] = {}
+    for r in sessions:
+        by_camp.setdefault(r["camp_id"], []).append([
+            r["id"], r["name"], r["start_date"], r["end_date"], r["length_days"],
+            r["length_weeks"], r["price"], r["full_season"], r["availability"],
+        ])
+    for chunk in _chunks([[cid, rows] for cid, rows in by_camp.items()], max_chars):
+        stmts.append(
+            "INSERT INTO sessions (id, camp_id, name, start_date, end_date, length_days, length_weeks, price, full_season, availability)\n"
+            "SELECT (s->>0)::uuid, (e->>0)::uuid, s->>1, (s->>2)::date, (s->>3)::date, (s->>4)::int,\n"
+            "       (s->>5)::numeric, (s->>6)::numeric, (s->>7)::boolean, s->>8\n"
+            f"FROM jsonb_array_elements({_q(chunk)}) e, jsonb_array_elements(e->1) s;"
+        )
+    # field_sources: one [camp_id, url, checked, note, [fields]] entry per source page.
+    grouped: dict[tuple, list[str]] = {}
+    for r in sources:
+        grouped.setdefault((r["camp_id"], r["source_url"], r["last_verified"], r["notes"]), []).append(r["field_name"])
+    entries = [[cid, url, checked, note, fields] for (cid, url, checked, note), fields in grouped.items()]
+    for chunk in _chunks(entries, max_chars):
+        stmts.append(
+            "INSERT INTO field_sources (camp_id, field_name, source_type, source_url, last_verified, notes)\n"
+            "SELECT (e->>0)::uuid, f, 'public_web', e->>1, (e->>2)::timestamptz, e->>3\n"
+            f"FROM jsonb_array_elements({_q(chunk)}) e, jsonb_array_elements_text(e->4) f;"
         )
     return stmts
-
-
-def to_sql(camps: list[dict], sessions: list[dict], sources: list[dict]) -> list[str]:
-    ids = ", ".join(_lit(c["id"]) for c in camps)
-    return [
-        *_insert("camps", camps, "id"),
-        f"DELETE FROM sessions WHERE camp_id IN ({ids});",
-        f"DELETE FROM field_sources WHERE camp_id IN ({ids});",
-        *_insert("sessions", sessions, "id"),
-        *_insert("field_sources", sources, "camp_id, field_name"),
-    ]
 
 
 def load(camps: list[dict], sessions: list[dict], sources: list[dict]) -> None:
