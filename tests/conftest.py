@@ -27,7 +27,7 @@ from fastapi.testclient import TestClient
 
 import campfinder.auth as auth
 import campfinder.database as database
-from campfinder.household import mailer
+from campfinder import mailer
 from campfinder.migrate import apply_migrations
 from tests.fakes import FakeSupabase
 

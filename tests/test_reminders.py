@@ -88,7 +88,7 @@ async def test_switching_reminder_time_neither_drops_nor_repeats_a_day(client, p
 
 @pytest.mark.asyncio
 async def test_log_mode_reports_not_sent(plan, db):
-    from campfinder.household import mailer
+    from campfinder import mailer
     mailer.set_mailer(mailer.LogMailer())
     assert await run_reminders(date(2027, 7, 5), weekly=False) == []
     assert not db.tables.get("reminder_sends")

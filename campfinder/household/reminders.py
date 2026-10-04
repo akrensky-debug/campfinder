@@ -28,7 +28,7 @@ from zoneinfo import ZoneInfo
 
 from campfinder.config import get_settings
 from campfinder.database import get_supabase
-from campfinder.household.mailer import Email, get_mailer
+from campfinder.mailer import Email, get_mailer
 from campfinder.household.service import _esc, member_names, task_rows
 
 log = logging.getLogger(__name__)

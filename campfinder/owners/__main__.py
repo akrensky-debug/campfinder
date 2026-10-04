@@ -7,7 +7,7 @@ Owner confirmation, run by a person on the team.
     python -m campfinder.owners status  <camp>                # emails sent, answers, and the change log
 
 <camp> is the camp's id, its dataset slug (data/camps/*.json) or its exact name.
-Email goes out only when HOUSEHOLD_EMAIL_MODE=resend and RESEND_API_KEY are set; otherwise
+Email goes out only when EMAIL_MODE=resend and RESEND_API_KEY are set; otherwise
 `send` records the email and prints the link for you to send by hand.
 """
 

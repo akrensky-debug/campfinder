@@ -5,12 +5,9 @@ Run once or twice a day (e.g. a Railway cron at 7am Eastern) with
     python -m campfinder.booking.reminders [--dry-run] [--date YYYY-MM-DD]
 or POST /api/v1/internal/registration-reminders/run with the X-Cron-Secret header.
 
-BOOKING_EMAIL_MODE picks the transport:
-  log     (default) render and log, send nothing
-  resend  send through Resend (needs RESEND_API_KEY)
-  off     drop silently
-Tests use MemoryMailer via set_mailer(). Real email goes out only when the mode is
-explicitly resend. Each family gets at most one email per run, listing what's due; a
+Email goes through campfinder.mailer: nothing is sent unless EMAIL_MODE=resend (the older
+BOOKING_EMAIL_MODE still works). In log mode nothing is marked sent, so the reminder goes
+out on the first run after real email is switched on. Tests use MemoryMailer via set_mailer(). Each family gets at most one email per run, listing what's due; a
 registration_reminder_sends row per item makes re-runs no-ops. Emails carry camp
 names, dates and a link back, never info kit contents.
 """
@@ -21,10 +18,9 @@ import argparse
 import asyncio
 import html
 import logging
-import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
-from typing import Any, Protocol
+from typing import Any
 
 from campfinder.booking.models import ReminderPrefs, ReminderPreview
 from campfinder.booking.service import (
@@ -32,87 +28,11 @@ from campfinder.booking.service import (
 )
 from campfinder.config import get_settings
 from campfinder.database import get_supabase
+from campfinder.mailer import (  # noqa: F401  (re-exported for callers and tests)
+    Email, LogMailer, Mailer, MemoryMailer, OffMailer, ResendMailer, get_mailer, set_mailer,
+)
 
 log = logging.getLogger(__name__)
-
-
-# ---------------------------------------------------------------------------
-# Mail transport
-# ---------------------------------------------------------------------------
-
-@dataclass
-class Email:
-    to: str
-    subject: str
-    html: str
-    text: str
-
-
-class Mailer(Protocol):
-    async def send(self, email: Email) -> bool: ...
-
-
-class LogMailer:
-    async def send(self, email: Email) -> bool:
-        log.info("email (not sent, BOOKING_EMAIL_MODE=log) to=%s subject=%r\n%s", email.to, email.subject, email.text)
-        return True
-
-
-class OffMailer:
-    async def send(self, email: Email) -> bool:
-        return False
-
-
-@dataclass
-class MemoryMailer:
-    outbox: list[Email] = field(default_factory=list)
-
-    async def send(self, email: Email) -> bool:
-        self.outbox.append(email)
-        return True
-
-
-class ResendMailer:
-    def __init__(self, api_key: str, sender: str):
-        self.api_key, self.sender = api_key, sender
-
-    async def send(self, email: Email) -> bool:
-        import httpx
-
-        async with httpx.AsyncClient() as client:
-            res = await client.post(
-                "https://api.resend.com/emails",
-                headers={"Authorization": f"Bearer {self.api_key}"},
-                json={"from": self.sender, "to": [email.to], "subject": email.subject,
-                      "html": email.html, "text": email.text},
-                timeout=10,
-            )
-        if res.status_code >= 300:
-            log.warning("resend rejected reminder: %s", res.text[:200])
-            return False
-        return True
-
-
-_mailer: Mailer | None = None
-
-
-def get_mailer() -> Mailer:
-    global _mailer
-    if _mailer is None:
-        mode = os.environ.get("BOOKING_EMAIL_MODE", "log").lower()
-        key = os.environ.get("RESEND_API_KEY", "")
-        if mode == "resend" and key:
-            _mailer = ResendMailer(key, os.environ.get("EMAIL_FROM", "CampFinder <hello@campfinder.com>"))
-        elif mode == "off":
-            _mailer = OffMailer()
-        else:
-            _mailer = LogMailer()
-    return _mailer
-
-
-def set_mailer(mailer: Mailer | None) -> None:
-    global _mailer
-    _mailer = mailer
 
 
 # ---------------------------------------------------------------------------

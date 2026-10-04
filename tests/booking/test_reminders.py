@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 from typing import Any
 
 from fastapi.testclient import TestClient
@@ -95,12 +95,24 @@ def test_cron_endpoint_needs_secret(client: TestClient, db: FakeSupabase, family
 
 
 def test_default_mailer_never_sends_without_resend_mode(monkeypatch: Any) -> None:
-    reminders.set_mailer(None)
+    for name in ("EMAIL_MODE", "HOUSEHOLD_EMAIL_MODE", "BOOKING_EMAIL_MODE"):
+        monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("RESEND_API_KEY", "re_test")
-    monkeypatch.delenv("BOOKING_EMAIL_MODE", raising=False)
+    reminders.set_mailer(None)
     assert isinstance(reminders.get_mailer(), reminders.LogMailer)
+    # The old name still switches it on, and EMAIL_MODE wins over it.
     reminders.set_mailer(None)
     monkeypatch.setenv("BOOKING_EMAIL_MODE", "resend")
     assert isinstance(reminders.get_mailer(), reminders.ResendMailer)
     reminders.set_mailer(None)
-    assert date.today()  # keep import used
+    monkeypatch.setenv("EMAIL_MODE", "log")
+    assert isinstance(reminders.get_mailer(), reminders.LogMailer)
+    reminders.set_mailer(None)
+
+
+def test_log_mode_marks_nothing_sent(client: TestClient, db: FakeSupabase, family: dict[str, Any]) -> None:
+    """With email off, a reminder isn't recorded as sent, so it still goes out once email is on."""
+    reminders.set_mailer(reminders.LogMailer())
+    watch(client, family, camp_id=CAMP, opens_at=opens_on(1))
+    assert asyncio.run(reminders.run())["families_emailed"] == 0
+    assert not db.tables.get("registration_reminder_sends")
