@@ -11,7 +11,7 @@ Strategy: `docs/assistant-apps-strategy.md`. Founder steps: `docs/assistant-apps
 | --- | --- |
 | ChatGPT endpoint | `https://<api>/chatgpt/mcp` (stateless streamable HTTP, no auth) |
 | Tools and their discovery descriptions | `campfinder/mcp_server.py` |
-| Camp cards (MCP Apps UI, protocol 2026-01-26) | `campfinder/chatgpt/widget.html`, served as `ui://campfinder/camps-v2.html` |
+| Camp cards (MCP Apps UI, protocol 2026-01-26) | `campfinder/chatgpt/widget.html`, served as `ui://campfinder/camps-v3.html` |
 | Widget origin (`_meta.ui.domain`) | `CHATGPT_WIDGET_DOMAIN`, default `FRONTEND_URL`. Required by OpenAI, unique per app |
 | Link allowlist | `openai/widgetCSP.redirect_domains` = `FRONTEND_URL`, so links open without a warning |
 | Domain verification | `OPENAI_APPS_CHALLENGE` is served at `/.well-known/openai-apps-challenge` |
