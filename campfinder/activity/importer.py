@@ -150,6 +150,16 @@ def _prices(items: list[dict[str, Any]], where: str, sources: dict[str, Any], pr
 
 def plan_dataset(data: dict[str, Any]) -> Plan:
     """Validate a dataset and turn it into rows. Raises DatasetError listing every problem."""
+    # Provenance is unique per (program, offering, field). Two prices of the same type and
+    # audience (a group class and a private lesson, both per class) get .2, .3 ...
+    price_names: Counter[tuple[str, str | None, str]] = Counter()
+
+    def price_field(slug: str, key: str | None, pr: dict[str, Any]) -> str:
+        name = f"prices.{pr['price_type']}.{pr['audience'] or 'all'}"
+        price_names[(slug, key, name)] += 1
+        n = price_names[(slug, key, name)]
+        return name if n == 1 else f"{name}.{n}"
+
     problems: list[str] = []
     sources = data.get("sources") or {}
     for key, src in sources.items():
@@ -211,14 +221,14 @@ def plan_dataset(data: dict[str, Any]) -> Plan:
             for pr in _prices(o.get("prices"), ow, sources, problems):
                 plan.prices.append({"_slug": slug, "_key": key, **pr})
                 plan.sources.append({
-                    "_slug": slug, "_key": key, "field_name": f"prices.{pr['price_type']}.{pr['audience'] or 'all'}",
+                    "_slug": slug, "_key": key, "field_name": price_field(slug, key, pr),
                     "source_type": "public_web", "source_url": sources[pr["_source"]]["url"],
                     "retrieved_on": sources[pr["_source"]]["retrieved_on"],
                 })
         for pr in _prices(p.get("prices"), where, sources, problems):
             plan.prices.append({"_slug": slug, "_key": None, **pr})
             plan.sources.append({
-                "_slug": slug, "_key": None, "field_name": f"prices.{pr['price_type']}.{pr['audience'] or 'all'}",
+                "_slug": slug, "_key": None, "field_name": price_field(slug, None, pr),
                 "source_type": "public_web", "source_url": sources[pr["_source"]]["url"],
                 "retrieved_on": sources[pr["_source"]]["retrieved_on"],
             })

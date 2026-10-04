@@ -54,3 +54,18 @@ def test_apply_is_idempotent_and_removes_dropped_offerings(db):
 def test_summary_mentions_counts_and_samples():
     text = summarize(plan_dataset(make_dataset()))
     assert "3 programs, 3 offerings" in text and "Tuesdays 4–4:30pm" in text
+
+
+def test_pilot_dataset_provenance_is_unique():
+    """program_field_sources has a unique index on (program, offering, field); two prices of the
+    same type and audience must not collide (Postgres rejects the whole import if they do)."""
+    from collections import Counter
+    from pathlib import Path
+
+    from campfinder.activity.importer import load_dataset, plan_dataset
+
+    path = Path(__file__).resolve().parents[2] / "data" / "pilots" / "providence-swim-2026.json"
+    plan = plan_dataset(load_dataset(path))
+    keys = Counter((s["_slug"], s.get("_key"), s["field_name"]) for s in plan.sources)
+    assert [k for k, n in keys.items() if n > 1] == []
+    assert any(s["field_name"].endswith(".2") for s in plan.sources)
