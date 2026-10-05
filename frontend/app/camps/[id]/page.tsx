@@ -5,14 +5,12 @@ import { useParams } from 'next/navigation'
 import { getCamp, type CampDetail } from '@/lib/api'
 import { Events, captureAssistantArrival } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
-import RequestInfoModal from '@/components/RequestInfoModal'
 import RegistrationAlert from '@/components/booking/RegistrationAlert'
 
 export default function CampDetailPage() {
   const { id } = useParams<{ id: string }>()
   const [camp, setCamp]         = useState<CampDetail | null>(null)
   const [loading, setLoading]   = useState(true)
-  const [showModal, setModal]   = useState(false)
 
   useEffect(() => {
     captureAssistantArrival(new URLSearchParams(window.location.search))
@@ -42,8 +40,6 @@ export default function CampDetailPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {showModal && <RequestInfoModal campId={camp.id} campName={camp.name} onClose={() => setModal(false)} />}
-
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-400 mb-6">
         <a href="/search" className="hover:text-brand-600">← Back to results</a>
@@ -74,19 +70,13 @@ export default function CampDetailPage() {
 
           {/* Primary CTAs */}
           <div className="flex flex-col gap-2 md:min-w-[200px]">
-            <button
-              onClick={() => setModal(true)}
-              className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-3 rounded-xl transition-colors text-center"
-            >
-              Request info →
-            </button>
             {camp.website_url && (
               <a
                 href={camp.website_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => Events.outboundSiteClicked(camp.id, camp.website_url!)}
-                className="border border-gray-200 text-gray-700 font-medium px-5 py-2.5 rounded-xl text-center hover:border-brand-400 hover:text-brand-700 transition-colors text-sm"
+                className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-3 rounded-xl transition-colors text-center"
               >
                 Visit camp website ↗
               </a>

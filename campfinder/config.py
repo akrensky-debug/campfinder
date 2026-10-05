@@ -25,9 +25,6 @@ class Settings:
         return url
 
     resend_api_key: str = os.environ.get("RESEND_API_KEY", "")
-    stripe_secret_key: str = os.environ.get("STRIPE_SECRET_KEY", "")
-    stripe_webhook_secret: str = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
-    stripe_pro_price_id: str = os.environ.get("STRIPE_PRO_PRICE_ID", "")
     anthropic_api_key: str = os.environ.get("ANTHROPIC_API_KEY", "")
     # Model the listing tool (python -m campfinder.ingest) uses to read camp websites.
     ingest_model: str = os.environ.get("INGEST_MODEL", "claude-opus-5-5")

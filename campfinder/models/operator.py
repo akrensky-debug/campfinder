@@ -1,34 +1,11 @@
-"""Pydantic v2 models for lead capture and camp submissions."""
+"""Pydantic v2 models for camp submissions and the claim flow."""
 
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field
-
-
-class LeadCreate(BaseModel):
-    parent_email: str = Field(..., min_length=3)
-    first_name: str | None = None
-    parent_zip: str | None = None
-    child_age_band: str | None = None       # e.g. "6-8", "9-11"
-    weeks_needed: int | None = None
-    interests: list[str] | None = None
-    target_camp_id: str | None = None
-    search_context: dict[str, Any] | None = None
-    message: str | None = None
-    consent_flag: bool = False
-    source: str = "search_gate"
-    matched_camp_ids: list[str] | None = None
-
-
-class LeadResponse(BaseModel):
-    id: UUID
-    parent_email: str
-    lead_status: str
-    created_at: datetime | None = None
 
 
 class CampSubmissionCreate(BaseModel):

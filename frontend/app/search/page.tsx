@@ -5,9 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { searchCamps, type CampSearchResult } from '@/lib/api'
 import { Events } from '@/lib/analytics'
 import CampCard from '@/components/CampCard'
-import EmailGate from '@/components/EmailGate'
 
-const TEASER_COUNT = 3
 
 function SearchResults() {
   const params = useSearchParams()
@@ -21,18 +19,10 @@ function SearchResults() {
   const [results, setResults]     = useState<CampSearchResult[]>([])
   const [loading, setLoading]     = useState(true)
   const [error, setError]         = useState('')
-  const [unlocked, setUnlocked]   = useState(false)
 
   // Search form state (for inline re-search)
   const [loc, setLoc]       = useState(location)
   const [ageVal, setAgeVal] = useState(age?.toString() ?? '')
-
-  useEffect(() => {
-    // Check persisted unlock
-    if (typeof window !== 'undefined' && localStorage.getItem('cf_unlocked')) {
-      setUnlocked(true)
-    }
-  }, [])
 
   useEffect(() => {
     if (!location) return
@@ -50,9 +40,6 @@ function SearchResults() {
       .then(data => {
         setResults(data.results)
         Events.resultsViewed({ count: data.total, location })
-        if (data.total > TEASER_COUNT && !unlocked) {
-          Events.emailGateViewed({ hidden: data.total - TEASER_COUNT, location })
-        }
       })
       .catch(() => setError('Search failed. Please try again.'))
       .finally(() => setLoading(false))
@@ -64,10 +51,6 @@ function SearchResults() {
     if (ageVal) p.set('age', ageVal)
     router.push(`/search?${p.toString()}`)
   }
-
-  const visible = unlocked ? results : results.slice(0, TEASER_COUNT)
-  const hidden  = unlocked ? [] : results.slice(TEASER_COUNT)
-  const matchedIds = results.map(r => r.id)
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -126,37 +109,11 @@ function SearchResults() {
           </p>
 
           <div className="space-y-4">
-            {visible.map((camp, i) => (
+            {results.map((camp, i) => (
               <CampCard key={camp.id} camp={camp} rank={i + 1} />
             ))}
           </div>
 
-          {/* Email gate */}
-          {!unlocked && hidden.length > 0 && (
-            <div className="mt-6">
-              {/* Blurred previews */}
-              <div className="space-y-4 mb-6 pointer-events-none">
-                {hidden.slice(0, 2).map(camp => (
-                  <CampCard key={camp.id} camp={camp} blurred />
-                ))}
-              </div>
-              <EmailGate
-                hiddenCount={hidden.length}
-                searchContext={{ location, age, camp_type }}
-                matchedCampIds={matchedIds}
-                onUnlock={() => setUnlocked(true)}
-              />
-            </div>
-          )}
-
-          {unlocked && (
-            <div className="mt-8 p-4 bg-brand-50 border border-brand-200 rounded-2xl text-center">
-              <p className="text-sm text-brand-700 font-medium">
-                ✉️ Results sent to your email ·
-                <a href="/camps" className="underline ml-1">Save your shortlist</a>
-              </p>
-            </div>
-          )}
         </>
       )}
     </div>

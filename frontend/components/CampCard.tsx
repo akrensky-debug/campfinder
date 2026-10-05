@@ -4,24 +4,20 @@ import { Events } from '@/lib/analytics'
 
 interface Props {
   camp: CampSearchResult
-  blurred?: boolean
   rank?: number
 }
 
-export default function CampCard({ camp, blurred = false, rank }: Props) {
+export default function CampCard({ camp, rank }: Props) {
   const typeLabel: Record<string, string> = {
     day: 'Day Camp', sleepaway: 'Sleepaway', specialty: 'Specialty'
   }
 
   return (
     <a
-      href={blurred ? undefined : `/camps/${camp.id}`}
-      onClick={() => !blurred && Events.campDetailViewed(camp.id)}
-      className={`block bg-white rounded-2xl border border-gray-200 p-5 hover:border-brand-300 hover:shadow-md transition-all relative ${blurred ? 'cursor-default select-none' : ''}`}
+      href={`/camps/${camp.id}`}
+      onClick={() => Events.campDetailViewed(camp.id)}
+      className="block bg-white rounded-2xl border border-gray-200 p-5 hover:border-brand-300 hover:shadow-md transition-all relative"
     >
-      {blurred && (
-        <div className="absolute inset-0 rounded-2xl backdrop-blur-sm bg-white/60 z-10" />
-      )}
 
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
@@ -67,7 +63,7 @@ export default function CampCard({ camp, blurred = false, rank }: Props) {
         </div>
       </div>
 
-      {camp.match_reasons && camp.match_reasons.length > 0 && !blurred && (
+      {camp.match_reasons && camp.match_reasons.length > 0 && (
         <div className="mt-3 pt-3 border-t border-gray-100">
           <p className="text-xs text-brand-600 font-medium">
             {camp.match_reasons.slice(0, 2).join(' · ')}

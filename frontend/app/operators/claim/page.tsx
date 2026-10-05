@@ -24,7 +24,6 @@ function ClaimFlow() {
   const [token, setToken] = useState('')
   const [verifying, setVerifying] = useState(false)
   const [verifyError, setVerifyError] = useState('')
-  const [upgrading, setUpgrading] = useState(false)
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -265,48 +264,13 @@ function ClaimFlow() {
             Your ownership has been verified. You can now update your listing, add sessions,
             and manage your camp's data on CampFinder.
           </p>
-          <div className="bg-brand-50 border border-brand-200 rounded-2xl p-6 text-left mb-6">
+          <div className="bg-brand-50 border border-brand-200 rounded-2xl p-6 text-left">
             <h2 className="font-bold text-gray-900 mb-3 text-sm">What's next</h2>
             <ul className="text-sm text-gray-600 space-y-2">
               <li>✓ Your listing now shows a <strong>claimed</strong> status badge</li>
               <li>✓ Parents see that your data is managed by a verified owner</li>
-              <li>→ Add your 2025 sessions and pricing to rank higher in search</li>
-              <li>→ Upgrade to Pro for priority placement and AI discoverability boost</li>
+              <li>→ Reply to any email from us with new sessions, dates or prices and a person will update them</li>
             </ul>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 text-left">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-bold text-gray-900 text-sm mb-1">Pro listing -- $149/yr</p>
-                <p className="text-xs text-gray-500">
-                  Priority ranking · Verified badge · Session management · AI discoverability signals
-                </p>
-              </div>
-              <button
-                disabled={upgrading}
-                onClick={async () => {
-                  if (!selected) return
-                  setUpgrading(true)
-                  Events.stripeCheckoutStarted(selected.id)
-                  try {
-                    const res = await fetch(`${API_URL}/api/v1/stripe/checkout`, {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ camp_id: selected.id, email }),
-                    })
-                    const data = await res.json()
-                    if (data.checkout_url) {
-                      window.location.href = data.checkout_url
-                    }
-                  } catch {
-                    setUpgrading(false)
-                  }
-                }}
-                className="shrink-0 bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors disabled:opacity-60"
-              >
-                {upgrading ? 'Redirecting...' : 'Upgrade →'}
-              </button>
-            </div>
           </div>
         </div>
       )}
