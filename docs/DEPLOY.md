@@ -45,3 +45,14 @@ used once sign-in is checked locally instead of by asking Supabase.
   migration as applied.
 
 Do not run `python -m campfinder.seed.generate` against this database: it inserts fake camps.
+
+## Applied to the live project by hand
+
+- 3 October 2026: the schema in `migrations/0008_programs.sql` (year-round programs, the
+  recurring columns on `family_events`, the day/time columns on `activity_demand`), and the
+  swim-lessons pilot from `data/pilots/providence-swim-2026.json`: 8 programs, 319 offerings,
+  500 prices, 3,354 sourced facts, all `unverified`. Loaded through the Supabase MCP and
+  checked row for row against the importer's plan by checksum. 0008 is idempotent, so the
+  first deploy re-runs it harmlessly and records it in `schema_migrations`.
+- To refresh the pilot later: `python -m campfinder.activity.importer <file> --apply` with
+  the service key. It upserts by slug and offering key and replaces prices and sources.
