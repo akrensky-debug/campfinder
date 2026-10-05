@@ -14,10 +14,11 @@ from pydantic import BaseModel, Field
 from campfinder.agent.runner import run_agent
 from campfinder.agent.tools import list_family_events
 from campfinder.household.context import acting_as
-from campfinder.household.service import actor_for
+from campfinder.household.service import actor_for, audit
 from campfinder.auth import ALL_ROLES, FamilyAccess, active_membership, authorize_family, family_access, optional_user, required_user
 from campfinder.kit.service import delete_family_data
 from campfinder.database import get_supabase
+from campfinder.services import family_export
 from campfinder.services.calendar import build_ics
 
 router = APIRouter()
@@ -128,6 +129,23 @@ async def reset_calendar_link(request: Request, family_id: UUID, user_id: str | 
     get_supabase().table("families").update({"calendar_token": token}).eq("id", str(family_id)).execute()
     family["calendar_token"] = token
     return _family_response(request, family)
+
+
+@router.get("/families/{family_id}/export", summary="Download everything we hold about this family")
+async def export_family(family_id: UUID, user_id: str | None = Depends(optional_user)) -> Response:
+    """The owner's copy of the family's data as one JSON file: profile, calendar, conversations,
+    the info kit (decrypted), household, tasks, share links and who opened them, registrations
+    and alerts. Link secrets are left out. Each download is written to the activity log."""
+    access = family_access(family_id, user_id, roles=("owner",))
+    data = family_export.export_family(access.family)
+    audit(actor_for(access), "family_exported")
+    day = data["exported_at"][:10]
+    return Response(
+        content=json.dumps(data, indent=2, default=str),
+        media_type="application/json",
+        headers={"Content-Disposition": f'attachment; filename="campfinder-family-{day}.json"',
+                 "Cache-Control": "private, no-store"},
+    )
 
 
 @router.delete("/families/{family_id}", status_code=204, summary="Delete everything about this family")

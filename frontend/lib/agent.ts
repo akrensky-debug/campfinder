@@ -179,6 +179,19 @@ export async function resetCalendarLink(familyId: string): Promise<Family> {
 }
 
 /** Permanently delete the family, its calendar, conversations and info kit. */
+/** Download everything we hold about the family as one JSON file (owner only). */
+export async function downloadFamilyData(familyId: string): Promise<void> {
+  const res = await fetch(`${API}/api/v1/families/${familyId}/export`, { headers: await authHeaders(), cache: 'no-store' })
+  if (!res.ok) throw new Error('Could not prepare your download')
+  const name = /filename="([^"]+)"/.exec(res.headers.get('Content-Disposition') || '')?.[1] || 'campfinder-family.json'
+  const url = URL.createObjectURL(await res.blob())
+  const a = Object.assign(document.createElement('a'), { href: url, download: name })
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
+
 export async function deleteFamily(familyId: string): Promise<void> {
   const res = await fetch(`${API}/api/v1/families/${familyId}`, { method: 'DELETE', headers: await authHeaders() })
   if (!res.ok) throw new Error('Could not delete')

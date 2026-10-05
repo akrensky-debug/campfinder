@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signOut, useSession } from '@/lib/auth'
-import { deleteFamily, loadFamily, type Family } from '@/lib/agent'
+import { deleteFamily, downloadFamilyData, loadFamily, type Family } from '@/lib/agent'
 import {
   CHILD_LABELS, HOUSEHOLD_LABELS, createShare, getKit, listShares, revokeShare, saveKit,
   type Child, type Contact, type InfoKit, type ShareSummary,
@@ -77,6 +77,18 @@ export default function KitPage() {
   function setChild(i: number, field: keyof Child, value: string) {
     setKit(k => ({ ...k, children: k.children.map((c, j) => (j === i ? { ...c, [field]: value || null } : c)) }))
     setStatus('')
+  }
+
+  async function download() {
+    if (!family) return
+    setStatus('Preparing your download…')
+    try {
+      await downloadFamilyData(family.id)
+      setStatus('')
+    } catch (e) {
+      setStatus('')
+      setError((e as Error).message)
+    }
   }
 
   async function eraseEverything() {
@@ -201,14 +213,23 @@ export default function KitPage() {
 
       <section className="border-t border-gray-100 pt-6 space-y-2">
         <h2 className="font-semibold text-gray-900">Your data</h2>
-        <p className="text-sm text-gray-600">
-          Deleting removes your family profile, calendar, conversations, info kit and every share link, permanently.
-        </p>
-        <div className="flex gap-4 text-sm">
+        {family.role === 'owner' && (
+          <p className="text-sm text-gray-600">
+            Download is one file with everything we hold about your family, including this info kit, so keep it
+            somewhere safe. Deleting removes your family profile, calendar, conversations, info kit and every share
+            link, permanently.
+          </p>
+        )}
+        <div className="flex flex-wrap gap-4 text-sm">
           <button onClick={() => signOut().then(() => router.replace('/'))} className="text-gray-600 hover:text-gray-900">
             Sign out
           </button>
-          <button onClick={eraseEverything} className="text-red-600 hover:text-red-700">Delete everything</button>
+          {family.role === 'owner' && (
+            <>
+              <button onClick={download} className="text-brand-600 hover:text-brand-700">Download my family&rsquo;s data</button>
+              <button onClick={eraseEverything} className="text-red-600 hover:text-red-700">Delete everything</button>
+            </>
+          )}
         </div>
       </section>
     </div>

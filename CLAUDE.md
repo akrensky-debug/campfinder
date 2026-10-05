@@ -13,7 +13,8 @@ Read this first, every session. Updated 4 October 2026 (order of work); 3 Octobe
 - `claude/product-plan` is **retired and read-only**: a source to port from, not a base. Its
   migrations runner, listing tool, product docs and the allergy fix are already on `main`.
   Owner confirmation and the listing change log are on `main`; registration alerts are built
-  fresh on `main`'s booking tables. Still to port: family data export.
+  fresh on `main`'s booking tables, family data export on `main`'s own tables. Nothing left
+  to port.
   Its `families`/`children`/`child_medical` schema is **not** coming over: `main` keeps its own
   family model (`families.profile`, the encrypted info kit, household members).
 - Retired, merged or superseded: `claude/beautiful-hawking-yxgc0q`,
@@ -32,11 +33,9 @@ Read this first, every session. Updated 4 October 2026 (order of work); 3 Octobe
 
 Done: household sharing, real camp data, year-round activities, owner confirmation with the
 listing change log, registration day, registration alerts, camp logic moved into services, Phase 1 removals
-(Pro plan, email gate, lead capture).
+(Pro plan, email gate, lead capture), listing fields (slug, spots), family data export.
 
-1. Family data export. (Listing fields, slug and spots, are done. Phase 1 removals are done in
-   code; the old `leads` table and `camp_ownership` Pro columns are still in the database
-   until Andrew decides to drop them.)
+1. Andrew decides whether to drop the empty `leads` table and `camp_ownership` Pro columns.
 2. `tests/booking/fakes.py` is a second copy of the fake Supabase; fold it into `tests/fakes.py`.
 
 ## Where code goes
@@ -66,6 +65,8 @@ listing change log, registration day, registration alerts, camp logic moved into
   in-app only.
 - Anything the assistant would send to another person (assignments, invites, messages) is
   proposed as a card. The parent confirms it.
+- A new table holding family data must be added to `services/family_export.py`, so the
+  owner's download stays complete; strip columns that work as keys (`SECRETS`).
 
 ## Running it
 
