@@ -19,7 +19,7 @@ from campfinder.activity.schema import (
 )
 from campfinder.config import get_settings
 from campfinder.database import get_supabase
-from campfinder.routers.camps import _build_trust_summary
+from campfinder.services.camps import build_trust_summary
 from campfinder.services.geo import geocode_location
 from campfinder.services.search import search_camps
 
@@ -55,7 +55,7 @@ def program_from_camp(
     field_sources: list[dict[str, Any]] | None = None,
     include_policies: bool = False,
 ) -> Program:
-    trust = _build_trust_summary(camp, field_sources or [], bool(sessions))
+    trust = build_trust_summary(camp, field_sources or [], bool(sessions))
     coords = geocode_location(f"{camp['city']}, {camp['state']}")
     frontend = get_settings().frontend_url.rstrip("/")
     return Program(

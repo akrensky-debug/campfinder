@@ -25,7 +25,7 @@ from campfinder.activity.sources import (
     find_programs, find_sessions, get_offering_with_program, get_program, get_session_with_program,
 )
 from campfinder.database import get_supabase
-from campfinder.routers.agent import build_ics
+from campfinder.services.calendar import build_ics
 
 PREFIX = "/api/activity/v1"
 router = APIRouter(prefix=PREFIX, tags=["Activity API v1"])

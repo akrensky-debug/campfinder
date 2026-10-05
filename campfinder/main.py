@@ -9,13 +9,14 @@ from contextlib import AsyncExitStack, asynccontextmanager
 from pathlib import Path
 from typing import AsyncGenerator
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from campfinder.config import get_settings
 from campfinder.database import check_connection, close_pool, init_pool
+from campfinder.services.errors import NotFound
 from campfinder.mcp_server import VERSION as MCP_VERSION, servers as mcp_servers
 from campfinder.routers import activities, activity, agent, camps, household, kit, owners, compare, freshness, leads, planner, search, sessions, stripe
 from campfinder.routers import alerts, booking
@@ -54,6 +55,10 @@ def create_app() -> FastAPI:
         version="1.0.0",
         lifespan=lifespan,
     )
+
+    @app.exception_handler(NotFound)
+    async def not_found(_request: Request, exc: NotFound) -> JSONResponse:
+        return JSONResponse(status_code=404, content={"detail": exc.detail})
 
     app.add_middleware(
         CORSMiddleware,

@@ -585,7 +585,7 @@ def member_by_calendar_token(token: str) -> dict[str, Any] | None:
 
 def build_member_ics(member: dict[str, Any], events: list[dict[str, Any]], tasks: list[dict[str, Any]]) -> str:
     """The family calendar plus this person's own jobs."""
-    from campfinder.routers.agent import _ics_escape, _ics_fold
+    from campfinder.services.calendar import ics_escape as _ics_escape, ics_fold as _ics_fold
 
     stamp = _now().strftime("%Y%m%dT%H%M%SZ")
     lines = [
