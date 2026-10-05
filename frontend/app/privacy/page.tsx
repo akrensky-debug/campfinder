@@ -39,7 +39,7 @@ export default function PrivacyPage() {
         <li><strong>Planning chat and family profile.</strong> What you tell the planner (your town, your kids&apos; first names, ages and interests, dates, budget and notes) is stored as your family profile and calendar so it can plan with you. Chat messages are processed by Anthropic&apos;s Claude model to produce answers.</li>
         <li><strong>Account.</strong> If you sign in, we store your email address to send sign-in links and keep your family attached to your account.</li>
         <li><strong>Info kit.</strong> Details you add to the info kit (contacts, pickups, insurance, medical notes) are encrypted before storage, are never sent to the AI model, and are shared only through links you create, which you can revoke. Every opening of a shared link is logged so you can see it.</li>
-        <li><strong>Requests to camps and emails.</strong> If you request information or ask us to email results, we store your email, first name and what you searched for. If you ask a camp for information, we share your contact details and message with that camp.</li>
+        <li><strong>Registration alerts.</strong> If you ask us to email you when a camp&apos;s registration opens, we keep your email address and which camp, nothing else. Nothing is sent until you confirm, and every email has a link to stop it.</li>
         <li><strong>Usage.</strong> We record page views and actions with a random session identifier stored in your browser, to improve the site.</li>
       </ul>
 
@@ -64,6 +64,7 @@ export default function PrivacyPage() {
 
       <h2>Your choices</h2>
       <ul>
+        <li>Download everything we hold about your family as one file, from the info kit page.</li>
         <li>Delete your family, calendar and info kit from your account page, or email us and we will delete them.</li>
         <li>Reset your private calendar link at any time; the old one stops working.</li>
         <li>Revoke any info kit share link at any time.</li>
