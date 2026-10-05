@@ -5,6 +5,12 @@ parents can see, export and delete their family's data).
 Left out on purpose, and said so in the file: the secrets that open things (calendar links,
 invite and share link hashes, the info kit's ciphertext). The kit itself is included,
 decrypted, because the export only goes to the owner, who can already open it.
+
+Other people's data stays out too:
+- Conversations are the owner's own. Co-parents' chats are private to them in the app
+  (agent/runner.load_conversation), so they are private here.
+- Registration alerts are matched on the account email only, which sign-in has verified.
+  The reminder email is whatever the owner typed and could be anyone's address.
 """
 
 from __future__ import annotations
@@ -23,6 +29,7 @@ SECRETS = {"calendar_token", "invite_token_hash", "token_hash", "ciphertext", "v
 
 NOT_INCLUDED = [
     "Private link secrets: calendar feed links, invite links and share links. Reset or revoke them in the app.",
+    "Conversations other household members had with the assistant: those are private to them.",
     "Anonymous search statistics, which are not linked to your family.",
     "Server request logs, kept for security.",
 ]
@@ -52,9 +59,12 @@ def export_family(family: dict[str, Any]) -> dict[str, Any]:
     has_kit = bool(sb.table("family_kits").select("family_id").eq("family_id", fid).execute().data)
 
     owner_email = account_email(family)
-    prefs = by_family("registration_reminder_prefs")
-    emails = {e.lower() for e in [owner_email, *(p.get("email") for p in prefs)] if e}
-    alerts = _rows("registration_alerts", "email", sorted(emails))
+    alerts = _rows("registration_alerts", "email", [owner_email.lower()]) if owner_email else []
+
+    # The owner's own chats: started by their member row, or older ones with no starter.
+    owner_ids = {str(m["id"]) for m in members if m.get("role") == "owner"}
+    conversations = [c for c in by_family("agent_conversations", "created_at")
+                     if not c.get("started_by") or str(c["started_by"]) in owner_ids]
 
     return {
         "format": "campfinder-family-export",
@@ -63,7 +73,7 @@ def export_family(family: dict[str, Any]) -> dict[str, Any]:
         "family": _clean([family])[0] | {"account_email": owner_email},
         "info_kit": load_kit(fid).model_dump(mode="json") if has_kit else None,
         "calendar_events": by_family("family_events", "start_date"),
-        "conversations": by_family("agent_conversations", "created_at"),
+        "conversations": conversations,
         "household": {
             "members": members,
             "tasks": by_family("family_tasks", "created_at"),
@@ -76,7 +86,7 @@ def export_family(family: dict[str, Any]) -> dict[str, Any]:
         },
         "registrations": {
             "tracked": registrations,
-            "reminder_settings": prefs,
+            "reminder_settings": by_family("registration_reminder_prefs"),
             "reminder_emails_sent": _rows("registration_reminder_sends", "registration_id",
                                           [str(r["id"]) for r in registrations]),
             "booking_attempts": by_family("booking_attempts", "created_at"),
