@@ -2,7 +2,7 @@ import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
 import { BookingBlock } from '@/components/booking/BookingBlocks'
 import { AssignProposal, HouseholdCard, InviteProposal, MessageDraft, TasksCard } from '@/components/household/HouseholdBlocks'
-import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
+import type { Comparison, Coverage, CoverageStatus, FamilyEvent, Plan, UIData } from '@/lib/agent'
 import { ActivityDetailCard, ActivityResults, ScheduleFitView, WeekView, weeklyLabel } from '@/components/agent/ActivityBlocks'
 
 const SHOWN_CAMPS = 5
@@ -142,6 +142,71 @@ function PlanView({ plan }: { plan: Plan }) {
   )
 }
 
+function CoverageView({ data }: { data: Coverage }) {
+  const tone: Record<CoverageStatus, string> = {
+    covered: 'bg-green-50 border-green-200',
+    check_hours: 'bg-sky-50 border-sky-200',
+    partial: 'bg-amber-50 border-amber-200',
+    open: 'bg-red-50 border-red-200',
+    away: 'bg-gray-50 border-gray-200',
+    not_needed: 'bg-gray-50 border-gray-200',
+  }
+  const label: Record<CoverageStatus, string> = {
+    covered: 'Covered', check_hours: 'Confirm hours', partial: 'Partly covered',
+    open: 'Open', away: 'Away', not_needed: 'No care needed',
+  }
+  const hours = Object.entries(data.care_hours)
+  return (
+    <div className="bg-white rounded-2xl border border-gray-200 p-4 space-y-4">
+      {hours.length > 0 && (
+        <p className="text-xs text-gray-500">
+          Care needed: {hours.map(([d, h]) => `${d} ${h}`).join(' · ')}
+        </p>
+      )}
+      {data.kids.map(kid => (
+        <div key={kid.name}>
+          <div className="flex justify-between text-sm mb-2">
+            <span className="font-semibold text-gray-900">{kid.name}</span>
+            <span className="text-gray-500">
+              {kid.weeks_covered} covered · {kid.weeks_partial} partly · {kid.weeks_open} open
+            </span>
+          </div>
+          <div className="space-y-1.5">
+            {kid.weeks.filter(w => w.status !== 'not_needed').map(w => (
+              <div key={w.week_of} className={`border rounded-lg px-3 py-1.5 text-sm ${tone[w.status]}`}>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-gray-600 whitespace-nowrap">{fmtRange(w.week_of, w.week_end)}</span>
+                  <span className="text-gray-800 truncate text-right">
+                    {w.status === 'away' ? w.away.join(', ')
+                      : w.covered_by.length ? w.covered_by.join(' + ') : label[w.status]}
+                  </span>
+                </div>
+                {w.status !== 'covered' && w.status !== 'away' && (
+                  <div className="mt-1 text-xs text-gray-600 space-y-0.5">
+                    <div>{label[w.status]}</div>
+                    {w.check_hours.map(c => <div key={c}>{c}</div>)}
+                    {w.gaps.slice(0, 3).map(g => (
+                      <div key={g.day}>{fmtRange(g.day, g.day)}: {g.uncovered}</div>
+                    ))}
+                    {w.options.length > 0 && (
+                      <div className="pt-0.5">
+                        Options: {w.options.map(o =>
+                          `${o.name} (${o.city}${o.extended_care ? ', extended care' : ''}${o.last_season ? ', last season’s dates' : ''})`
+                        ).join(' · ')}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {data.notes.map(n => <p key={n} className="text-xs text-gray-500">{n}</p>)}
+    </div>
+  )
+}
+
 export function CalendarList({ events, compact = false }: { events: FamilyEvent[]; compact?: boolean }) {
   if (!events.length) return <p className="text-sm text-gray-400">Nothing on the calendar yet.</p>
   return (
@@ -164,6 +229,7 @@ export function AgentBlock({ data, familyId }: { data: UIData; familyId?: string
     case 'camp_detail': return <CampDetailCard camp={data.camp} />
     case 'comparison':  return <ComparisonView data={data} />
     case 'plan':        return <PlanView plan={data} />
+    case 'coverage':    return <CoverageView data={data} />
     case 'calendar':    return <CalendarList events={data.events} />
     case 'profile':     return null // reflected in the family panel
     case 'registrations':

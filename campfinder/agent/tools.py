@@ -24,10 +24,12 @@ from pydantic import BaseModel, Field, ValidationError
 from campfinder.activity.sources import find_sessions
 from campfinder.database import get_supabase
 from campfinder.models.compare import CompareRequest
+from campfinder.models.coverage import AwayRange, WorkBlock
 from campfinder.models.plan import PlanRequest, PlanSessionInput
 from campfinder.models.search import SearchRequest
 from campfinder.services.camps import get_camp_detail
 from campfinder.services.compare import compare_camps
+from campfinder.services.coverage import check_coverage
 from campfinder.services.errors import ServiceError
 from campfinder.services.plan import build_summer_plan
 from campfinder.services.search import run_search
@@ -150,6 +152,16 @@ class UpdateFamilyProfileInput(BaseModel):
         description="Household logistics, e.g. 'extended care until 5:30', 'no driving on Tuesdays'. Replaces the stored list.",
     )
     notes: str | None = Field(default=None, description="Anything else worth remembering. Replaces stored notes.")
+    work_schedule: list[WorkBlock] | None = Field(
+        default=None,
+        description="When each parent works over the summer (days and hours), used to find the hours "
+        "that need camp or care. Replaces the stored list, so include every parent.",
+    )
+    away: list[AwayRange] | None = Field(
+        default=None,
+        description="Vacations, travel and weeks a kid spends elsewhere (e.g. with grandparents). "
+        "Replaces the stored list, so include every trip.",
+    )
 
 
 class CalendarEventInput(BaseModel):
@@ -168,6 +180,10 @@ class AddToCalendarInput(BaseModel):
 
 class ListCalendarInput(BaseModel):
     pass
+
+
+class CheckCoverageInput(BaseModel):
+    suggest_camps: bool = Field(default=True, description="Suggest nearby camps for weeks that aren't covered.")
 
 
 class RemoveFromCalendarInput(BaseModel):
@@ -314,6 +330,36 @@ async def update_family_profile_tool(inp: UpdateFamilyProfileInput, family_id: s
     return ToolOutput(content={"saved": True, "profile": profile}, ui={"type": "profile", "profile": profile})
 
 
+async def check_coverage_tool(inp: CheckCoverageInput, family_id: str) -> ToolOutput:
+    try:
+        result = await check_coverage(family_id, with_options=inp.suggest_camps)
+    except ValueError as e:
+        raise ToolError(str(e)) from e
+    data = result.model_dump(mode="json")
+    content = {
+        "care_hours": data["care_hours"],
+        "notes": data["notes"],
+        "kids": [
+            {
+                "name": k["name"],
+                "weeks": [
+                    {key: w[key] for key in ("week_of", "status", "covered_by", "away", "gaps", "check_hours")
+                     if w[key] not in ([], None)}
+                    | ({"options": [
+                        {o_key: o[o_key] for o_key in ("name", "city", "distance_miles", "extended_care",
+                                                       "start_date", "end_date", "last_season", "camp_id",
+                                                       "session_id")}
+                        for o in w["options"]
+                    ]} if w["options"] else {})
+                    for w in k["weeks"] if w["status"] != "not_needed"
+                ],
+            }
+            for k in data["kids"]
+        ],
+    }
+    return ToolOutput(content=content, ui={"type": "coverage", **data})
+
+
 async def add_to_calendar_tool(inp: AddToCalendarInput, family_id: str) -> ToolOutput:
     rows = []
     for e in inp.events:
@@ -411,6 +457,15 @@ FAMILY_TOOLS: list[ToolSpec] = [
         "parent can subscribe to from Google, Apple or Outlook Calendar. Only add what the "
         "parent has chosen.",
         AddToCalendarInput, add_to_calendar_tool, family=True, status="Updating your calendar",
+    ),
+    ToolSpec(
+        "check_summer_coverage",
+        "Check, week by week and for each kid, whether the summer is covered: the hours when every "
+        "parent is at work (from the saved work schedule), minus vacations and travel, against the "
+        "camps and commitments on the family calendar. Reports covered, open and partly covered "
+        "weeks, camps whose hours need confirming, and nearby camps for the open weeks. Save work "
+        "hours and trips with update_family_profile first.",
+        CheckCoverageInput, check_coverage_tool, family=True, status="Checking your summer coverage",
     ),
     ToolSpec(
         "list_family_calendar",

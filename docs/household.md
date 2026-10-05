@@ -108,3 +108,23 @@ python -m pytest
 
 `tests/fakes.py` has an in-memory Supabase client (tables, filters, cascades, auth) and
 a scripted Anthropic stream; the tests drive the real FastAPI app through both.
+
+## Summer coverage
+
+`check_summer_coverage` (agent, family only; `campfinder/services/coverage.py`) answers "is the
+whole summer covered?" for each kid, week by week.
+
+- **Inputs, all in `families.profile`:** `work_schedule` (each parent's days and hours),
+  `away` (vacations, travel, and weeks one kid spends elsewhere, with `child_name`), the summer
+  dates and the kids. No migration: they are profile fields saved with `update_family_profile`.
+- **Care hours:** a day needs care only when every parent works that day, and only for the
+  hours they all overlap (Mom 8:30-5, Dad 9-5:30 means 9-5). Away dates need none.
+- **What covers a day:** a camp or commitment on the family calendar for that kid (weekly
+  classes and reminders don't). Sleepaway covers it fully. A timed entry is checked against the
+  care hours; a camp without times counts, but if care runs past 9-3 the week is marked
+  *confirm hours* (or *partly covered* when the camp lists no extended care).
+- **Statuses:** covered, confirm hours, partly covered (with the uncovered hours), open, away.
+- **Options:** for open and partly covered weeks, nearby camps with a session that week, age
+  fit, extended care first when the workday is long. When a camp hasn't posted this season's
+  dates, the same week last season is offered and labelled as last season's.
+- Like the other family tools, it is in-app only: never on the MCP server or the Activity API.
