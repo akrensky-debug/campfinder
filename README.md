@@ -96,6 +96,28 @@ with AES-GCM before storage, never sent to the AI model, and shared as packages 
 fields for chosen kids) behind expiring, revocable links that log every open. Losing
 `KIT_ENCRYPTION_KEY` makes stored kits unreadable, so keep it in a secrets manager.
 
+### Registration day
+
+Watch camps for registration, get reminders, a register-now checklist, info kit packages
+mapped to each camp's form, and tracking of registered / waitlisted / paid. Parents
+register and pay on the camp's own site; nothing is shared, booked or paid without their
+explicit confirm, and the agent can only propose. Strategy and legal review list:
+`docs/booking-strategy.md`.
+
+```bash
+psql $DATABASE_URL -f schema_booking.sql
+```
+
+```
+BOOKING_EMAIL_MODE=log      # log (default, sends nothing) | resend | off
+BOOKING_CRON_SECRET=        # enables POST /api/v1/internal/registration-reminders/run
+REMINDER_TZ=America/New_York
+BOOKING_PROVIDERS=          # sandbox booking prototype; empty = off. Only sandbox providers exist.
+```
+
+Reminders: `python -m campfinder.booking.reminders --dry-run [--date YYYY-MM-DD]`.
+Tests: `pip install pytest pytest-asyncio && python -m pytest`.
+
 ---
 
 ## Endpoints
@@ -128,6 +150,13 @@ fields for chosen kids) behind expiring, revocable links that log every open. Lo
 | `GET/POST` | `/api/v1/invites/{token}[/accept]` | Preview and accept an invite |
 | `GET`  | `/api/v1/calendar/member/{token}.ics` | One person's feed: the family plan plus their jobs |
 | `GET/POST` | `/api/v1/owners/confirm/{token}` | A camp owner checks their listing: looks right, or take it down (see `docs/owner-confirmation.md`) |
+| `GET/POST` | `/api/v1/families/{id}/registrations` | Tracked registrations; `PATCH`/`DELETE /{registration_id}` to record or stop |
+| `GET`  | `/api/v1/families/{id}/register-checklist` | Register-now checklist for a camp or registration |
+| `POST` | `/api/v1/families/{id}/registration-package/preview` | The package a camp's form needs (shares nothing) |
+| `POST` | `/api/v1/families/{id}/registration-package` | Share the package the parent approved (`confirm: true`) |
+| `GET/PUT` | `/api/v1/families/{id}/registration-reminders` | Reminder settings; `/preview` shows what would send |
+| `GET`  | `/api/v1/camps/{id}/registration` | When registration opens and what the form asks |
+| `POST` | `/api/v1/families/{id}/bookings/quote` | Sandbox prototype, behind `BOOKING_PROVIDERS` |
 | `GET`  | `/api/activity/v1/...` | Activity API for partners (API key); see `docs/activity-api.md` |
 | `POST` | `/mcp` | MCP server (streamable HTTP) exposing the camp tools to any client |
 | `POST` | `/chatgpt/mcp`, `/claude/mcp` | The same server tuned for the ChatGPT app and the Claude connector |

@@ -1,5 +1,6 @@
 import CampCard from '@/components/CampCard'
 import TrustBadge from '@/components/TrustBadge'
+import { BookingBlock } from '@/components/booking/BookingBlocks'
 import { AssignProposal, HouseholdCard, InviteProposal, MessageDraft, TasksCard } from '@/components/household/HouseholdBlocks'
 import type { Comparison, FamilyEvent, Plan, UIData } from '@/lib/agent'
 import { ActivityDetailCard, ActivityResults, ScheduleFitView, WeekView, weeklyLabel } from '@/components/agent/ActivityBlocks'
@@ -165,6 +166,9 @@ export function AgentBlock({ data, familyId }: { data: UIData; familyId?: string
     case 'plan':        return <PlanView plan={data} />
     case 'calendar':    return <CalendarList events={data.events} />
     case 'profile':     return null // reflected in the family panel
+    case 'registrations':
+    case 'register_checklist':
+    case 'registration_package': return <BookingBlock data={data} />
     // Year-round activities
     case 'activities':      return <ActivityResults activities={data.activities} />
     case 'activity_detail': return <ActivityDetailCard activity={data.activity} />

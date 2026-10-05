@@ -1,6 +1,7 @@
 import type { CampSearchResult } from '@/lib/api'
 import type { ActivityCard, ActivityProgram, FamilyWeek, ScheduleFitResult } from '@/lib/activities'
 import { authHeaders } from '@/lib/auth'
+import type { BookingUIData } from '@/components/booking/BookingBlocks'
 import { Events } from '@/lib/analytics'
 import type { Role, Task } from '@/lib/household'
 
@@ -90,6 +91,7 @@ export type UIData =
   | ({ type: 'plan' } & Plan)
   | { type: 'calendar'; events: FamilyEvent[] }
   | { type: 'profile'; profile: FamilyProfile }
+  | BookingUIData
   | { type: 'activities'; activities: ActivityCard[] }
   | { type: 'activity_detail'; activity: ActivityProgram }
   | { type: 'schedule_fit'; checked_against: string; results: ScheduleFitResult[] }

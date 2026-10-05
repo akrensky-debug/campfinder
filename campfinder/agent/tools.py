@@ -423,6 +423,9 @@ FAMILY_TOOLS: list[ToolSpec] = [
 
 ALL_TOOLS = {t.name: t for t in CAMP_TOOLS + FAMILY_TOOLS}
 
+# Registration day (watch, record, checklist, propose a package) adds its tools to the lists above.
+import campfinder.agent.booking_tools  # noqa: E402,F401
+
 
 # Year-round activities (classes, lessons, leagues) add their tools to the lists above.
 import campfinder.agent.activity_tools  # noqa: E402,F401

@@ -15,6 +15,7 @@ from typing import Any, AsyncIterator
 
 import anthropic
 
+from campfinder.agent.booking_tools import BOOKING_PROMPT, registrations_context
 from campfinder.activity.family_week import compact_event
 from campfinder.agent.household_tools import HOUSEHOLD_PROMPT, household_context
 from campfinder.agent.tools import (
@@ -85,7 +86,7 @@ point them to the provider's registration page.
 Coverage today: summer camps in the Northeast US (CT, MA, ME, NH, NJ, NY, PA, RI, VT), and \
 a first pilot of year-round activities: swim lessons in and around Providence, RI. If asked \
 about something outside that, say what you can't do yet and help with what you can.\
-""" + HOUSEHOLD_PROMPT
+""" + HOUSEHOLD_PROMPT + BOOKING_PROMPT
 
 
 def _client() -> anthropic.AsyncAnthropic:
@@ -105,6 +106,7 @@ def _context_block(family_id: str) -> str:
         f"Family profile: {json.dumps(profile) if profile else 'empty (new family)'}\n"
         f"Family calendar: {json.dumps(calendar) if calendar else 'empty'}\n"
         f"{household_context(family_id)}\n"
+        f"{registrations_context(family_id)}"
         "</context>"
     )
 
