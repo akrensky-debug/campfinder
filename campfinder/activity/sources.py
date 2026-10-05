@@ -42,6 +42,8 @@ def session_from_row(s: dict[str, Any], api_base: str) -> Session:
         length_weeks=_num(s.get("length_weeks")),
         price=_num(s.get("price")),
         availability=availability if availability in AVAILABILITY else "unknown",
+        spots_left=s.get("spots_available"),
+        spots_updated_at=s.get("spots_updated_at"),
         full_season=bool(s.get("full_season")),
         calendar_url=f"{api_base}/sessions/{s['id']}.ics",
     )

@@ -25,6 +25,17 @@ confirms its own listing, nothing we serve (site, agent, MCP) can say "confirmed
    a fresh one.
 
 `python -m campfinder.owners status <camp>` shows the emails, answers and the change log.
+
+## Spots left
+
+When an owner tells us how many spots a session has left (by reply, phone or text), record it:
+
+    python -m campfinder.owners spots <camp> <session> <left> [--total N] --by <name> --from-owner
+
+`<session>` is the session id, its exact name or its start date. `0` marks the session full, and
+spots coming back reopen it. Leave out `--from-owner` when the team checked the number itself.
+Each change goes in the change log, and parents and assistants see the number with who gave it
+and when. The camp page links by slug (`/camps/<slug>`); ids still work.
 `<camp>` is the camp's id, its dataset slug (`data/camps/*.json`) or its exact name.
 
 Every step is written to `listing_changes` with who did it and why (company rule 13).

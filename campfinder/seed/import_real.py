@@ -185,6 +185,7 @@ def build_rows(records: list[tuple[str, dict[str, Any]]]) -> tuple[list[dict], l
         row = {f: c.get(f) for f in CAMP_FIELDS}
         row.update({
             "id": cid,
+            "slug": c["slug"],
             "region": c.get("region") or metro,
             "location": f"SRID=4326;POINT({lng} {lat})",
             "is_day_camp": c["camp_type"] == "day",

@@ -16,6 +16,7 @@ from supabase import Client
 from campfinder.database import get_supabase
 from campfinder.models.camp import CampSearchResult
 from campfinder.models.search import SearchRequest, SearchResponse
+from campfinder.services.camps import camp_url
 from campfinder.services.geo import geocode_location, haversine_miles
 from campfinder.services.ranking import score_camp
 
@@ -120,7 +121,7 @@ async def search_camps(
         camp["match_score"] = round(score, 4)
         camp["match_reasons"] = reasons
         camp["sessions"] = camp_sessions
-        camp["detail_url"] = f"https://campfinder.com/camps/{camp['id']}"
+        camp["detail_url"] = camp_url(camp)
         results.append(camp)
 
     # Sort
@@ -160,6 +161,7 @@ async def run_search(req: SearchRequest) -> SearchResponse:
 def to_search_result(camp: dict[str, Any]) -> CampSearchResult:
     return CampSearchResult(
         id=camp["id"],
+        slug=camp.get("slug"),
         name=camp["name"],
         city=camp["city"],
         state=camp["state"],

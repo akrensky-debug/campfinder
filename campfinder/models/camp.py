@@ -19,6 +19,11 @@ class SessionSummary(BaseModel):
     price: float | None = None
     full_season: bool = False
     availability: str = "unknown"
+    spots_total: int | None = None
+    spots_available: int | None = Field(
+        default=None, description="Spots left. Null means unknown, which is not the same as 0 (full).")
+    spots_updated_at: datetime | None = Field(default=None, description="When spots_available was last set.")
+    spots_source: str | None = Field(default=None, description="Who set it: owner, team or import.")
 
 
 class AccreditationSummary(BaseModel):
@@ -38,9 +43,10 @@ class TrustSummary(BaseModel):
 
 
 class CampDetail(BaseModel):
-    """Full camp record returned by GET /camps/{id}."""
+    """Full camp record returned by GET /camps/{id or slug}."""
 
     id: UUID
+    slug: str | None = Field(default=None, description="Stable address on the site: /camps/<slug>.")
     name: str
     operator_name: str | None = None
     website_url: str | None = None
@@ -110,6 +116,7 @@ class CampSearchResult(BaseModel):
     """Slimmer representation used in search results."""
 
     id: UUID
+    slug: str | None = None
     name: str
     city: str
     state: str

@@ -14,7 +14,7 @@ export default function CampCard({ camp, rank }: Props) {
 
   return (
     <a
-      href={`/camps/${camp.id}`}
+      href={`/camps/${camp.slug || camp.id}`}
       onClick={() => Events.campDetailViewed(camp.id)}
       className="block bg-white rounded-2xl border border-gray-200 p-5 hover:border-brand-300 hover:shadow-md transition-all relative"
     >

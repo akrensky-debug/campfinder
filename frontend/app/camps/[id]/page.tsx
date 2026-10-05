@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { getCamp, type CampDetail } from '@/lib/api'
+import { getCamp, spotsLine, type CampDetail } from '@/lib/api'
 import { Events, captureAssistantArrival } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
 import RegistrationAlert from '@/components/booking/RegistrationAlert'
@@ -19,7 +19,7 @@ export default function CampDetailPage() {
   useEffect(() => {
     if (!id) return
     getCamp(id)
-      .then(data => { setCamp(data); Events.campDetailViewed(id) })
+      .then(data => { setCamp(data); Events.campDetailViewed(data.id) })
       .catch(() => setCamp(null))
       .finally(() => setLoading(false))
   }, [id])
@@ -137,6 +137,9 @@ export default function CampDetailPage() {
                           {' - '}
                           {new Date(s.end_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </p>
+                        {spotsLine(s) && (
+                          <p className={`text-xs mt-0.5 ${s.spots_available === 0 ? 'text-red-600' : 'text-green-700'}`}>{spotsLine(s)}</p>
+                        )}
                       </div>
                       <div className="flex items-center gap-3">
                         {s.price && <span className="font-semibold text-gray-900">${Math.round(s.price).toLocaleString()}</span>}

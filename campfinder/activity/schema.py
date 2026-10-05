@@ -135,6 +135,8 @@ class Session(BaseModel):
     length_weeks: float | None = None
     price: float | None = Field(default=None, description="Camps: session price. Recurring: lowest full-term price.")
     availability: Availability = "unknown"
+    spots_left: int | None = Field(default=None, description="Spots left, when the camp or our team has told us. Null means unknown, not full.")
+    spots_updated_at: datetime | None = Field(default=None, description="When spots_left was last set; quote it with the number.")
     full_season: bool = False
     calendar_url: str = Field(description="iCalendar file for this session; no API key needed.")
     # Recurring offerings (classes, lessons, leagues, after-school). Null for camps.

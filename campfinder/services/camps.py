@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 from uuid import UUID
 
+from campfinder.config import get_settings
 from campfinder.database import get_supabase
 from campfinder.models.camp import (
     AccreditationSummary,
@@ -22,15 +23,35 @@ TRUST_IMPORTANT_FIELDS = [
 ]
 
 
-def get_camp_detail(camp_id: UUID | str) -> CampDetail:
-    """The full camp record with sessions and trust summary. NotFound if missing or taken down."""
-    client = get_supabase()
-    cid = str(camp_id)
+def camp_url(camp: dict[str, Any]) -> str:
+    """The camp's page on the site: by slug when it has one, else by id."""
+    return f"{get_settings().frontend_url.rstrip('/')}/camps/{camp.get('slug') or camp['id']}"
 
-    rows = client.table("camps").select("*").eq("id", cid).execute().data
+
+def session_spots(s: dict[str, Any]) -> dict[str, Any]:
+    """The spots fields of a session row, ready for SessionSummary / SessionResponse."""
+    return {k: s.get(k) for k in ("spots_total", "spots_available", "spots_updated_at", "spots_source")}
+
+
+def find_camp_row(ref: UUID | str) -> dict[str, Any]:
+    """A live camp by id or slug. NotFound if missing or taken down."""
+    client = get_supabase()
+    ref = str(ref).strip()
+    try:
+        rows = client.table("camps").select("*").eq("id", str(UUID(ref))).execute().data
+    except ValueError:
+        rows = client.table("camps").select("*").eq("slug", ref.lower()).execute().data
     if not rows or rows[0].get("is_active") is False:  # taken down by its owner or the team
         raise NotFound("Camp not found")
-    camp = rows[0]
+    return rows[0]
+
+
+def get_camp_detail(ref: UUID | str) -> CampDetail:
+    """The full camp record with sessions and trust summary, by id or slug.
+    NotFound if missing or taken down."""
+    client = get_supabase()
+    camp = find_camp_row(ref)
+    cid = str(camp["id"])
 
     sessions = client.table("sessions").select("*").eq("camp_id", cid).order("start_date").execute().data or []
     field_sources = client.table("field_sources").select("*").eq("camp_id", cid).execute().data or []
@@ -48,12 +69,14 @@ def get_camp_detail(camp_id: UUID | str) -> CampDetail:
             price=float(s["price"]) if s.get("price") else None,
             full_season=s.get("full_season") or False,
             availability=s.get("availability", "unknown"),
+            **session_spots(s),
         )
         for s in sessions
     ]
 
     return CampDetail(
         id=camp["id"],
+        slug=camp.get("slug"),
         name=camp["name"],
         operator_name=camp.get("operator_name"),
         website_url=camp.get("website_url"),
@@ -116,7 +139,7 @@ def get_camp_detail(camp_id: UUID | str) -> CampDetail:
         updated_at=camp.get("updated_at"),
         sessions=session_summaries,
         trust_summary=trust,
-        detail_url=f"https://campfinder.com/camps/{cid}",
+        detail_url=camp_url(camp),
     )
 
 

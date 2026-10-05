@@ -48,7 +48,8 @@ curl -G https://<api-host>/api/activity/v1/sessions \
   -d starts_on_or_after=2027-07-06 -d ends_on_or_before=2027-07-10
 ```
 
-Each result pairs a `session` (dates, price, availability, `calendar_url`) with its
+Each result pairs a `session` (dates, price, availability, `spots_left` with `spots_updated_at`
+when the camp or our team has told us, `calendar_url`) with its
 `program` (provider, location, ages, price, logistics, `verification`, `registration_url`).
 
 ## Camps and year-round programs
