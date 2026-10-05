@@ -5,8 +5,11 @@ Owner confirmation, run by a person on the team.
     python -m campfinder.owners checked <camp> --by NAME      # you checked the listing against its sources
     python -m campfinder.owners send    <camp> --by NAME [--to EMAIL]
     python -m campfinder.owners status  <camp>                # emails sent, answers, and the change log
+    python -m campfinder.owners spots   <camp> <session> <left> [--total N] --by NAME [--from-owner]
 
-<camp> is the camp's id, its dataset slug (data/camps/*.json) or its exact name.
+<camp> is the camp's id, its slug or its exact name. <session> is the session's id, exact
+name or start date (YYYY-MM-DD). `spots` records spots left (0 marks the session full) and
+writes it to the change log; --from-owner when the owner told you, so parents see who said it.
 Email goes out only when EMAIL_MODE=resend and RESEND_API_KEY are set; otherwise
 `send` records the email and prints the link for you to send by hand.
 """
@@ -32,6 +35,13 @@ def main(argv: list[str] | None = None) -> int:
             s.add_argument("--by", required=True, help="your name, for the change log")
         if name in ("preview", "send"):
             s.add_argument("--to", help="owner's email, if not the camp's contact")
+    s = sub.add_parser("spots")
+    s.add_argument("camp")
+    s.add_argument("session")
+    s.add_argument("left", type=int, help="spots left; 0 means full")
+    s.add_argument("--total", type=int, help="total spots, if known")
+    s.add_argument("--by", required=True, help="your name, for the change log")
+    s.add_argument("--from-owner", action="store_true", help="the camp owner gave this number")
     args = p.parse_args(argv)
 
     try:
@@ -42,6 +52,12 @@ def main(argv: list[str] | None = None) -> int:
             print("\n(preview only: nothing recorded or sent; the link above will not work)")
         elif args.cmd == "checked":
             print(f"{camp['name']}: {service.mark_checked(camp, args.by)}")
+        elif args.cmd == "spots":
+            session = service.find_session(camp, args.session)
+            row = service.set_spots(camp, session, args.left, total=args.total, actor=args.by,
+                                    source="owner" if args.from_owner else "team")
+            total = f" of {row['spots_total']}" if row.get("spots_total") is not None else ""
+            print(f"{camp['name']}, {session.get('name') or session['start_date']}: {args.left}{total} left ({row['availability']})")
         elif args.cmd == "send":
             prepared = asyncio.run(service.send(camp, sent_by=args.by, to=args.to))
             link = f"{get_settings().frontend_url.rstrip('/')}/owners/confirm/{prepared.token}"

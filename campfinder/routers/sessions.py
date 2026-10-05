@@ -9,6 +9,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 from campfinder.database import get_supabase
 from campfinder.models.session import SessionResponse
+from campfinder.services.camps import session_spots
 
 router = APIRouter()
 
@@ -52,6 +53,7 @@ async def get_sessions(
             price=float(r["price"]) if r.get("price") else None,
             full_season=r.get("full_season") or False,
             availability=r.get("availability", "unknown"),
+            **session_spots(r),
             created_at=r.get("created_at"),
             updated_at=r.get("updated_at"),
         )

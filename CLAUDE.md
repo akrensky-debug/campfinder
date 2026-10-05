@@ -34,7 +34,7 @@ Done: household sharing, real camp data, year-round activities, owner confirmati
 listing change log, registration day, registration alerts, camp logic moved into services, Phase 1 removals
 (Pro plan, email gate, lead capture).
 
-1. Camp listing fields (slug, spots); family data export. (Phase 1 removals are done in
+1. Family data export. (Listing fields, slug and spots, are done. Phase 1 removals are done in
    code; the old `leads` table and `camp_ownership` Pro columns are still in the database
    until Andrew decides to drop them.)
 2. `tests/booking/fakes.py` is a second copy of the fake Supabase; fold it into `tests/fakes.py`.

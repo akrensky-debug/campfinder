@@ -2,6 +2,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 export interface CampSearchResult {
   id: string
+  slug?: string | null
   name: string
   city: string
   state: string
@@ -41,6 +42,21 @@ export interface SessionSummary {
   price: number | null
   availability: string
   full_season: boolean
+  spots_total?: number | null
+  spots_available?: number | null   // null: unknown, not full
+  spots_updated_at?: string | null
+  spots_source?: 'owner' | 'team' | 'import' | null
+}
+
+/** "3 spots left · from the camp, Oct 5" — or null when we don't know. */
+export function spotsLine(s: SessionSummary): string | null {
+  if (s.spots_available == null) return null
+  const n = s.spots_available
+  const what = n === 0 ? 'No spots left' : `${n} spot${n === 1 ? '' : 's'} left`
+  const who = s.spots_source === 'owner' ? 'from the camp' : s.spots_source === 'team' ? 'checked by our team' : null
+  const when = s.spots_updated_at
+    ? new Date(s.spots_updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : null
+  return [what, [who, when].filter(Boolean).join(', ')].filter(Boolean).join(' · ')
 }
 
 export interface TrustSummary {
@@ -94,7 +110,7 @@ export async function searchCamps(params: {
 }
 
 export async function getCamp(id: string): Promise<CampDetail> {
-  const res = await fetch(`${API}/api/v1/camps/${id}`, { cache: 'no-store' })
+  const res = await fetch(`${API}/api/v1/camps/${encodeURIComponent(id)}`, { cache: 'no-store' })
   if (!res.ok) throw new Error('Camp not found')
   return res.json()
 }

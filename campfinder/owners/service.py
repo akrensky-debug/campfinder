@@ -65,7 +65,7 @@ def _plain(value: Any) -> Any:
 # ---------------------------------------------------------------------------
 
 def find_camp(ref: str) -> dict[str, Any]:
-    """A camp by id, by dataset slug, or by exact name (case-insensitive)."""
+    """A camp by id, by slug, or by exact name (case-insensitive)."""
     sb = get_supabase()
     ref = ref.strip()
     ids = [ref]
@@ -74,6 +74,8 @@ def find_camp(ref: str) -> dict[str, Any]:
     except ValueError:
         ids = [str(uuid.uuid5(SLUG_NAMESPACE, f"camp:{ref}"))]
     rows = sb.table("camps").select("*").in_("id", ids).execute().data or []
+    if not rows and ids[0] != ref:
+        rows = sb.table("camps").select("*").eq("slug", ref.lower()).execute().data or []
     if not rows:
         rows = [c for c in sb.table("camps").select("*").execute().data or []
                 if c["name"].strip().lower() == ref.lower()]
@@ -94,7 +96,8 @@ def build_snapshot(camp: dict[str, Any], sessions: list[dict[str, Any]]) -> dict
         "camp": {f: _plain(camp.get(f)) for f in CONFIRMED_FIELDS},
         "sessions": [
             {"name": s.get("name"), "start_date": str(s["start_date"]), "end_date": str(s["end_date"]),
-             "price": _plain(s.get("price")), "availability": s.get("availability")}
+             "price": _plain(s.get("price")), "availability": s.get("availability"),
+             "spots_available": s.get("spots_available")}
             for s in sorted(sessions, key=lambda s: (str(s["start_date"]), s.get("name") or ""))
         ],
     }
@@ -128,6 +131,44 @@ def record_change(camp_id: str, field_name: str, changed_by: str, actor: str | N
 def changes_for(camp_id: str, limit: int = 50) -> list[dict[str, Any]]:
     return (get_supabase().table("listing_changes").select("*").eq("camp_id", camp_id)
             .order("created_at", desc=True).limit(limit).execute().data or [])
+
+
+# ---------------------------------------------------------------------------
+# Spots left
+# ---------------------------------------------------------------------------
+
+def find_session(camp: dict[str, Any], ref: str) -> dict[str, Any]:
+    """One of the camp's sessions by id, exact name or start date (YYYY-MM-DD)."""
+    ref = ref.strip()
+    matches = [s for s in _sessions(camp["id"])
+               if ref in (str(s["id"]), str(s["start_date"])) or (s.get("name") or "").lower() == ref.lower()]
+    if len(matches) != 1:
+        raise ConfirmationError(f"{len(matches) or 'No'} sessions of {camp['name']} match {ref!r}; use the session id")
+    return matches[0]
+
+
+def set_spots(camp: dict[str, Any], session: dict[str, Any], available: int, *, total: int | None = None,
+              source: Literal["owner", "team"] = "team", actor: str | None = None,
+              raw_message: str | None = None) -> dict[str, Any]:
+    """Record spots left on a session, as told by the owner or checked by the team. 0 also marks
+    the session full; spots coming back reopens a full one. Every change goes in the change log."""
+    total = total if total is not None else session.get("spots_total")
+    if available < 0 or (total is not None and (total < 0 or available > total)):
+        raise ConfirmationError(f"Spots must be between 0 and {total if total is not None else 'the total'}")
+    availability = session.get("availability") or "unknown"
+    if available == 0:
+        availability = "full"
+    elif availability in ("full", "unknown"):
+        availability = "open"
+    values = {"spots_available": available, "spots_total": total, "availability": availability,
+              "spots_updated_at": _now().isoformat(), "spots_source": source}
+    get_supabase().table("sessions").update(values).eq("id", str(session["id"])).execute()
+    record_change(camp["id"], f"sessions.{session['id']}.spots_available", "owner_email" if source == "owner" else "team",
+                  actor, old_value={"spots_available": session.get("spots_available"),
+                                    "availability": session.get("availability")},
+                  new_value={"spots_available": available, "spots_total": total, "availability": availability},
+                  raw_message=raw_message)
+    return {**session, **values}
 
 
 # ---------------------------------------------------------------------------
