@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from campfinder.agent import runner
 from campfinder.agent.tools import ALL_TOOLS
 from tests.booking.conftest import CAMP, OWNER, SESSION, h, window
-from tests.booking.fakes import Block, FakeAnthropic, FakeSupabase
+from tests.fakes import Block, FakeAnthropic, FakeSupabase
 
 KIT_SECRETS = ("Peanuts", "XJ-55521", "401-555", "2018-04-02", "Rosa Silva", "Blue Cross")
 

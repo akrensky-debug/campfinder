@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from campfinder.booking import providers
 from campfinder.booking.providers.sandbox import SandboxProvider
 from tests.booking.conftest import CAMP, OWNER, SESSION, SESSION_2, STRANGER, h
-from tests.booking.fakes import FakeSupabase
+from tests.fakes import FakeSupabase
 
 
 @pytest.fixture

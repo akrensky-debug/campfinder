@@ -12,7 +12,7 @@ import campfinder.auth as auth
 import campfinder.database as database
 from campfinder.booking import reminders
 from campfinder.config import get_settings
-from tests.booking.fakes import FakeSupabase
+from tests.fakes import FakeSupabase
 
 OWNER, STRANGER = "u-owner", "u-stranger"
 CAMP = "11111111-1111-1111-1111-111111111111"

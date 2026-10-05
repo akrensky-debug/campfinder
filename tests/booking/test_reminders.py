@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from campfinder.booking import reminders
 from campfinder.booking.service import local_today, local_tz
 from tests.booking.conftest import CAMP, OTHER_CAMP, OWNER, SESSION, h
-from tests.booking.fakes import FakeSupabase
+from tests.fakes import FakeSupabase
 
 
 def opens_on(days: int) -> str:
