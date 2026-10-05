@@ -31,15 +31,20 @@ Read this first, every session. Updated 4 October 2026 (order of work); 3 Octobe
 ## Order of work
 
 Done: household sharing, real camp data, year-round activities, owner confirmation with the
-listing change log.
+listing change log, registration day, registration alerts, camp logic moved into services.
 
-1. Land registration day (`claude/booking-registration`, #14), then registration alerts
-   (`claude/registration-alerts`, stacked on it). `tests/booking/fakes.py` is a second copy of
-   the fake Supabase; fold it into `tests/fakes.py` once both land.
-2. Decouple callers from routers: move camp search, detail, compare and plan logic into
-   services, so the agent, MCP server and Activity API don't depend on router signatures.
-3. Phase 1 removals (paid Pro plan, email gate, lead selling); camp listing fields (slug,
+1. Phase 1 removals (paid Pro plan, email gate, lead selling); camp listing fields (slug,
    spots); family data export.
+2. `tests/booking/fakes.py` is a second copy of the fake Supabase; fold it into `tests/fakes.py`.
+
+## Where code goes
+
+- Camp search, detail, compare and plan live in `campfinder/services/` (`search.run_search`,
+  `camps.get_camp_detail`, `compare.compare_camps`, `plan.build_summer_plan`), with request and
+  response models in `campfinder/models/`. Routers only call them. Services raise
+  `services.errors.NotFound`, which the API turns into a 404 and the tools into a message.
+- Only `campfinder/routers/` and `main.py` may import a router; `tests/test_camp_services.py`
+  fails otherwise.
 
 ## Schema
 

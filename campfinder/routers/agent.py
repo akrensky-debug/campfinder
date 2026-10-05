@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import secrets
-from datetime import date, datetime, timedelta, timezone
 from typing import Any, AsyncIterator
 from uuid import UUID
 
@@ -12,7 +11,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
-from campfinder.activity import ics as ics_extended
 from campfinder.agent.runner import run_agent
 from campfinder.agent.tools import list_family_events
 from campfinder.household.context import acting_as
@@ -20,6 +18,7 @@ from campfinder.household.service import actor_for
 from campfinder.auth import ALL_ROLES, FamilyAccess, active_membership, authorize_family, family_access, optional_user, required_user
 from campfinder.kit.service import delete_family_data
 from campfinder.database import get_supabase
+from campfinder.services.calendar import build_ics
 
 router = APIRouter()
 
@@ -173,52 +172,3 @@ async def family_calendar(token: str) -> Response:
         media_type="text/calendar; charset=utf-8",
         headers={"Content-Disposition": 'inline; filename="campfinder.ics"', "Cache-Control": "private, no-store"},
     )
-
-
-def _ics_escape(text: str) -> str:
-    return text.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
-
-
-def _ics_fold(line: str) -> str:
-    """Fold lines longer than 75 octets, per RFC 5545."""
-    out, current = [], b""
-    for ch in line:
-        enc = ch.encode()
-        if len(current) + len(enc) > (75 if not out else 74):
-            out.append(current.decode())
-            current = b""
-        current += enc
-    out.append(current.decode())
-    return "\r\n ".join(out)
-
-
-def build_ics(events: list[dict[str, Any]]) -> str:
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    lines = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//CampFinder//Family Calendar//EN",
-        "CALSCALE:GREGORIAN",
-        "X-WR-CALNAME:Family plans (CampFinder)",
-        "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
-    ]
-    lines += ics_extended.vtimezone_lines(events)
-    for e in events:
-        if ics_extended.needs_extended_ics(e):  # recurring/timed classes and reminders
-            lines += ics_extended.vevent_lines(e, stamp)
-            continue
-        start = date.fromisoformat(str(e["start_date"]))
-        end = date.fromisoformat(str(e["end_date"])) + timedelta(days=1)  # DTEND is exclusive
-        lines += [
-            "BEGIN:VEVENT",
-            f"UID:{e['id']}@campfinder",
-            f"DTSTAMP:{stamp}",
-            f"DTSTART;VALUE=DATE:{start:%Y%m%d}",
-            f"DTEND;VALUE=DATE:{end:%Y%m%d}",
-            f"SUMMARY:{_ics_escape(e['title'])}",
-        ]
-        if e.get("notes"):
-            lines.append(f"DESCRIPTION:{_ics_escape(e['notes'])}")
-        lines.append("END:VEVENT")
-    lines.append("END:VCALENDAR")
-    return "\r\n".join(_ics_fold(line) for line in lines) + "\r\n"

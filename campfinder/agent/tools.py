@@ -23,11 +23,14 @@ from pydantic import BaseModel, Field, ValidationError
 
 from campfinder.activity.sources import find_sessions
 from campfinder.database import get_supabase
+from campfinder.models.compare import CompareRequest
 from campfinder.models.plan import PlanRequest, PlanSessionInput
-from campfinder.routers.camps import get_camp
-from campfinder.routers.compare import CompareRequest, compare_camps
-from campfinder.routers.planner import build_summer_plan
-from campfinder.routers.search import SearchRequest, search
+from campfinder.models.search import SearchRequest
+from campfinder.services.camps import get_camp_detail
+from campfinder.services.compare import compare_camps
+from campfinder.services.errors import ServiceError
+from campfinder.services.plan import build_summer_plan
+from campfinder.services.search import run_search
 
 
 class ToolError(Exception):
@@ -189,7 +192,7 @@ async def search_camps_tool(inp: SearchCampsInput) -> ToolOutput:
         **inp.model_dump(exclude={"weeks"}),
         weeks=[w.isoformat() for w in inp.weeks] if inp.weeks else None,
     )
-    res = await search(req)
+    res = await run_search(req)
     camps = [r.model_dump(mode="json") for r in res.results]
     if not camps:
         _record_unmet_demand(inp)
@@ -259,14 +262,14 @@ async def find_sessions_tool(inp: FindSessionsInput) -> ToolOutput:
 
 
 async def get_camp_details_tool(inp: GetCampDetailsInput) -> ToolOutput:
-    detail = (await get_camp(inp.camp_id)).model_dump(mode="json", exclude_none=True)
+    detail = get_camp_detail(inp.camp_id).model_dump(mode="json", exclude_none=True)
     for noisy in ("gallery_image_urls", "hero_image_url", "created_at", "updated_at"):
         detail.pop(noisy, None)
     return ToolOutput(content=detail, ui={"type": "camp_detail", "camp": detail})
 
 
 async def compare_camps_tool(inp: CompareCampsInput) -> ToolOutput:
-    res = await compare_camps(CompareRequest(**inp.model_dump()))
+    res = compare_camps(CompareRequest(**inp.model_dump()))
     data = res.model_dump(mode="json")
     return ToolOutput(content=data, ui={"type": "comparison", **data})
 
@@ -274,7 +277,7 @@ async def compare_camps_tool(inp: CompareCampsInput) -> ToolOutput:
 async def build_summer_plan_tool(inp: BuildSummerPlanInput) -> ToolOutput:
     if inp.summer_end <= inp.summer_start:
         raise ToolError("summer_end must be after summer_start")
-    res = await build_summer_plan(PlanRequest(
+    res = build_summer_plan(PlanRequest(
         camp_sessions=[PlanSessionInput(**s.model_dump()) for s in inp.sessions],
         summer_start=inp.summer_start,
         summer_end=inp.summer_end,
@@ -477,5 +480,7 @@ async def run_tool(name: str, raw_input: Any, family_id: str | None = None) -> T
         if spec.family or spec.family_optional:
             return await spec.fn(inp, family_id)
         return await spec.fn(inp)
-    except HTTPException as e:
+    except ServiceError as e:
+        raise ToolError(e.detail) from e
+    except HTTPException as e:  # family and booking services still raise these
         raise ToolError(str(e.detail)) from e
