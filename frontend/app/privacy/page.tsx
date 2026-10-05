@@ -55,7 +55,7 @@ export default function PrivacyPage() {
       <ul>
         <li>Supabase (database and sign-in), Railway (servers) and Vercel (website hosting)</li>
         <li>Anthropic (the AI model behind the planning chat)</li>
-        <li>Resend (email) and Stripe (payments by camps, not parents)</li>
+        <li>Resend (email)</li>
       </ul>
       <p>
         We share information with a camp only when you ask us to, and with authorities only when the

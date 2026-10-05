@@ -99,29 +99,6 @@ export async function getCamp(id: string): Promise<CampDetail> {
   return res.json()
 }
 
-export async function captureLead(data: {
-  parent_email: string
-  first_name?: string
-  parent_zip?: string
-  child_age_band?: string
-  weeks_needed?: number
-  interests?: string[]
-  target_camp_id?: string
-  search_context?: Record<string, unknown>
-  message?: string
-  consent_flag?: boolean
-  source?: string
-  matched_camp_ids?: string[]
-}): Promise<{ id: string }> {
-  const res = await fetch(`${API}/api/v1/leads`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  if (!res.ok) throw new Error('Failed to save')
-  return res.json()
-}
-
 export async function submitCamp(data: {
   name: string
   city: string
