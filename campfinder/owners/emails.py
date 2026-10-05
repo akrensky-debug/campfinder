@@ -12,7 +12,7 @@ from datetime import date
 from typing import Any
 
 from campfinder.config import get_settings
-from campfinder.household.mailer import Email
+from campfinder.mailer import Email
 
 LABELS = {
     "name": "Name", "city": "Town", "state": "State", "camp_type": "Type", "age_min": "Youngest age",
@@ -61,12 +61,14 @@ def _session_line(s: dict[str, Any]) -> str:
 
 
 def listing_confirmation(to: str, first_name: str | None, camp: dict[str, Any], snapshot: dict[str, Any],
-                         token: str) -> Email:
+                         token: str, waiting: int = 0) -> Email:
     page = f"{_site()}/owners/confirm/{token}"
     camp_url = f"{_site()}/camps/{camp['id']}"
     season = upcoming_season()
     rows, sessions = _rows(snapshot), snapshot["sessions"]
     old = camp.get("season_year") and int(camp["season_year"]) < season
+    asked = (f" {waiting} {'family has' if waiting == 1 else 'families have'} asked us to tell them."
+             if waiting else "")
     old_note = (f"The dates below are from your {camp['season_year']} season, which is what your website "
                 f"shows now. Send {season} dates whenever you have them.") if old else ""
 
@@ -80,7 +82,7 @@ def listing_confirmation(to: str, first_name: str | None, camp: dict[str, Any], 
         f"See the page: {camp_url}", "",
         "Is anything wrong? Reply to this email with the fix and a person will change it.",
         f"If it's all right, tell us here: {page}",
-        f"When does {season} registration open? Reply and we'll let interested parents know.", "",
+        f"When does {season} registration open? Reply and we'll let interested parents know.{asked}", "",
         "No login, no fee to be listed, nothing to install. If you'd rather not be listed, "
         f"take it down here: {page}", "",
         f"Thanks,\n{_signature()}",
@@ -99,7 +101,8 @@ def listing_confirmation(to: str, first_name: str | None, camp: dict[str, Any], 
         + f"<p><a href='{_e(camp_url)}'>See the page</a></p>"
         f"<p><strong>Is anything wrong?</strong> Reply to this email with the fix and a person will change it.<br>"
         f"<strong>All right?</strong> <a href='{_e(page)}'>Tell us it looks right</a>.<br>"
-        f"<strong>When does {season} registration open?</strong> Reply and we'll let interested parents know.</p>"
+        f"<strong>When does {season} registration open?</strong> Reply and we'll let interested parents "
+        f"know.{_e(asked)}</p>"
         f"<p style='color:#666'>No login, no fee to be listed, nothing to install. If you'd rather not be "
         f"listed, <a href='{_e(page)}'>take it down here</a>.</p>"
         f"<p>Thanks,<br>{_e(_signature())}</p>"

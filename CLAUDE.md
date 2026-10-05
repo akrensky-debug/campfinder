@@ -1,6 +1,6 @@
 # Working on CampFinder
 
-Read this first, every session. Updated 3 October 2026: `main` is the trunk. This replaces the
+Read this first, every session. Updated 4 October 2026 (order of work); 3 October: `main` is the trunk. This replaces the
 1 October rule (on `claude/product-plan`) that made `product-plan` the only line of work.
 
 ## Branches
@@ -12,7 +12,8 @@ Read this first, every session. Updated 3 October 2026: `main` is the trunk. Thi
   recent `git log origin/main`. If another session owns the area, ask Andrew.
 - `claude/product-plan` is **retired and read-only**: a source to port from, not a base. Its
   migrations runner, listing tool, product docs and the allergy fix are already on `main`.
-  Still to port: owner confirmation, listing change log, registration alerts, family data export.
+  Owner confirmation and the listing change log are on `main`; registration alerts are built
+  fresh on `main`'s booking tables. Still to port: family data export.
   Its `families`/`children`/`child_medical` schema is **not** coming over: `main` keeps its own
   family model (`families.profile`, the encrypted info kit, household members).
 - Retired, merged or superseded: `claude/beautiful-hawking-yxgc0q`,
@@ -24,20 +25,21 @@ Read this first, every session. Updated 3 October 2026: `main` is the trunk. Thi
 `README.md` (setup, endpoints), `docs/PRODUCT.md` (mission, trust rules), `docs/ROADMAP.md`
 (order of work), `docs/decisions/company.md` and `docs/decisions/agents.md` (settled rules),
 `docs/DEPLOY.md`, `docs/household.md`, `docs/activity-api.md`, `docs/chatgpt-app.md`,
-`docs/claude-connector.md`, `docs/ingest-test-set.md`.
+`docs/claude-connector.md`, `docs/ingest-test-set.md`, `docs/owner-confirmation.md`,
+`docs/booking-strategy.md`, `docs/registration-alerts.md`.
 
 ## Order of work
 
-1. Land open PRs: household sharing (#4), then `claude/real-camp-data` and
-   `claude/year-round-activities`. Both are built on `main`. Year-round brings its own
-   `tests/fakes.py`, so whichever merges second must reconcile it with the household one.
-2. Owner confirmation by email ("here is your listing, reply if anything is wrong"), with the
-   listing change log. ROADMAP Phase 2 item 1, and nothing on the MCP server can say "confirmed
-   by the owner" until it exists.
-3. Decouple callers from routers: move camp search, detail, compare and plan logic into
+Done: household sharing, real camp data, year-round activities, owner confirmation with the
+listing change log.
+
+1. Land registration day (`claude/booking-registration`, #14), then registration alerts
+   (`claude/registration-alerts`, stacked on it). `tests/booking/fakes.py` is a second copy of
+   the fake Supabase; fold it into `tests/fakes.py` once both land.
+2. Decouple callers from routers: move camp search, detail, compare and plan logic into
    services, so the agent, MCP server and Activity API don't depend on router signatures.
-4. Phase 1 removals (paid Pro plan, email gate, lead selling); camp listing fields (slug,
-   spots, registration opening); registration alerts; family data export.
+3. Phase 1 removals (paid Pro plan, email gate, lead selling); camp listing fields (slug,
+   spots); family data export.
 
 ## Schema
 

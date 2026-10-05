@@ -23,8 +23,9 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 
+from campfinder.alerts import service as alerts
 from campfinder.database import get_supabase
-from campfinder.household.mailer import Email, get_mailer
+from campfinder.mailer import Email, get_mailer
 from campfinder.owners import emails
 
 CONFIRMATION_TTL = timedelta(days=30)
@@ -166,7 +167,9 @@ def prepare(camp: dict[str, Any], *, to: str | None = None) -> Prepared:
         first_name = contact["name"].split()[0]
     _, snapshot = current_snapshot(camp["id"])
     token = secrets.token_urlsafe(24)
-    return Prepared(camp, snapshot, emails.listing_confirmation(recipient, first_name, camp, snapshot, token), token)
+    waiting = alerts.waiting_count(camp["id"])
+    return Prepared(camp, snapshot, emails.listing_confirmation(recipient, first_name, camp, snapshot, token,
+                                                                waiting=waiting), token)
 
 
 async def send(camp: dict[str, Any], *, sent_by: str, to: str | None = None) -> Prepared:

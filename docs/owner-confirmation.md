@@ -31,7 +31,7 @@ Every step is written to `listing_changes` with who did it and why (company rule
 
 ## Email
 
-Email goes out only when `HOUSEHOLD_EMAIL_MODE=resend` and `RESEND_API_KEY` are set. Otherwise
+Email goes out only when `EMAIL_MODE=resend` and `RESEND_API_KEY` are set. Otherwise
 `send` records the email, notes in the change log that it wasn't emailed, and prints the link for
 you to send by hand.
 

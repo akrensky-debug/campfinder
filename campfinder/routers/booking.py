@@ -16,6 +16,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Response
 
 from campfinder.auth import authorize_family, optional_user, required_user
+from campfinder.alerts import service as alerts
 from campfinder.booking import bookings, forms, reminders, service
 from campfinder.booking.models import (
     PackageConfirm, PackagePreview, PackageRequest, RegisterChecklist, Registration, RegistrationCreate,
@@ -42,6 +43,7 @@ async def camp_registration(camp_id: UUID, session_id: UUID | None = None) -> di
         "closes_at": window.get("closes_at") if window else None,
         "verified": bool(window and window.get("verified")),
         "source_url": window.get("source_url") if window else None,
+        "alerts_waiting": alerts.waiting_count(str(camp_id)),  # parents who asked to hear when it opens
         "form": form.model_dump(mode="json"),
     }
 

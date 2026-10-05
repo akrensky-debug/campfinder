@@ -20,6 +20,8 @@ The database and sign-in are the Supabase project `cdzzmyambonhkhsoltfw` (us-eas
 | `KIT_ENCRYPTION_KEY` | `python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"` | The info kit |
 | `CORS_ORIGINS` | Optional. Comma-separated; defaults to `FRONTEND_URL` and `http://localhost:3000` | Browser access |
 | `RESEND_API_KEY` | Optional. Without it, email is logged, not sent | Email |
+| `EMAIL_MODE` | Optional. `log` (default, sends nothing), `resend` or `off`. One switch for all email; the older `HOUSEHOLD_EMAIL_MODE` and `BOOKING_EMAIL_MODE` still work | Email |
+| `BOOKING_CRON_SECRET` | Optional. Any long random string; turns on the registration reminder and alert cron endpoints | Registration reminders and alerts |
 | `OWNER_EMAIL_SIGNATURE`, `OWNER_REPLY_TO` | Optional. Sign-off and reply address for camp owner emails | Owner confirmation |
 | `OPENAI_APPS_CHALLENGE`, `CHATGPT_WIDGET_DOMAIN` | From the OpenAI dashboard, when submitting the ChatGPT app | ChatGPT app review |
 

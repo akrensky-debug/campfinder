@@ -84,7 +84,7 @@ authorization or the camp's terms for the parent, or let the AI agent share, boo
 - **Reminders:** an email N days before opening (default 7, 1 and the morning of) and
   before payment and form deadlines (3 days and on the day). At most one email per family
   per run. It names camps and dates only, never kit contents. It logs by default and sends
-  real email only with `BOOKING_EMAIL_MODE=resend`. Dry run:
+  real email only with `EMAIL_MODE=resend`. Dry run:
   `python -m campfinder.booking.reminders --dry-run --date YYYY-MM-DD`.
 - **Register-now checklist** (`/register/{camp}`): deep link, countdown, a Google Calendar
   alarm, the steps, and what the form asks with "in your kit / missing / on the camp's
@@ -235,7 +235,7 @@ This supports "never scrape", not loosening it.
 ## Decisions for the founder
 
 1. Approve Stage 1 for launch: apply `schema_booking.sql`, set the reminder cron, and
-   choose when to switch `BOOKING_EMAIL_MODE` to `resend`.
+   choose when to switch `EMAIL_MODE` to `resend`.
 2. Approve outreach to Pike13 (partner app, trial access) and DaySmart (sandbox and
    partnership). Nothing has been sent.
 3. Pick a pilot metro and 10–20 camps for Stage 2. Who maps their forms: our team or the

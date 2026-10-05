@@ -129,9 +129,19 @@ async def test_find_camp_by_slug_and_name(camp, db):
 
 
 async def test_log_mode_records_that_nothing_was_emailed(camp, db):
-    from campfinder.household import mailer
+    from campfinder import mailer
     mailer.set_mailer(mailer.LogMailer())
     service.mark_checked(camp, "Andrew")
     await service.send(service.find_camp(CAMP_ID), sent_by="Andrew")
     assert any(isinstance(c.get("new_value"), dict) and c["new_value"].get("not_emailed")
                for c in db.tables["listing_changes"])
+
+
+async def test_email_counts_families_waiting_for_registration(camp, db, outbox):
+    db.table("registration_alerts").insert([
+        {"camp_id": CAMP_ID, "email": "a@example.com", "token": "t1", "confirmed_at": "2026-10-01T00:00:00+00:00"},
+        {"camp_id": CAMP_ID, "email": "b@example.com", "token": "t2", "confirmed_at": "2026-10-01T00:00:00+00:00"},
+        {"camp_id": CAMP_ID, "email": "c@example.com", "token": "t3"},   # never confirmed: not counted
+    ]).execute()
+    email = service.prepare(service.find_camp(CAMP_ID)).email
+    assert "2 families have asked us to tell them." in email.text and "c@example.com" not in email.text

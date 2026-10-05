@@ -6,6 +6,7 @@ import { getCamp, type CampDetail } from '@/lib/api'
 import { Events, captureAssistantArrival } from '@/lib/analytics'
 import TrustBadge from '@/components/TrustBadge'
 import RequestInfoModal from '@/components/RequestInfoModal'
+import RegistrationAlert from '@/components/booking/RegistrationAlert'
 
 export default function CampDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -109,6 +110,8 @@ export default function CampDetailPage() {
           </div>
         </div>
       </div>
+
+      <RegistrationAlert campId={camp.id} campName={camp.name} />
 
       <div className="grid md:grid-cols-3 gap-4">
         {/* Main content */}

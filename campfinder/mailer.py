@@ -1,9 +1,11 @@
 """
-Outgoing household email (invites, reminders, weekly summaries).
+All outgoing email: household invites and reminders, registration reminders and alerts,
+camp owner confirmations. One switch decides whether real email goes out.
 
-HOUSEHOLD_EMAIL_MODE picks the transport:
+EMAIL_MODE picks the transport (the older HOUSEHOLD_EMAIL_MODE and BOOKING_EMAIL_MODE
+are still read, in that order, when EMAIL_MODE is unset):
   log     (default) log who it was for and the subject, send nothing (bodies hold
-          invite links, so they are not logged)
+          private links, so they are not logged)
   resend  send through Resend (needs RESEND_API_KEY)
   off     drop silently
 Tests swap in a MemoryMailer with set_mailer(). Real email only goes out when the
@@ -37,7 +39,7 @@ class LogMailer:
     """Sends nothing and says so: callers report "not emailed" and reminders aren't marked sent."""
 
     async def send(self, email: Email) -> bool:
-        log.info("email not sent (HOUSEHOLD_EMAIL_MODE=log) to=%s subject=%r", email.to, email.subject)
+        log.info("email not sent (EMAIL_MODE=log) to=%s subject=%r", email.to, email.subject)
         return False
 
 
@@ -80,14 +82,21 @@ class ResendMailer:
 _mailer: Mailer | None = None
 
 
+def email_mode() -> str:
+    for name in ("EMAIL_MODE", "HOUSEHOLD_EMAIL_MODE", "BOOKING_EMAIL_MODE"):
+        if os.environ.get(name):
+            return os.environ[name].strip().lower()
+    return "log"
+
+
 def get_mailer() -> Mailer:
     global _mailer
     if _mailer is None:
-        mode = os.environ.get("HOUSEHOLD_EMAIL_MODE", "log").lower()
+        mode = email_mode()
         key = os.environ.get("RESEND_API_KEY", "")
         if mode == "resend":
             if not key:
-                log.error("HOUSEHOLD_EMAIL_MODE=resend but RESEND_API_KEY is not set: no email will be sent")
+                log.error("EMAIL_MODE=resend but RESEND_API_KEY is not set: no email will be sent")
                 _mailer = OffMailer()
             else:
                 _mailer = ResendMailer(key, os.environ.get("EMAIL_FROM", "CampFinder <hello@campfinder.com>"))

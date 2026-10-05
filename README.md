@@ -68,8 +68,8 @@ The API is now running at `http://localhost:8000`.
 Owners invite a co-parent, grandparent, nanny or carpool parent with a role, and the
 assistant turns the plan into jobs that each go to one person, with email reminders and a
 per-person calendar feed. Roles, setup, reminder scheduling and email settings
-(`HOUSEHOLD_EMAIL_MODE` is `log` by default, so nothing is sent until you choose
-`resend`) are in `docs/household.md`. Tests: `python -m pytest`.
+(`EMAIL_MODE` is `log` by default, so nothing is sent until you choose `resend`; it
+covers every kind of email) are in `docs/household.md`. Tests: `python -m pytest`.
 
 ### Parent sign-in and the info kit
 
@@ -104,18 +104,20 @@ register and pay on the camp's own site; nothing is shared, booked or paid witho
 explicit confirm, and the agent can only propose. Strategy and legal review list:
 `docs/booking-strategy.md`.
 
-```bash
-psql $DATABASE_URL -f schema_booking.sql
-```
+Tables come from `migrations/0010_booking.sql` (`python -m campfinder.migrate`).
 
 ```
-BOOKING_EMAIL_MODE=log      # log (default, sends nothing) | resend | off
-BOOKING_CRON_SECRET=        # enables POST /api/v1/internal/registration-reminders/run
+EMAIL_MODE=log              # log (default, sends nothing) | resend | off. All email, not just booking.
+BOOKING_CRON_SECRET=        # enables the reminder and alert cron endpoints
 REMINDER_TZ=America/New_York
 BOOKING_PROVIDERS=          # sandbox booking prototype; empty = off. Only sandbox providers exist.
 ```
 
 Reminders: `python -m campfinder.booking.reminders --dry-run [--date YYYY-MM-DD]`.
+
+Any parent, no account, can ask to be emailed when a camp's registration opens (a box on
+the camp page; double opt-in, one-click stop). Run `python -m campfinder.alerts` hourly.
+Details: `docs/registration-alerts.md`.
 Tests: `pip install pytest pytest-asyncio && python -m pytest`.
 
 ---

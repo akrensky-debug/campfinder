@@ -17,7 +17,7 @@ from campfinder.auth import ALL_ROLES, FULL_PLAN, family_access, optional_user, 
 from campfinder.config import get_settings
 from campfinder.database import get_supabase
 from campfinder.household import service
-from campfinder.household.mailer import Email, get_mailer
+from campfinder.mailer import Email, get_mailer
 from campfinder.household.models import (
     AssignRequest, AuditEntry, GenerateRequest, Household, InviteCreate, InviteCreated, InvitePreview, Member,
     MemberUpdate, MyPrefs, Task, TaskCreate, TaskUpdate,
