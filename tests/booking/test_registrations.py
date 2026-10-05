@@ -6,7 +6,7 @@ from typing import Any
 from fastapi.testclient import TestClient
 
 from tests.booking.conftest import CAMP, OTHER_CAMP, OWNER, SESSION, STRANGER, h, window
-from tests.booking.fakes import FakeSupabase
+from tests.fakes import FakeSupabase
 
 
 def regs(client: TestClient, fam: dict[str, Any]) -> str:

@@ -13,7 +13,7 @@ from campfinder import mailer
 from campfinder.alerts import service
 from campfinder.booking.service import local_tz
 from tests.booking.conftest import CAMP, OTHER_CAMP, SESSION
-from tests.booking.fakes import FakeSupabase
+from tests.fakes import FakeSupabase
 
 SIGNUP = f"/api/v1/camps/{CAMP}/registration/alerts"
 

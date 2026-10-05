@@ -33,10 +33,10 @@ Read this first, every session. Updated 4 October 2026 (order of work); 3 Octobe
 
 Done: household sharing, real camp data, year-round activities, owner confirmation with the
 listing change log, registration day, registration alerts, camp logic moved into services, Phase 1 removals
-(Pro plan, email gate, lead capture), listing fields (slug, spots), family data export.
+(Pro plan, email gate, lead capture), listing fields (slug, spots), family data export, one
+shared test fake.
 
 1. Andrew decides whether to drop the empty `leads` table and `camp_ownership` Pro columns.
-2. `tests/booking/fakes.py` is a second copy of the fake Supabase; fold it into `tests/fakes.py`.
 
 ## Where code goes
 
@@ -72,7 +72,8 @@ listing change log, registration day, registration alerts, camp logic moved into
 
 - Tests: `python -m pytest` (not bare `pytest`). Database tests start a throwaway Postgres
   16 with PostGIS (`postgresql-16`, `postgresql-16-postgis-3`), or use `TEST_DATABASE_URL`.
-  Household, agent and reminder tests use the in-memory fakes in `tests/fakes.py`.
+  Household, agent, booking and reminder tests use the one set of in-memory fakes in
+  `tests/fakes.py`; give a new table its defaults there.
 - Frontend: `cd frontend && npx tsc --noEmit && npm run build`.
 - CI (`.github/workflows/test.yml`) runs both on every PR.
 - The listing tool eval: `scripts/run_ingest_eval.sh` (reads `CAMPFINDER_ANTHROPIC_API_KEY`).

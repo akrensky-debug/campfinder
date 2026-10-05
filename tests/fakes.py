@@ -33,12 +33,25 @@ DEFAULTS: dict[str, dict[str, Any]] = {
     "family_audit_log": {"via": "app", "target_type": None, "target_id": None, "detail": {}},
     "agent_conversations": {"messages": []},
     "reminder_sends": {"task_count": 0},
+    "family_registrations": {
+        "session_id": None, "child_name": None, "status": "watching", "payment_status": "unpaid", "amount_paid": None,
+        "paid_on": None, "balance_due": None, "payment_due_date": None, "forms_due_date": None, "opens_at": None,
+        "confirmation_number": None, "notes": None, "remind": True, "event_ids": {}, "registered_at": None,
+    },
+    "registration_windows": {"session_id": None, "closes_at": None, "source_url": None, "verified": False, "notes": None},
+    "registration_alerts": {"session_id": None, "confirm_sent_at": None, "confirmed_at": None, "unsubscribed_at": None},
+    "booking_attempts": {"registration_id": None, "consent": None, "provider_ref": None, "error": None,
+                         "status": "quoted", "environment": "sandbox"},
 }
 UNIQUE = {
+    "registration_reminder_sends": [("registration_id", "kind", "due_on", "days_before")],
+    "registration_alerts": [("camp_id", "session_id", "email"), ("token",)],
+    "registration_alert_sends": [("alert_id", "kind", "opens_at")],
     "family_members": [("family_id", "email")],
     "reminder_sends": [("member_id", "kind", "period")],
 }
-SERIAL = {"family_audit_log", "reminder_sends", "kit_share_events", "activity_demand"}
+SERIAL = {"family_audit_log", "reminder_sends", "kit_share_events", "activity_demand", "registration_reminder_sends",
+          "registration_alert_sends"}
 
 
 class Result:
