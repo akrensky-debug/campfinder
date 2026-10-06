@@ -3,8 +3,13 @@
 import { createClient, type Session, type SupabaseClient } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+// The campfinder project's public sign-in settings. Both are public by design: the anon key
+// ships to every browser and, with row-level security on every table and no policies, can read
+// or write nothing. Only the backend (service key, on Railway) touches data. Env vars override
+// these, e.g. for a local Supabase.
+const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cdzzmyambonhkhsoltfw.supabase.co'
 const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkenpteWFtYm9uaGtoc29sdGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODgzNDYsImV4cCI6MjEwNjI2NDM0Nn0.WgAE_QFKWtGYdiuC7jE0k1lg93thkJaVcVobXP0ZnVk'
 
 let client: SupabaseClient | null = null
 
