@@ -81,3 +81,23 @@ async def test_every_migration_is_safe_to_rerun(migrated: asyncpg.Connection) ->
         assert applied == [p.name for p in list_migration_files()]
     finally:
         await tx.rollback()
+
+
+def test_bad_database_url_is_reported_without_its_value(capsys) -> None:
+    import asyncio
+
+    from campfinder import migrate
+    from campfinder.config import get_settings
+
+    secret = "eyJhbGciOiJIUzI1NiJ9.secret-part.signature"
+    for value, says in [("", "not set"), (secret, "API key"),
+                        ("postgresql://u:[YOUR-PASSWORD]@h:5432/postgres", "[YOUR-PASSWORD]"),
+                        ("postgresql://u:hunter2@[not-a-host:5432/postgres", "Could not connect")]:
+        settings = get_settings()
+        old, settings.database_url = settings.database_url, value
+        try:
+            assert asyncio.run(migrate._main([])) == 2
+        finally:
+            settings.database_url = old
+        err = capsys.readouterr().err
+        assert says in err and "secret-part" not in err and "hunter2" not in err
