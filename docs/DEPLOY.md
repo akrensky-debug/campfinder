@@ -33,6 +33,19 @@ would no longer decrypt. Keep a copy in the password manager.
 `AUTH_JWKS_URL` and `AUTH_JWT_ISSUER` are not read by `main` yet. They can stay; they are
 used once sign-in is checked locally instead of by asking Supabase.
 
+## Scheduled jobs
+
+One Railway cron service (`cron`, image `curlimages/curl`, schedule `5 * * * *`) calls
+
+    POST https://api-production-4a03.up.railway.app/api/v1/internal/cron/tick
+    X-Cron-Secret: ${{api.BOOKING_CRON_SECRET}}
+
+every hour. The API decides what is due (`campfinder/jobs/tick.py`): registration alerts every
+hour; registration reminders and household morning digests at 7am, household evening
+reminders at 6pm, in `REMINDER_TZ` (default America/New_York). Every job records what it sent,
+so a repeated tick sends nothing twice. Nothing is emailed while `EMAIL_MODE=log`.
+Try it by hand with `?dry_run=true`, or `python -m campfinder.jobs.tick --dry-run`.
+
 ## Supabase settings
 
 - Authentication → Sign In / Providers: Email on.
