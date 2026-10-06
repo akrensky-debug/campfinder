@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 import asyncpg
+import pytest
 
 from campfinder.migrate import MIGRATIONS_DIR, apply_migrations, list_migration_files
 
@@ -32,10 +33,23 @@ async def test_every_table_the_code_uses_exists(migrated: asyncpg.Connection) ->
     assert not missing, f"tables used in code but not created by migrations: {sorted(missing)}"
 
 
-async def test_leads_has_the_columns_the_code_writes(migrated: asyncpg.Connection) -> None:
+async def test_no_leads_or_pro_plan(migrated: asyncpg.Connection) -> None:
+    """Phase 1: no table of parent leads, no paid plan (migration 0013)."""
+    assert await migrated.fetchval("SELECT to_regclass('public.leads')") is None
     cols = {r["column_name"] for r in await migrated.fetch(
-        "SELECT column_name FROM information_schema.columns WHERE table_name = 'leads'")}
-    assert {"parent_email", "lead_status", "target_camp_id"} <= cols
+        "SELECT column_name FROM information_schema.columns WHERE table_name = 'camp_ownership'")}
+    assert "plan" in cols and not {"stripe_customer_id", "plan_started_at"} & cols
+    camp = await migrated.fetchval(
+        "INSERT INTO camps (name, city, state, zip, camp_type, location) VALUES "
+        "('Plan Camp', 'Providence', 'RI', '02906', 'day', ST_GeogFromText('POINT(-71.4 41.8)')) RETURNING id")
+    tx = migrated.transaction()
+    await tx.start()
+    try:
+        with pytest.raises(asyncpg.CheckViolationError):
+            await migrated.execute("INSERT INTO camp_ownership (camp_id, email, plan) VALUES ($1, 'o@x.org', 'pro')", camp)
+    finally:
+        await tx.rollback()
+    await migrated.execute("DELETE FROM camps WHERE id = $1", camp)
 
 
 async def test_row_level_security_is_on_for_every_table(migrated: asyncpg.Connection) -> None:

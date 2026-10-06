@@ -34,9 +34,9 @@ Read this first, every session. Updated 4 October 2026 (order of work); 3 Octobe
 Done: household sharing, real camp data, year-round activities, owner confirmation with the
 listing change log, registration day, registration alerts, camp logic moved into services, Phase 1 removals
 (Pro plan, email gate, lead capture), listing fields (slug, spots), family data export, one
-shared test fake.
+shared test fake, `leads` and the Pro columns dropped (migration 0013).
 
-1. Andrew decides whether to drop the empty `leads` table and `camp_ownership` Pro columns.
+1. Next build (ROADMAP Phase 2): listing updates by email ("Week 3 is full"), once Andrew says go.
 
 ## Where code goes
 
