@@ -56,12 +56,32 @@ async def apply_migrations(conn: asyncpg.Connection, directory: Path = MIGRATION
     return applied
 
 
+def dsn_problem(dsn: str) -> str | None:
+    """Why DATABASE_URL can't be a Postgres connection string, without repeating its value
+    (it holds a password, and errors end up in deploy logs)."""
+    if not dsn:
+        return "DATABASE_URL is not set"
+    if not dsn.startswith(("postgresql://", "postgres://")):
+        hint = " It looks like an API key (eyJ...)." if dsn.startswith("eyJ") else ""
+        return ("DATABASE_URL must be a Postgres connection string starting with postgresql://, "
+                "e.g. Supabase > Connect > Session pooler, with the password filled in." + hint)
+    if "[YOUR-PASSWORD]" in dsn:
+        return "DATABASE_URL still contains [YOUR-PASSWORD]: put the database password in its place."
+    return None
+
+
 async def _main(argv: list[str]) -> int:
     settings = get_settings()
-    if not settings.database_url:
-        print("DATABASE_URL is not set", file=sys.stderr)
+    problem = dsn_problem(settings.database_url)
+    if problem:
+        print(problem, file=sys.stderr)
         return 2
-    conn = await asyncpg.connect(settings.asyncpg_dsn)
+    try:
+        conn = await asyncpg.connect(settings.asyncpg_dsn)
+    except Exception as e:  # never print the DSN: asyncpg's errors can include it
+        print(f"Could not connect to the database ({type(e).__name__}). Check DATABASE_URL: host, "
+              "port 5432 (Session pooler) and password.", file=sys.stderr)
+        return 2
     try:
         if "--status" in argv:
             done = await applied_versions(conn)
