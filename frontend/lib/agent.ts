@@ -23,6 +23,8 @@ export interface FamilyProfile {
   weekly_budget?: number | null
   needs?: string[]
   notes?: string | null
+  work_schedule?: Array<{ parent: string; days: string[]; start: string; end: string }>
+  away?: Array<{ start_date: string; end_date: string; label: string; child_name?: string | null }>
 }
 
 export interface FamilyEvent {
@@ -84,11 +86,46 @@ export interface Plan {
   weeks_total: number
 }
 
+export type CoverageStatus = 'covered' | 'check_hours' | 'partial' | 'open' | 'away' | 'not_needed'
+
+export interface Coverage {
+  summer_start: string
+  summer_end: string
+  care_hours: Record<string, string>
+  notes: string[]
+  kids: Array<{
+    name: string
+    age: number | null
+    weeks_open: number
+    weeks_partial: number
+    weeks_covered: number
+    weeks: Array<{
+      week_of: string
+      week_end: string
+      status: CoverageStatus
+      covered_by: string[]
+      away: string[]
+      gaps: Array<{ day: string; uncovered: string }>
+      check_hours: string[]
+      options: Array<{
+        camp_id: string
+        name: string
+        city: string
+        extended_care: boolean | null
+        start_date: string
+        end_date: string
+        last_season: boolean
+      }>
+    }>
+  }>
+}
+
 export type UIData =
   | { type: 'camps'; camps: CampSearchResult[] }
   | { type: 'camp_detail'; camp: CampSearchResult & { sessions?: Array<{ id: string; name: string | null; start_date: string; end_date: string; price: number | null }> } }
   | ({ type: 'comparison' } & Comparison)
   | ({ type: 'plan' } & Plan)
+  | ({ type: 'coverage' } & Coverage)
   | { type: 'calendar'; events: FamilyEvent[] }
   | { type: 'profile'; profile: FamilyProfile }
   | BookingUIData
