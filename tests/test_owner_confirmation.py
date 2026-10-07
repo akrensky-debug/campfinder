@@ -145,3 +145,43 @@ async def test_email_counts_families_waiting_for_registration(camp, db, outbox):
     ]).execute()
     email = service.prepare(service.find_camp(CAMP_ID)).email
     assert "2 families have asked us to tell them." in email.text and "c@example.com" not in email.text
+
+
+def test_queue_and_send_ready(db, outbox, capsys):
+    base = {"city": "Providence", "state": "RI", "zip": "02906", "camp_type": "day", "is_active": True,
+            "season_year": 2026}
+    ids = {n: f"44444444-0000-0000-0000-00000000000{i}" for i, n in enumerate(
+        ["Asked", "Checked", "Confirmed", "No Email", "Off Site", "Unchecked", "With Contact"], 1)}
+    db.table("camps").insert([
+        {**base, "id": ids["Asked"], "name": "Asked", "email": "a@x.example", "verification_status": "team_verified"},
+        {**base, "id": ids["Checked"], "name": "Checked", "email": "b@x.example", "verification_status": "team_verified"},
+        {**base, "id": ids["Confirmed"], "name": "Confirmed", "email": "c@x.example", "verification_status": "camp_verified"},
+        {**base, "id": ids["No Email"], "name": "No Email", "verification_status": "team_verified"},
+        {**base, "id": ids["Off Site"], "name": "Off Site", "email": "o@x.example", "is_active": False,
+         "verification_status": "team_verified"},
+        {**base, "id": ids["Unchecked"], "name": "Unchecked", "email": "u@x.example", "verification_status": "unverified"},
+        {**base, "id": ids["With Contact"], "name": "With Contact", "email": "info@w.example",
+         "verification_status": "team_verified"},
+    ]).execute()
+    db.table("camp_contacts").insert({"camp_id": ids["With Contact"], "email": "Director@W.example",
+                                      "is_primary": True}).execute()
+    db.table("listing_confirmations").insert({
+        "camp_id": ids["Asked"], "email": "a@x.example", "token_hash": "h", "snapshot": {}, "status": "sent",
+        "sent_by": "Andrew", "sent_at": "2026-10-01T00:00:00+00:00",
+        "expires_at": (datetime.now(timezone.utc) + timedelta(days=20)).isoformat(),
+    }).execute()
+
+    q = service.queue()
+    assert [(c["name"], e) for c, e in q.ready] == [("Checked", "b@x.example"), ("With Contact", "director@w.example")]
+    why = {c["name"]: w for c, w in q.waiting}
+    assert why["Asked"].startswith("asked; link works until") and "not checked" in why["Unchecked"]
+    assert "no email" in why["No Email"] and "Confirmed" not in why and "Off Site" not in why
+
+    assert cli(["send-ready", "--by", "Andrew", "--limit", "1"]) == 0     # lists only
+    assert "would ask Checked" in capsys.readouterr().out and outbox == []
+    assert cli(["send-ready", "--by", "Andrew", "--limit", "1", "--yes"]) == 0
+    assert [e.to for e in outbox] == ["b@x.example"]
+    assert [c["name"] for c, _ in service.queue().ready] == ["With Contact"]
+
+    assert cli(["checked", ids["Unchecked"], ids["No Email"], "--by", "Andrew"]) == 0
+    assert "Unchecked: team_verified" in capsys.readouterr().out

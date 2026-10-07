@@ -236,6 +236,46 @@ async def send(camp: dict[str, Any], *, sent_by: str, to: str | None = None) -> 
     return p
 
 
+@dataclass
+class Queue:
+    ready: list[tuple[dict[str, Any], str]]       # (camp, email to ask)
+    waiting: list[tuple[dict[str, Any], str]]     # (camp, why it isn't ready)
+
+
+def queue(now: datetime | None = None) -> Queue:
+    """Which camps to ask next: checked by a person, on the site, not confirmed yet, with an
+    email, and no unanswered link still working. Everything else says why it's not ready."""
+    sb = get_supabase()
+    now = now or _now()
+    open_links = {}
+    for c in sb.table("listing_confirmations").select("*").eq("status", "sent").execute().data or []:
+        expires = datetime.fromisoformat(str(c["expires_at"]).replace("Z", "+00:00"))
+        if expires > now:
+            open_links[str(c["camp_id"])] = expires
+    contacts: dict[str, list[dict[str, Any]]] = {}
+    for c in sb.table("camp_contacts").select("*").execute().data or []:
+        contacts.setdefault(str(c["camp_id"]), []).append(c)
+
+    ready, waiting = [], []
+    for camp in sorted(sb.table("camps").select("*").execute().data or [], key=lambda c: c["name"].lower()):
+        cid = str(camp["id"])
+        people = sorted(contacts.get(cid, []), key=lambda r: (not r.get("is_primary"), r.get("verified_at") is None))
+        email = ((people[0]["email"] if people else None) or camp.get("email") or "").strip().lower()
+        if camp.get("is_active") is False:
+            continue
+        if camp["verification_status"] == "camp_verified":
+            continue
+        if camp["verification_status"] == "unverified":
+            waiting.append((camp, "not checked by a person yet"))
+        elif cid in open_links:
+            waiting.append((camp, f"asked; link works until {open_links[cid]:%Y-%m-%d}"))
+        elif "@" not in email:
+            waiting.append((camp, "no email: add a contact or pass --to with send"))
+        else:
+            ready.append((camp, email))
+    return Queue(ready, waiting)
+
+
 def confirmations_for(camp_id: str) -> list[dict[str, Any]]:
     return (get_supabase().table("listing_confirmations").select("*").eq("camp_id", camp_id)
             .order("sent_at", desc=True).execute().data or [])
