@@ -71,7 +71,7 @@ python -m campfinder.ingest.promote data/drafts/providence/<slug>.json --by <you
 python -m campfinder.seed.import_real --check                             # then --load
 ```
 
-`candidates.json` is a list of `{"name", "url"}`, the camp's own page. Each camp becomes a draft
+`candidates.json` is a list of `{"name", "url"}`, the camp's own page (`data/candidates/providence.json` has 125 around Providence, found by web search on 7 October 2026; not checked by a person). Each camp becomes a draft
 in the dataset's format plus a `review` block: fields the tool was unsure of (with its quote),
 what it couldn't find, its warnings, and anything the dataset validator rejects.
 `data/drafts/<metro>/REVIEW.md` lists them all, and the hosts that refused us under "ask the

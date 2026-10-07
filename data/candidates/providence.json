@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "Attleboro Norton YMCA Arts Camps",
+    "operator": "Attleboro Norton YMCA",
+    "town": "Attleboro",
+    "state": "MA",
+    "url": "https://www.attleboroymca.org/art-camp",
+    "kind": "ymca"
+  },
+  {
+    "name": "Attleboro Summer All Day Program",
+    "operator": "City of Attleboro Recreation Department",
+    "town": "Attleboro",
+    "state": "MA",
+    "url": "https://www.cityofattleboro.us/266/Summer-All-Day-Program",
+    "kind": "town rec"
+  },
+  {
+    "name": "Camp Finberg",
+    "operator": "Attleboro Norton YMCA",
+    "town": "Attleboro",
+    "state": "MA",
+    "url": "https://www.attleboroymca.org/camps/camp-finberg",
+    "kind": "ymca"
+  },
+  {
+    "name": "Bellingham Youth Baseball Summer Camp",
+    "operator": "Bellingham Youth Baseball",
+    "town": "Bellingham",
+    "state": "MA",
+    "url": "https://www.bellinghamyouthbaseball.com/bellinghamyouthbaseball/CampsandClinics",
+    "kind": "sports"
+  },
+  {
+    "name": "Urban Air Bellingham Summer Camp",
+    "operator": "Urban Air Adventure Park Bellingham",
+    "town": "Bellingham",
+    "state": "MA",
+    "url": "https://www.urbanair.com/massachusetts-bellingham/camps/",
+    "kind": "private"
+  },
+  {
+    "name": "Blackstone Valley Boys & Girls Club Summer Program",
+    "operator": "Blackstone Valley Boys & Girls Club",
+    "town": "Blackstone",
+    "state": "MA",
+    "url": "https://www.bvbgc.com/summer-program.html",
+    "kind": "bgc"
+  },
+  {
+    "name": "AMP Academy Day Camp",
+    "operator": "AMP Academy",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://ampacademygym.com/day-camp/",
+    "kind": "sports"
+  },
+  {
+    "name": "Camp Jack",
+    "operator": "People Incorporated Diabetes Association",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://peopleincfr.org/services/diabetes-association-inc/camp-jack/",
+    "kind": "special_needs"
+  },
+  {
+    "name": "Fall River Youth Soccer Camps",
+    "operator": "Greater Fall River RE-CREATION",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://gfrrec.org/youth-soccer/",
+    "kind": "sports"
+  },
+  {
+    "name": "Sail Rec! Youth Sailing",
+    "operator": "Greater Fall River RE-CREATION",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://gfrrec.org/sailing-2/",
+    "kind": "sailing"
+  },
+  {
+    "name": "Salvation Army Fall River Day Camp and Summer Programs",
+    "operator": "The Salvation Army Fall River Corps",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://easternusa.salvationarmy.org/massachusetts/fall-river/camp-summerprograms/",
+    "kind": "faith"
+  },
+  {
+    "name": "United We Row Youth Summer Rowing",
+    "operator": "Watuppa Rowing Center",
+    "town": "Fall River",
+    "state": "MA",
+    "url": "https://www.watupparowingcenter.org/summer-rowing",
+    "kind": "sports"
+  },
+  {
+    "name": "Broadway Kids Summer Program",
+    "operator": "Marilyn Rodman Performing Arts Center",
+    "town": "Foxborough",
+    "state": "MA",
+    "url": "https://mrpac.art/broadway-kids",
+    "kind": "arts"
+  },
+  {
+    "name": "Foxboro Recreation Summer Programs",
+    "operator": "Town of Foxborough Recreation Department",
+    "town": "Foxborough",
+    "state": "MA",
+    "url": "https://foxboroma.myrec.com/info/activities/default.aspx?type=activities",
+    "kind": "town rec"
+  },
+  {
+    "name": "Mass Premier Courts Basketball Summer Camps",
+    "operator": "Mass Premier Courts",
+    "town": "Foxborough",
+    "state": "MA",
+    "url": "https://masspremiercourts.com/basketball/camps/",
+    "kind": "sports"
+  },
+  {
+    "name": "Summer Sage",
+    "operator": "The Sage School",
+    "town": "Foxborough",
+    "state": "MA",
+    "url": "https://sageschool.org/program/summer-sage/",
+    "kind": "school"
+  },
+  {
+    "name": "Adirondack Club Summer Camps",
+    "operator": "The Adirondack Club",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.adirondackclub.com/camps",
+    "kind": "sports"
+  },
+  {
+    "name": "Creative Corner Art Studio Summer Camps",
+    "operator": "Creative Corner Art Studio",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.creativecornerartstudiofranklin.com/",
+    "kind": "arts"
+  },
+  {
+    "name": "Elementree House Summer Camp",
+    "operator": "Elementree House",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.elementreehouse.com/summer-camp",
+    "kind": "private"
+  },
+  {
+    "name": "Franklin Country Day Camp",
+    "operator": "Franklin Country Day Camp",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.franklincountrydaycamp.com/",
+    "kind": "private"
+  },
+  {
+    "name": "Franklin Recreation Summer Camp",
+    "operator": "Town of Franklin Recreation Department",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://franklinma.gov/1158/Summer-Camp",
+    "kind": "town rec"
+  },
+  {
+    "name": "Franklin Soccer School Summer Programs",
+    "operator": "Franklin Soccer School",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.franklinsoccerschool.com/programs/summerprograms",
+    "kind": "sports"
+  },
+  {
+    "name": "Tri-County Summer Camps",
+    "operator": "Tri-County Regional Vocational Technical High School",
+    "town": "Franklin",
+    "state": "MA",
+    "url": "https://www.tri-county.us/page/summer-camps",
+    "kind": "school"
+  },
+  {
+    "name": "Camp Welch",
+    "operator": "Boys & Girls Club of Fall River",
+    "town": "Freetown",
+    "state": "MA",
+    "url": "https://www.fallriverbgc.org/camp-welch",
+    "kind": "bgc"
+  },
+  {
+    "name": "Arnold's Gymnastics Academy Summer Camps",
+    "operator": "Arnold's Gymnastics Academy",
+    "town": "Mansfield",
+    "state": "MA",
+    "url": "https://www.arnoldsgymnastics.com/camps",
+    "kind": "sports"
+  },
+  {
+    "name": "Mansfield Recreation Summer Camp",
+    "operator": "Town of Mansfield Parks & Recreation",
+    "town": "Mansfield",
+    "state": "MA",
+    "url": "https://www.mansfieldma.com/232/Parks-Recreation",
+    "kind": "town rec"
+  },
+  {
+    "name": "Mass Arts Center Summer Program",
+    "operator": "Mass Arts Center",
+    "town": "Mansfield",
+    "state": "MA",
+    "url": "https://massartscenter.org/summer-program/",
+    "kind": "arts"
+  },
+  {
+    "name": "Summer Wild Adventure Programs at Southwick's Zoo",
+    "operator": "EARTH Ltd.",
+    "town": "Mendon",
+    "state": "MA",
+    "url": "https://www.earthltd.org/wild-adventure-programs/summer/",
+    "kind": "nature"
+  },
+  {
+    "name": "Stony Brook Nature Camp",
+    "operator": "Mass Audubon",
+    "town": "Norfolk",
+    "state": "MA",
+    "url": "https://www.massaudubon.org/places-to-explore/wildlife-sanctuaries/stony-brook/camp",
+    "kind": "nature"
+  },
+  {
+    "name": "North Attleborough Summer Playground Program",
+    "operator": "Town of North Attleborough Parks & Recreation",
+    "town": "North Attleborough",
+    "state": "MA",
+    "url": "https://nattleboro.com/252/Programs-by-Season",
+    "kind": "town rec"
+  },
+  {
+    "name": "Plainville Summer Recreation Program",
+    "operator": "Town of Plainville",
+    "town": "Plainville",
+    "state": "MA",
+    "url": "https://www.plainvillema.gov/281/Summer-Recreation-Program",
+    "kind": "town rec"
+  },
+  {
+    "name": "Teamworks Seekonk Summer Camp",
+    "operator": "Teamworks Seekonk",
+    "town": "Seekonk",
+    "state": "MA",
+    "url": "https://www.teamworksseekonk.com/summercamphome.aspx",
+    "kind": "sports"
+  },
+  {
+    "name": "Art Pop Summer Art Camp",
+    "operator": "Art Pop Process-Based Art Studio",
+    "town": "Somerset",
+    "state": "MA",
+    "url": "https://www.artpopclub.com/summerartcamp",
+    "kind": "arts"
+  },
+  {
+    "name": "Teamworks Somerset Summer Camp",
+    "operator": "Teamworks Somerset",
+    "town": "Somerset",
+    "state": "MA",
+    "url": "https://www.teamworkssomerset.com/summercamphome.aspx",
+    "kind": "sports"
+  },
+  {
+    "name": "Camp Taunton",
+    "operator": "Old Colony YMCA",
+    "town": "Taunton",
+    "state": "MA",
+    "url": "https://www.oldcolonyymca.org/child-care-camps/camps/camp-taunton",
+    "kind": "ymca"
+  },
+  {
+    "name": "Taunton Summer Camps & Programs",
+    "operator": "City of Taunton Parks & Recreation",
+    "town": "Taunton",
+    "state": "MA",
+    "url": "https://www.taunton-ma.gov/993/Summer-CampsPrograms",
+    "kind": "town rec"
+  },
+  {
+    "name": "Westport Art Group Summer Art Camps",
+    "operator": "Westport Art Group",
+    "town": "Westport",
+    "state": "MA",
+    "url": "https://www.westportartgroup.com/summer-art-camps",
+    "kind": "arts"
+  },
+  {
+    "name": "Camp Whitin",
+    "operator": "Whitin Community Center",
+    "town": "Whitinsville",
+    "state": "MA",
+    "url": "https://www.whitincommunitycenter.com/our-community/camp-whitin/",
+    "kind": "other"
+  },
+  {
+    "name": "DARE to Dream Summer Day Camp",
+    "operator": "DARE to Dream Summer Camp",
+    "town": "Wrentham",
+    "state": "MA",
+    "url": "https://www.daretodreamsummer.com/",
+    "kind": "other"
+  },
+  {
+    "name": "Wrentham Recreation Summer Programs",
+    "operator": "Town of Wrentham Recreation Department",
+    "town": "Wrentham",
+    "state": "MA",
+    "url": "https://wrenthamma.myrec.com/info/default.aspx",
+    "kind": "town rec"
+  },
+  {
+    "name": "COZ Summer Camp",
+    "operator": "Bristol Warren Regional School District",
+    "town": "Bristol",
+    "state": "RI",
+    "url": "https://www.bwrsd.org/families1/family-resource-center/coz-summer-camp",
+    "kind": "school"
+  },
+  {
+    "name": "RWU Forensic Science Summer Camp",
+    "operator": "Roger Williams University",
+    "town": "Bristol",
+    "state": "RI",
+    "url": "https://www.rwu.edu/summer-camps/forensic-science-summer-camp",
+    "kind": "stem"
+  },
+  {
+    "name": "RWU Marine Biology Camp",
+    "operator": "Roger Williams University",
+    "town": "Bristol",
+    "state": "RI",
+    "url": "https://www.rwu.edu/academics/marine-biology-camp",
+    "kind": "stem"
+  },
+  {
+    "name": "SEA by the Bay: Summer Engineering Academy",
+    "operator": "Roger Williams University",
+    "town": "Bristol",
+    "state": "RI",
+    "url": "https://www.rwu.edu/summer-camps/sea-bay",
+    "kind": "stem"
+  },
+  {
+    "name": "Camp Ruggles",
+    "operator": "Camp Ruggles, Inc.",
+    "town": "Chepachet",
+    "state": "RI",
+    "url": "https://www.campruggles.org/",
+    "kind": "special_needs"
+  },
+  {
+    "name": "Mother of Hope Camp",
+    "operator": "Roman Catholic Diocese of Providence",
+    "town": "Chepachet",
+    "state": "RI",
+    "url": "https://www.motherofhopecamp.com/",
+    "kind": "faith"
+  },
+  {
+    "name": "Camp Westwood",
+    "operator": "YMCA of Pawtucket",
+    "town": "Coventry",
+    "state": "RI",
+    "url": "https://ymcapawtucket.org/camps/camp-westwood",
+    "kind": "ymca"
+  },
+  {
+    "name": "Coventry Parks & Recreation Day Camps",
+    "operator": "Town of Coventry Parks and Recreation",
+    "town": "Coventry",
+    "state": "RI",
+    "url": "https://coventryri.myrec.com/info/activities/default.aspx?CategoryID=1600",
+    "kind": "town rec"
+  },
+  {
+    "name": "Artists' Exchange Summer Camps",
+    "operator": "Artists' Exchange",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://www.artists-exchange.org/summer-camps",
+    "kind": "arts"
+  },
+  {
+    "name": "Cranston Summer Playground Camp",
+    "operator": "City of Cranston Parks and Recreation",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://www.cranstonri.gov/parks-and-recreation/",
+    "kind": "town rec"
+  },
+  {
+    "name": "Dream Big Gymnastics Summer Camps",
+    "operator": "Dream Big Gymnastics",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://www.dreambiggym.com/camps",
+    "kind": "sports"
+  },
+  {
+    "name": "Project FashionWorks Summer Classes",
+    "operator": "Project FashionWorks",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://projectfashionworks.com/collections/frontpage",
+    "kind": "arts"
+  },
+  {
+    "name": "Rhode Island Surf Summer Soccer Camps",
+    "operator": "Rhode Island Surf Soccer Club",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://rhodeislandsurfsoccer.com/summer-camps/",
+    "kind": "sports"
+  },
+  {
+    "name": "Scouting Adventure Day Camp at Adventure Base Camp",
+    "operator": "Narragansett Council, Scouting America",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://www.narragansettbsa.org/adventure-day-camp/",
+    "kind": "other"
+  },
+  {
+    "name": "You Rock School of Music Summer Camp",
+    "operator": "You Rock School of Music",
+    "town": "Cranston",
+    "state": "RI",
+    "url": "https://www.yourockschoolofmusic.com/summer-camp2026",
+    "kind": "arts"
+  },
+  {
+    "name": "BGCNRI Summer Sports Camp",
+    "operator": "Boys & Girls Clubs of Northern Rhode Island",
+    "town": "Cumberland",
+    "state": "RI",
+    "url": "https://bgcnri.org/sports/summer-sports/",
+    "kind": "bgc"
+  },
+  {
+    "name": "Aim High Academy Summer Camps",
+    "operator": "Aim High Academy",
+    "town": "East Greenwich",
+    "state": "RI",
+    "url": "https://www.aimhighacademy.com/camps.aspx",
+    "kind": "sports"
+  },
+  {
+    "name": "Taste Buds Kitchen Kids Summer Cooking Camps",
+    "operator": "Taste Buds Kitchen East Greenwich",
+    "town": "East Greenwich",
+    "state": "RI",
+    "url": "https://tastebudskitchen.com/east-greenwich/kids-cooking-camps/",
+    "kind": "other"
+  },
+  {
+    "name": "Camps at Agawam Hunt (Golf & Tennis)",
+    "operator": "Agawam Hunt",
+    "town": "East Providence",
+    "state": "RI",
+    "url": "https://www.agawamhunt.org/camp",
+    "kind": "sports"
+  },
+  {
+    "name": "Fundamentals Summer Camp",
+    "operator": "Fundamentals",
+    "town": "East Providence",
+    "state": "RI",
+    "url": "https://playatfundamentals.com/",
+    "kind": "private"
+  },
+  {
+    "name": "RI Philharmonic Music School Summer Programs",
+    "operator": "Rhode Island Philharmonic Orchestra & Music School",
+    "town": "East Providence",
+    "state": "RI",
+    "url": "https://www.riphil.org/sum26",
+    "kind": "arts"
+  },
+  {
+    "name": "Rhode Island Fencing Academy Summer Camps",
+    "operator": "Rhode Island Fencing Academy and Club",
+    "town": "East Providence",
+    "state": "RI",
+    "url": "https://www.rifac.com/",
+    "kind": "sports"
+  },
+  {
+    "name": "Camp WANNAGOAGAIN",
+    "operator": "The Autism Project",
+    "town": "Johnston",
+    "state": "RI",
+    "url": "https://theautismproject.org/parents-families/programs-resources/summer-camp",
+    "kind": "special_needs"
+  },
+  {
+    "name": "Fox and Bear Art Academy Summer Camp",
+    "operator": "Fox and Bear Art Academy",
+    "town": "Johnston",
+    "state": "RI",
+    "url": "https://www.foxandbearartacademy.com/",
+    "kind": "arts"
+  },
+  {
+    "name": "Johnston Parks and Recreation Day Camp",
+    "operator": "Town of Johnston Parks and Recreation",
+    "town": "Johnston",
+    "state": "RI",
+    "url": "https://johnstonrec.com/day-camp",
+    "kind": "town rec"
+  },
+  {
+    "name": "Courage Quest Summer Camp",
+    "operator": "URI Child Anxiety Program",
+    "town": "Kingston",
+    "state": "RI",
+    "url": "https://www.childanxietyprogram.com/summer-camp",
+    "kind": "special_needs"
+  },
+  {
+    "name": "URI Artificial Intelligence Camp",
+    "operator": "University of Rhode Island",
+    "town": "Kingston",
+    "state": "RI",
+    "url": "https://web.uri.edu/camps/artificial-intelligence-camp/",
+    "kind": "stem"
+  },
+  {
+    "name": "URI Computer Camp",
+    "operator": "University of Rhode Island",
+    "town": "Kingston",
+    "state": "RI",
+    "url": "https://web.uri.edu/camps/computer-camp/",
+    "kind": "stem"
+  },
+  {
+    "name": "URI Fit2Cook4Kids Camp",
+    "operator": "University of Rhode Island",
+    "town": "Kingston",
+    "state": "RI",
+    "url": "https://web.uri.edu/camps/fit2cook4kids/",
+    "kind": "other"
+  },
+  {
+    "name": "URI Navy STEM Crew Summer Camp",
+    "operator": "University of Rhode Island",
+    "town": "Kingston",
+    "state": "RI",
+    "url": "https://web.uri.edu/naval-science-technology/summer-camp/",
+    "kind": "stem"
+  },
+  {
+    "name": "Brae Crest Children's Summer Ballet Camp",
+    "operator": "Brae Crest School of Ballet / State Ballet of Rhode Island",
+    "town": "Lincoln",
+    "state": "RI",
+    "url": "https://braecrestschool.com/summer/childrens-summer-camp",
+    "kind": "arts"
+  },
+  {
+    "name": "Camp MacColl",
+    "operator": "YMCA of Pawtucket",
+    "town": "Lincoln",
+    "state": "RI",
+    "url": "https://ymcapawtucket.org/camps/camp-maccoll",
+    "kind": "ymca"
+  },
+  {
+    "name": "Lincoln Parks & Recreation Youth Summer Programs",
+    "operator": "Town of Lincoln",
+    "town": "Lincoln",
+    "state": "RI",
+    "url": "https://www.lincolnri.gov/180/Youth-Programs",
+    "kind": "town rec"
+  },
+  {
+    "name": "Rock Spot Summer Youth Adventure Programs",
+    "operator": "Rock Spot Climbing",
+    "town": "Lincoln",
+    "state": "RI",
+    "url": "https://rockspotclimbing.com/youthadventure/",
+    "kind": "sports"
+  },
+  {
+    "name": "Studio Playground Summer Theater Camp",
+    "operator": "Studio Playground",
+    "town": "Lincoln",
+    "state": "RI",
+    "url": "https://www.studioplayground.org/summercamp",
+    "kind": "arts"
+  },
+  {
+    "name": "Aquidneck Island Day Camp",
+    "operator": "Aquidneck Island Day Camp",
+    "town": "Middletown",
+    "state": "RI",
+    "url": "https://www.aquidneckislanddaycamp.com/",
+    "kind": "private"
+  },
+  {
+    "name": "URI GSO Oceanography Explorers Camp",
+    "operator": "URI Graduate School of Oceanography",
+    "town": "Narragansett",
+    "state": "RI",
+    "url": "https://web.uri.edu/gso/outreach/gso-oceanography-explorers-camp/",
+    "kind": "stem"
+  },
+  {
+    "name": "Newport Art Museum Summer Camps",
+    "operator": "Newport Art Museum",
+    "town": "Newport",
+    "state": "RI",
+    "url": "https://newportartmuseum.org/education/classes/?category=camps/",
+    "kind": "arts"
+  },
+  {
+    "name": "Sail Newport Summer Youth Programs",
+    "operator": "Sail Newport",
+    "town": "Newport",
+    "state": "RI",
+    "url": "https://sailnewport.org/youth-sailing-programs/youth-instruction/",
+    "kind": "sailing"
+  },
+  {
+    "name": "Sail To Prevail Summer Programs",
+    "operator": "Sail To Prevail",
+    "town": "Newport",
+    "state": "RI",
+    "url": "https://sailtoprevail.org/",
+    "kind": "special_needs"
+  },
+  {
+    "name": "North Kingstown Recreation Summer Camp",
+    "operator": "Town of North Kingstown Recreation Department",
+    "town": "North Kingstown",
+    "state": "RI",
+    "url": "https://www.northkingstownri.gov/1227/Summer-Camp",
+    "kind": "town rec"
+  },
+  {
+    "name": "Camp Phoenix",
+    "operator": "Camp Phoenix",
+    "town": "North Smithfield",
+    "state": "RI",
+    "url": "https://www.campphoenixonline.com/",
+    "kind": "private"
+  },
+  {
+    "name": "ECC Summer Camp",
+    "operator": "Episcopal Conference Center (Episcopal Diocese of Rhode Island)",
+    "town": "Pascoag",
+    "state": "RI",
+    "url": "https://www.eccri.org/",
+    "kind": "faith"
+  },
+  {
+    "name": "Camp Pawtucket",
+    "operator": "YMCA of Pawtucket",
+    "town": "Pawtucket",
+    "state": "RI",
+    "url": "https://ymcapawtucket.org/camps/camp-pawtucket",
+    "kind": "ymca"
+  },
+  {
+    "name": "Kismet Improv Youth and Teen Summer Intensives",
+    "operator": "Kismet Improv",
+    "town": "Pawtucket",
+    "state": "RI",
+    "url": "https://www.kismetimprov.com/summer",
+    "kind": "arts"
+  },
+  {
+    "name": "Slater Park Summer Camp",
+    "operator": "City of Pawtucket Parks & Recreation",
+    "town": "Pawtucket",
+    "state": "RI",
+    "url": "https://pawtucketri.gov/2026-slater-park-summer-camp-info-packet/",
+    "kind": "town rec"
+  },
+  {
+    "name": "Pennfield School Summer Program",
+    "operator": "The Pennfield School",
+    "town": "Portsmouth",
+    "state": "RI",
+    "url": "https://www.pennfield.org/summer-program/",
+    "kind": "school"
+  },
+  {
+    "name": "1on1 Basketball Providence Summer Camps",
+    "operator": "1on1 Basketball Providence",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://providence.1on1basketball.com/programs?type=1",
+    "kind": "sports"
+  },
+  {
+    "name": "Brown & Blue Lacrosse Camps",
+    "operator": "Brown University Men's Lacrosse coaching staff",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.brownandbluelacrosse.com/",
+    "kind": "sports"
+  },
+  {
+    "name": "Camp BraveHeart",
+    "operator": "Hope Health",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.hopehealthco.org/campbraveheartregistration/",
+    "kind": "special_needs"
+  },
+  {
+    "name": "Camp Kaleidoscope",
+    "operator": "Kaleidoscope PVD",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://kaleidoscopepvd.org/camp.html",
+    "kind": "other"
+  },
+  {
+    "name": "ECC City Camp",
+    "operator": "Episcopal Conference Center (Episcopal Diocese of Rhode Island)",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.eccri.org/citycamp",
+    "kind": "faith"
+  },
+  {
+    "name": "Igliozzi Day Camp",
+    "operator": "City of Providence Parks & Recreation",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rec.providenceri.gov/program-details/?i=1594",
+    "kind": "town rec"
+  },
+  {
+    "name": "JWU Kitchen Academy Kids Summer Cooking Camp",
+    "operator": "Johnson & Wales University",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://inquire.jwu.edu/admissions/welcome/summer-at-jwu/providence.html",
+    "kind": "other"
+  },
+  {
+    "name": "John Rollins Day Camp",
+    "operator": "City of Providence Parks & Recreation",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rec.providenceri.gov/program-details/?i=1595",
+    "kind": "town rec"
+  },
+  {
+    "name": "Katrina Dowd Lacrosse Camps",
+    "operator": "Brown University Women's Lacrosse coaching staff",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.bearswlaxcamps.com/camps.cfm",
+    "kind": "sports"
+  },
+  {
+    "name": "La Salle Academy Summer Camps",
+    "operator": "La Salle Academy",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.lasalle-academy.org/campus-life/summer-camps",
+    "kind": "school"
+  },
+  {
+    "name": "Moses Brown Performing and Visual Arts Camps",
+    "operator": "Moses Brown School",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.camps.mosesbrown.org/arts",
+    "kind": "arts"
+  },
+  {
+    "name": "Moses Brown STEM and Specialty Camps",
+    "operator": "Moses Brown School",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.camps.mosesbrown.org/stemandspecialty",
+    "kind": "stem"
+  },
+  {
+    "name": "Moses Brown Sports Camps",
+    "operator": "Moses Brown School",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.camps.mosesbrown.org/sportscamps",
+    "kind": "sports"
+  },
+  {
+    "name": "Narragansett Boat Club Youth Rowing Summer Camp",
+    "operator": "Narragansett Boat Club",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rownbc.org/row-with-nbc/youth-rowing/summer-camp/",
+    "kind": "sports"
+  },
+  {
+    "name": "Providence Recreation Sailing Camp",
+    "operator": "City of Providence Parks & Recreation",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rec.providenceri.gov/program-details/?i=1615",
+    "kind": "sailing"
+  },
+  {
+    "name": "Providence Tennis Academy Summer Camp",
+    "operator": "Providence Tennis Academy",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://playtennis.usta.com/providencetennis/Coaching/Junior",
+    "kind": "sports"
+  },
+  {
+    "name": "RISD CE Youth Full-Day Camps",
+    "operator": "Rhode Island School of Design Continuing Education",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://ce.risd.edu/youth-full-day-camps/",
+    "kind": "arts"
+  },
+  {
+    "name": "Rhode Island College Summer Sports Camps",
+    "operator": "Rhode Island College Athletics",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.goanchormen.com/sports/2020/10/22/Inside-Athletics-SummerSportsCamps.aspx",
+    "kind": "sports"
+  },
+  {
+    "name": "Robert F. Kennedy Day Camp",
+    "operator": "City of Providence Parks & Recreation",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rec.providenceri.gov/program-details/?i=1596",
+    "kind": "town rec"
+  },
+  {
+    "name": "Summer@Lincoln",
+    "operator": "Lincoln School",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.lincolnschool.org/summerlincoln/summerlincoln",
+    "kind": "school"
+  },
+  {
+    "name": "Vincent Brown Day Camp",
+    "operator": "City of Providence Parks & Recreation",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://rec.providenceri.gov/program-details/?i=1599",
+    "kind": "town rec"
+  },
+  {
+    "name": "Young Actors Summer Institute (YASI)",
+    "operator": "Trinity Repertory Company",
+    "town": "Providence",
+    "state": "RI",
+    "url": "https://www.trinityrep.com/education/yasi/",
+    "kind": "arts"
+  },
+  {
+    "name": "Camp Woonasquatucket",
+    "operator": "Woonasquatucket River Watershed Council",
+    "town": "Smithfield",
+    "state": "RI",
+    "url": "https://wrwc.org/camp-woonasquatucket/",
+    "kind": "nature"
+  },
+  {
+    "name": "Smithfield Recreation Summer Camp",
+    "operator": "Town of Smithfield Parks & Recreation",
+    "town": "Smithfield",
+    "state": "RI",
+    "url": "https://www.smithfieldri.gov/departments/parks-recreation/activities",
+    "kind": "town rec"
+  },
+  {
+    "name": "Tiverton Recreation Camps & Programs",
+    "operator": "Town of Tiverton Recreation",
+    "town": "Tiverton",
+    "state": "RI",
+    "url": "https://www.tiverton.ri.gov/174/Camps-Programs",
+    "kind": "town rec"
+  },
+  {
+    "name": "Bishop Hendricken Summer Camps",
+    "operator": "Bishop Hendricken High School",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://hendricken.com/camps/",
+    "kind": "school"
+  },
+  {
+    "name": "Central Rock Gym Warwick Summer Camp",
+    "operator": "Central Rock Gym",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://centralrockgym.com/warwick/programs/summer-camp/",
+    "kind": "sports"
+  },
+  {
+    "name": "Gamm Theatre Summer Camps",
+    "operator": "The Gamm Theatre",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://www.gammtheatre.org/camps",
+    "kind": "arts"
+  },
+  {
+    "name": "Launch Trampoline Park Summer Camp",
+    "operator": "Launch Trampoline Park Warwick",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://launchtrampolinepark.com/warwick/camp/",
+    "kind": "private"
+  },
+  {
+    "name": "Teamworks Warwick Summer Camp",
+    "operator": "Teamworks Warwick",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://www.teamworkswarwick.com/summercamphome.aspx",
+    "kind": "sports"
+  },
+  {
+    "name": "Urban Air Warwick Summer Camp",
+    "operator": "Urban Air Adventure Park Warwick",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://www.urbanair.com/rhode-island-warwick/camps/",
+    "kind": "private"
+  },
+  {
+    "name": "Warwick Center for the Arts Summer Art Camp",
+    "operator": "Warwick Center for the Arts",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://warwickcfa.org/youth-classes/",
+    "kind": "arts"
+  },
+  {
+    "name": "Warwick's Best Summer Camp",
+    "operator": "Warwick's Best Summer Camp",
+    "town": "Warwick",
+    "state": "RI",
+    "url": "https://warwicksbestsummercamp.com/",
+    "kind": "private"
+  },
+  {
+    "name": "Kingston's Camp",
+    "operator": "Kingston's Camp & Larkins Pond Beach Club",
+    "town": "West Kingston",
+    "state": "RI",
+    "url": "https://www.kingstonscamp.com/kingstons-camp-home",
+    "kind": "private"
+  },
+  {
+    "name": "Kent County Summer Camp",
+    "operator": "Kent County Summer Camp",
+    "town": "West Warwick",
+    "state": "RI",
+    "url": "https://kentcountysummercamp.com/",
+    "kind": "private"
+  },
+  {
+    "name": "West Warwick Civic Center Summer Program",
+    "operator": "Town of West Warwick",
+    "town": "West Warwick",
+    "state": "RI",
+    "url": "https://westwarwickri.gov/civic-center",
+    "kind": "town rec"
+  },
+  {
+    "name": "CCF Summer Camps",
+    "operator": "Connecting for Children & Families",
+    "town": "Woonsocket",
+    "state": "RI",
+    "url": "https://www.ccfcenter.org/summer-camps",
+    "kind": "other"
+  },
+  {
+    "name": "Mount Saint Charles Summer Studio",
+    "operator": "Mount Saint Charles Academy",
+    "town": "Woonsocket",
+    "state": "RI",
+    "url": "https://mountsaintcharles.org/arts/summer-studio/",
+    "kind": "arts"
+  }
+]
