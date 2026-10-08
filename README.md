@@ -83,11 +83,12 @@ KIT_ENCRYPTION_KEY=   # python -c "import os,base64;print(base64.urlsafe_b64enco
 FRONTEND_URL=         # used to build share links
 ```
 
-Frontend env (Vercel):
+Frontend env (Vercel, Settings → Environment Variables; root directory `frontend`):
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_API_URL=            # the Railway API, e.g. https://api-production-4a03.up.railway.app
+NEXT_PUBLIC_SUPABASE_URL=       # optional: lib/auth.ts defaults to the campfinder project
+NEXT_PUBLIC_SUPABASE_ANON_KEY=  # optional, same
 ```
 
 Families start as guests (no account) so parents get value first. Signing in saves the
