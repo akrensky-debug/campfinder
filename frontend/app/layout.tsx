@@ -4,7 +4,7 @@ import AccountLink from '@/components/AccountLink'
 
 export const metadata: Metadata = {
   title: 'CampFinder -- There is finally a better way to plan your kid\'s summer.',
-  description: 'Search verified summer camps near you. Filter by age, type, price, and interests. Request info in one click.',
+  description: 'Search verified summer camps near you. Filter by age, type, price, and interests, and get an email when registration opens.',
   icons: { icon: '/icon.png', apple: '/icon.png' },
   openGraph: {
     title: 'CampFinder',
