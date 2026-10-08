@@ -6,6 +6,8 @@ Owner confirmation, run by a person on the team.
     python -m campfinder.owners send    <camp> --by NAME [--to EMAIL]
     python -m campfinder.owners status  <camp>                # emails sent, answers, and the change log
     python -m campfinder.owners spots   <camp> <session> <left> [--total N] --by NAME [--from-owner]
+    python -m campfinder.owners queue                         # who to ask next, and why the rest aren't ready
+    python -m campfinder.owners send-ready --by NAME [--limit N] [--yes]   # without --yes, only lists them
 
 Listing updates by email ("Week 3 is full"):
 
@@ -38,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     for name in ("preview", "checked", "send", "status"):
         s = sub.add_parser(name)
-        s.add_argument("camp")
+        s.add_argument("camp", nargs="+" if name == "checked" else None)
         if name in ("checked", "send"):
             s.add_argument("--by", required=True, help="your name, for the change log")
         if name in ("preview", "send"):
@@ -50,6 +52,11 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--total", type=int, help="total spots, if known")
     s.add_argument("--by", required=True, help="your name, for the change log")
     s.add_argument("--from-owner", action="store_true", help="the camp owner gave this number")
+    sub.add_parser("queue")
+    s = sub.add_parser("send-ready")
+    s.add_argument("--by", required=True, help="your name, for the change log")
+    s.add_argument("--limit", type=int, default=10)
+    s.add_argument("--yes", action="store_true", help="send; without it, only list who would be asked")
     s = sub.add_parser("receive", help="read an owner's email from stdin")
     s.add_argument("--from", dest="from_email", required=True)
     s.add_argument("--subject")
@@ -66,13 +73,18 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.cmd in ("receive", "inbox", "apply", "reject"):
             return _updates(args)
+        if args.cmd in ("queue", "send-ready"):
+            return _batch(args)
+        if args.cmd == "checked":
+            for ref in args.camp:
+                camp = service.find_camp(ref)
+                print(f"{camp['name']}: {service.mark_checked(camp, args.by)}")
+            return 0
         camp = service.find_camp(args.camp)
         if args.cmd == "preview":
             prepared = service.prepare(camp, to=args.to)
             print(f"To: {prepared.email.to}\nSubject: {prepared.email.subject}\n\n{prepared.email.text}")
             print("\n(preview only: nothing recorded or sent; the link above will not work)")
-        elif args.cmd == "checked":
-            print(f"{camp['name']}: {service.mark_checked(camp, args.by)}")
         elif args.cmd == "spots":
             session = service.find_session(camp, args.session)
             row = service.set_spots(camp, session, args.left, total=args.total, actor=args.by,
@@ -93,6 +105,29 @@ def main(argv: list[str] | None = None) -> int:
     except service.ConfirmationError as e:
         print(e, file=sys.stderr)
         return 1
+    return 0
+
+
+def _batch(args: argparse.Namespace) -> int:
+    q = service.queue()
+    if args.cmd == "queue":
+        print(f"Ready to ask ({len(q.ready)}):")
+        for camp, email in q.ready:
+            print(f"  {camp['name']}  ->  {email}")
+        print(f"Not ready ({len(q.waiting)}):")
+        for camp, why in q.waiting:
+            print(f"  {camp['name']}: {why}")
+        return 0
+    batch = q.ready[: args.limit]
+    if not args.yes:
+        for camp, email in batch:
+            print(f"would ask {camp['name']}  ->  {email}")
+        print(f"\n{len(batch)} of {len(q.ready)} ready. Preview any one with `preview <camp>`; add --yes to send.")
+        return 0
+    site = get_settings().frontend_url.rstrip("/")
+    for camp, _ in batch:
+        prepared = asyncio.run(service.send(camp, sent_by=args.by))
+        print(f"asked {camp['name']}  ->  {prepared.email.to}  ({site}/owners/confirm/{prepared.token})")
     return 0
 
 

@@ -26,6 +26,17 @@ confirms its own listing, nothing we serve (site, agent, MCP) can say "confirmed
 
 `python -m campfinder.owners status <camp>` shows the emails, answers and the change log.
 
+## In batches
+
+    python -m campfinder.owners checked <camp> <camp> ... --by <name>    # several at once
+    python -m campfinder.owners queue                                   # who to ask next, and why the rest aren't ready
+    python -m campfinder.owners send-ready --by <name> --limit 10       # lists who would be asked
+    python -m campfinder.owners send-ready --by <name> --limit 10 --yes # sends
+
+A camp is ready when a person has checked it, it's on the site, the camp hasn't confirmed yet,
+there's an email for it (primary contact first, then the camp's own email), and no earlier link
+is still waiting for an answer. `preview <camp>` shows any one email first.
+
 ## Spots left
 
 When an owner tells us how many spots a session has left (by reply, phone or text), record it:
