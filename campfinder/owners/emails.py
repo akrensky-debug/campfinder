@@ -56,7 +56,10 @@ def _rows(snapshot: dict[str, Any]) -> list[tuple[str, str]]:
 
 def _session_line(s: dict[str, Any]) -> str:
     when = f"{s['start_date']} to {s['end_date']}"
-    bits = [b for b in (s.get("name"), when, f"${s['price']}" if s.get("price") is not None else None) if b]
+    price = s.get("price")
+    if isinstance(price, float) and price.is_integer():
+        price = int(price)
+    bits = [b for b in (s.get("name"), when, f"${price}" if price is not None else None) if b]
     return " · ".join(bits)
 
 
@@ -129,3 +132,42 @@ def listing_removed(to: str, camp_name: str) -> Email:
             f"pages.</p><p>If that was a mistake, reply to this email and a person will put it back.</p>"
             f"<p>Thanks,<br>{_e(_signature())}</p>")
     return Email(to=to, subject=f"Removed: {camp_name}", html=html, text=text, reply_to=_reply_to())
+
+
+def _state(v: dict[str, Any]) -> str:
+    left = v.get("spots_available")
+    if v.get("availability") == "full":
+        return "full"
+    if left is not None:
+        return f"open, {left} spot{'' if left == 1 else 's'} left"
+    return v.get("availability") or "unknown"
+
+
+def listing_updated(to: str, camp: dict[str, Any], changes: list[dict[str, Any]],
+                    sessions: list[dict[str, Any]]) -> Email:
+    """'Here is what changed, reply if wrong.' Shows each change in full, before and after, and
+    every session as it now stands, because some owners will read this with their own AI."""
+    camp_url = f"{_site()}/camps/{camp.get('slug') or camp['id']}"
+    changed = [(c["session"], _state(c["before"]), _state(c["after"]), c["quote"]) for c in changes]
+    now = [(_session_line(s), _state(s)) for s in sessions]
+    text = "\n".join([
+        "Hi,", "",
+        f"We updated {camp['name']}'s listing from your email:", "",
+        *[f"  {name}: {before} -> {after}   (you wrote: \"{quote}\")" for name, before, after, quote in changed], "",
+        "Every session now shows:",
+        *[f"  {line}: {state}" for line, state in now], "",
+        f"See the page: {camp_url}", "",
+        "Is anything wrong? Reply to this email and a person will fix it.", "",
+        f"Thanks,\n{_signature()}",
+    ])
+    html = (
+        f"<p>Hi,</p><p>We updated <strong>{_e(camp['name'])}</strong>'s listing from your email:</p><ul>"
+        + "".join(f"<li><strong>{_e(n)}</strong>: {_e(b)} &rarr; <strong>{_e(a)}</strong> "
+                  f"<span style='color:#666'>(you wrote: &ldquo;{_e(q)}&rdquo;)</span></li>" for n, b, a, q in changed)
+        + "</ul><p><strong>Every session now shows</strong></p><ul>"
+        + "".join(f"<li>{_e(line)}: {_e(state)}</li>" for line, state in now)
+        + f"</ul><p><a href='{_e(camp_url)}'>See the page</a></p>"
+        f"<p><strong>Is anything wrong?</strong> Reply to this email and a person will fix it.</p>"
+        f"<p>Thanks,<br>{_e(_signature())}</p>"
+    )
+    return Email(to=to, subject=f"Updated: {camp['name']}", html=html, text=text, reply_to=_reply_to())

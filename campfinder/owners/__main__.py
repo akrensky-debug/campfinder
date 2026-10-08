@@ -7,6 +7,13 @@ Owner confirmation, run by a person on the team.
     python -m campfinder.owners status  <camp>                # emails sent, answers, and the change log
     python -m campfinder.owners spots   <camp> <session> <left> [--total N] --by NAME [--from-owner]
 
+Listing updates by email ("Week 3 is full"):
+
+    python -m campfinder.owners receive --from EMAIL [--subject S] < email.txt   # read a pasted email
+    python -m campfinder.owners inbox                          # emails waiting for a person
+    python -m campfinder.owners apply  <message-id> --by NAME  # make the proposed changes, tell the owner
+    python -m campfinder.owners reject <message-id> --by NAME --reason "..."
+
 <camp> is the camp's id, its slug or its exact name. <session> is the session's id, exact
 name or start date (YYYY-MM-DD). `spots` records spots left (0 marks the session full) and
 writes it to the change log; --from-owner when the owner told you, so parents see who said it.
@@ -18,10 +25,11 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import sys
 
 from campfinder.config import get_settings
-from campfinder.owners import service
+from campfinder.owners import service, updates
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -42,9 +50,22 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--total", type=int, help="total spots, if known")
     s.add_argument("--by", required=True, help="your name, for the change log")
     s.add_argument("--from-owner", action="store_true", help="the camp owner gave this number")
+    s = sub.add_parser("receive", help="read an owner's email from stdin")
+    s.add_argument("--from", dest="from_email", required=True)
+    s.add_argument("--subject")
+    sub.add_parser("inbox")
+    s = sub.add_parser("apply")
+    s.add_argument("message")
+    s.add_argument("--by", required=True, help="your name, for the change log")
+    s = sub.add_parser("reject")
+    s.add_argument("message")
+    s.add_argument("--by", required=True, help="your name, for the change log")
+    s.add_argument("--reason", required=True)
     args = p.parse_args(argv)
 
     try:
+        if args.cmd in ("receive", "inbox", "apply", "reject"):
+            return _updates(args)
         camp = service.find_camp(args.camp)
         if args.cmd == "preview":
             prepared = service.prepare(camp, to=args.to)
@@ -72,6 +93,32 @@ def main(argv: list[str] | None = None) -> int:
     except service.ConfirmationError as e:
         print(e, file=sys.stderr)
         return 1
+    return 0
+
+
+def _show(m: dict) -> None:
+    print(f"{m['id']}  {str(m.get('received_at') or '')[:16]}  {m['status']:<12} from {m['from_email']}"
+          + (f"  ({m['reason']})" if m.get("reason") else ""))
+    for c in (m.get("proposal") or {}).get("changes", []):
+        left = f" {c['spots_left']}" if c.get("spots_left") is not None else ""
+        print(f"    {c['change']}{left} for session {c['session_id']}: \"{c['quote']}\"")
+
+
+def _updates(args: argparse.Namespace) -> int:
+    if args.cmd == "receive":
+        row = asyncio.run(updates.receive(args.from_email, sys.stdin.read(), subject=args.subject))
+        _show(row)
+    elif args.cmd == "inbox":
+        rows = updates.inbox()
+        for m in rows:
+            _show(m)
+        if not rows:
+            print("Nothing waiting.")
+    elif args.cmd == "apply":
+        row = asyncio.run(updates.apply(args.message, handled_by=args.by))
+        print(json.dumps(row["applied"], indent=2, default=str))
+    else:
+        _show(updates.reject(args.message, handled_by=args.by, reason=args.reason))
     return 0
 
 
