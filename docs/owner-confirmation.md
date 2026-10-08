@@ -67,7 +67,43 @@ that a reply reaches a person.
 
 The copy in `campfinder/owners/emails.py` is a starting point for Andrew to edit.
 
+## Listing updates by email
+
+An owner writes "Week 3 is full"; the listing changes and the owner gets back "here is what
+changed, reply if wrong" (ROADMAP Phase 2, item 2). Code: `campfinder/owners/updates.py`.
+
+1. **The email arrives**, from the mail provider's inbound hook
+   (`POST /api/v1/internal/owner-mail`, header `X-Inbound-Secret: $OWNER_INBOUND_SECRET`, 404
+   unless set; JSON `{from_email, text, subject?, message_id?, sender_verified?}`), or pasted by a
+   person: `python -m campfinder.owners receive --from owner@camp.org < email.txt`. Each one is
+   stored in `owner_messages`; a redelivery with the same Message-ID is handled once.
+2. **Who sent it.** Only a camp contact who has already confirmed a listing (their
+   `camp_contacts.verified_at` is set), for exactly one camp. Anyone else goes to a person.
+3. **Claude reads it** against the camp's sessions (`INGEST_MODEL`), and may report only:
+   a session is full, open again, or has N spots left, each with the owner's own words. Anything
+   else (prices, dates, new sessions, refunds, a complaint, a question, an upset tone, anything
+   unclear) marks it for a person. The email is treated as data: the reader can only name the
+   camp's own session ids, and the code checks every change (spots within the total).
+4. **A person applies it**: `python -m campfinder.owners inbox` lists what's waiting,
+   `apply <id> --by NAME` makes the changes, `reject <id> --by NAME --reason "..."` closes it.
+   Each change goes in `listing_changes` as `owner_email`, with the owner's address and the
+   whole email.
+5. **The owner gets back what changed**: each change before and after with their words, every
+   session as it now stands, and "reply and a person will fix it". It shows the change in full
+   because some owners will read it with their own AI.
+
+Turning on `OWNER_UPDATES_AUTO_APPLY=1` lets routine updates apply without a person, but only
+when the provider reports the sender passed SPF/DKIM (`sender_verified`): a From address alone
+is easy to fake. Leave it off until the inbound provider is set up and a few weeks of proposals
+have been right.
+
+| Variable | Default | Use |
+|---|---|---|
+| `OWNER_INBOUND_SECRET` | none (endpoint off) | Shared secret the inbound hook sends |
+| `OWNER_UPDATES_AUTO_APPLY` | off | Apply routine updates from verified senders without a person |
+
 ## Not yet
 
-- Reading replies ("week 3 is full") and updating the listing from them: ROADMAP Phase 2 item 2.
+- The inbound mail provider: pick one (Resend inbound, Postmark, SendGrid Inbound Parse) and map
+  its webhook to the JSON above, with `sender_verified` from its SPF/DKIM result.
 - Text messages.

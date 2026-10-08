@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import hmac
+import os
 from typing import Any, Literal
 
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter, Header, HTTPException
+from pydantic import BaseModel, Field
 
-from campfinder.owners import service
+from campfinder.owners import service, updates
 
 router = APIRouter()
 
@@ -46,3 +48,28 @@ async def answer_confirmation(token: str, body: Answer) -> AnswerResult:
     if outcome == "invalid" or name is None:
         raise HTTPException(status_code=404, detail=GONE)
     return AnswerResult(outcome=outcome, camp_name=name)
+
+
+class InboundEmail(BaseModel):
+    """An owner's email, as the mail provider's inbound hook hands it over."""
+    from_email: str
+    text: str = Field(max_length=200_000)
+    subject: str | None = None
+    message_id: str | None = None
+    sender_verified: bool = False   # the provider checked SPF/DKIM and they passed
+
+
+class Received(BaseModel):
+    id: str
+    status: str
+
+
+@router.post("/internal/owner-mail", response_model=Received, include_in_schema=False)
+async def owner_mail(body: InboundEmail, x_inbound_secret: str | None = Header(default=None)) -> Received:
+    """Listing updates by email. 404 unless OWNER_INBOUND_SECRET is set and matches."""
+    secret = os.environ.get("OWNER_INBOUND_SECRET", "")
+    if not secret or not x_inbound_secret or not hmac.compare_digest(secret, x_inbound_secret):
+        raise HTTPException(status_code=404, detail="Not found")
+    row = await updates.receive(body.from_email, body.text, subject=body.subject, message_id=body.message_id,
+                                sender_verified=body.sender_verified)
+    return Received(id=str(row["id"]), status=row["status"])

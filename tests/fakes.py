@@ -40,6 +40,9 @@ DEFAULTS: dict[str, dict[str, Any]] = {
     },
     "registration_windows": {"session_id": None, "closes_at": None, "source_url": None, "verified": False, "notes": None},
     "registration_alerts": {"session_id": None, "confirm_sent_at": None, "confirmed_at": None, "unsubscribed_at": None},
+    "owner_messages": {"message_id": None, "sender_verified": False, "subject": None, "camp_id": None,
+                       "status": "received", "reason": None, "proposal": None, "applied": None, "handled_by": None,
+                       "received_at": lambda: datetime.now(timezone.utc).isoformat(), "handled_at": None},
     "booking_attempts": {"registration_id": None, "consent": None, "provider_ref": None, "error": None,
                          "status": "quoted", "environment": "sandbox"},
 }
