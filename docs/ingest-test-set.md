@@ -63,6 +63,25 @@ for url in <each source above>; do
 done
 ```
 
+## Many camps at once: drafts, then a person checks each one
+
+```bash
+python -m campfinder.ingest.batch candidates.json --metro providence     # writes data/drafts/providence/
+python -m campfinder.ingest.promote data/drafts/providence/<slug>.json --by <your name>
+python -m campfinder.seed.import_real --check                             # then --load
+```
+
+`candidates.json` is a list of `{"name", "url"}`, the camp's own page (`data/candidates/providence.json` has 125 around Providence, found by web search on 7 October 2026; not checked by a person). Each camp becomes a draft
+in the dataset's format plus a `review` block: fields the tool was unsure of (with its quote),
+what it couldn't find, its warnings, and anything the dataset validator rejects.
+`data/drafts/<metro>/REVIEW.md` lists them all, and the hosts that refused us under "ask the
+owner for the brochure". Camps already listed or drafted are skipped, so a stopped run resumes.
+
+Drafts are never imported. `promote` is the person saying they checked every field against the
+page: it drops the review notes, marks the source checked by them today, and refuses unless the
+whole dataset still validates. The tool never claims ACA accreditation: a person adds it with
+`aca_source_url` after checking acacamps.org.
+
 ## What to score
 
 For each camp, by hand, against the page:
