@@ -22,6 +22,7 @@ The database and sign-in are the Supabase project `cdzzmyambonhkhsoltfw` (us-eas
 | `RESEND_API_KEY` | Optional. Without it, email is logged, not sent | Email |
 | `EMAIL_MODE` | Optional. `log` (default, sends nothing), `resend` or `off`. One switch for all email; the older `HOUSEHOLD_EMAIL_MODE` and `BOOKING_EMAIL_MODE` still work | Email |
 | `BOOKING_CRON_SECRET` | Optional. Any long random string; turns on the registration reminder and alert cron endpoints | Registration reminders and alerts |
+| `EMAIL_FROM` | With `EMAIL_MODE=resend`: the sender, on a domain verified in Resend, e.g. `CampFinder <hello@yourdomain.com>`. Default `CampFinder <hello@campfinder.com>` | All email |
 | `OWNER_EMAIL_SIGNATURE`, `OWNER_REPLY_TO` | Optional. Sign-off and reply address for camp owner emails | Owner confirmation |
 | `OWNER_INBOUND_SECRET`, `OWNER_UPDATES_AUTO_APPLY` | Optional. Turn on the inbound hook for owners' emails; auto-apply stays off until Andrew says | Listing updates by email (`docs/owner-confirmation.md`) |
 | `OPENAI_APPS_CHALLENGE`, `CHATGPT_WIDGET_DOMAIN` | From the OpenAI dashboard, when submitting the ChatGPT app | ChatGPT app review |
